@@ -71,35 +71,42 @@ def main():
 	it is recommended to generate database usng sampler.py before run main
 	"""
 
-	model_type = 'MLP'; exploration_init = 1.; fld_load = None
-	n_episode_training = 100
-	n_episode_testing = 50
-	open_cost = 3.3
-	db_type = 'SinSamplerDB'; db = 'concat_half_base_'; Sampler = SinSampler
-	#db_type = 'PairSamplerDB'; db = 'randjump_100,1(10, 30)[]_'; Sampler = PairSampler
-	# Agent's options
+	# --- Agent's options
 	batch_size 		= 	8
-	learning_rate 	= 	1e-4
+	learning_rate 	= 	1e-2
 	discount_factor = 	0.8
 	exploration_decay= 	0.99
 	exploration_min = 	0.01
-	# Environment's options
+	# DQN architecture
+	model_type		=	'MLP';
+	exploration_init= 	1.;
+	fld_load 		= 	None
+
+	# --- Environment's options
+	rootStore 		=	'/home/younesz/Documents/Databases/BTC'
 	window_state 	= 	32
 	time_difference = 	True
 	wavelet_channels=	4
+	n_episode_training= 100
+	n_episode_testing = 50
+	open_cost 		= 	3  # Percentage on the buy order
+	db_type 		= 	'SinSamplerDB'; db = 'concat_half_base_'; Sampler = 	SinSampler
+	# db_type = 'PairSamplerDB'; db = 'randjump_100,1(10, 30)[]_'; Sampler = PairSampler
 
-	fld = os.path.join('..','data',db_type,db+'A')
+
+
+	fld 	= 	os.path.join(rootStore,'data',db_type,db+'A')
 	#sampler = Sampler('load', fld=fld)
-	sampler = Sampler('single', 180, 0, (30,40), (49,50), fld=fld)
-	env = Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
+	sampler = 	Sampler('single', 180, 1.5, (30,40), (49,50), fld=fld)
+	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
 	model, print_t = get_model(model_type, env, learning_rate, fld_load)
 	model.model.summary()
 	#return
 
-	agent = Agent(model, discount_factor=discount_factor, batch_size=batch_size)
-	visualizer = Visualizer(env.action_labels)
+	agent 	=	Agent(model, discount_factor=discount_factor, batch_size=batch_size)
+	visualizer	=	Visualizer(env.action_labels)
 
-	fld_save = os.path.join(OUTPUT_FLD, sampler.title, model.model_name, 
+	fld_save 	=	os.path.join(rootStore, 'results', sampler.title, model.model_name,
 		str((env.window_state, sampler.window_episode, agent.batch_size, learning_rate,
 			agent.discount_factor, exploration_decay, env.open_cost)))
 	

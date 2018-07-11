@@ -1,4 +1,4 @@
-from lib import *
+from src.lib import *
 from scripts.dwt_no_edge_effects import *
 import matplotlib.pyplot as plt
 
@@ -62,6 +62,7 @@ class Market:
 			state[:,i] = (( state[:,i]-norm)/stdv )#*100
 		return state
 
+
 	def get_valid_actions(self):
 		if self.empty:
 			return [0, 1]	# wait, open
@@ -76,7 +77,7 @@ class Market:
 			empty = self.empty
 		reward = self.direction * (self.price[t+1] - self.price[t])
 		if empty:
-			reward -= self.open_cost
+			reward -= self.open_cost*self.price[t]/100
 		if reward < 0:
 			reward *= (1. + self.risk_averse)
 		return reward

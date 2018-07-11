@@ -1,4 +1,6 @@
-from lib import *
+from src.lib import *
+from copy import deepcopy
+from scipy.signal import decimate
 
 def read_data(date, instrument, time_step):
 	path = os.path.join(PRICE_FLD, date, instrument+'.csv')
@@ -132,7 +134,6 @@ class PairSampler(Sampler):
 
 
 
-
 class SinSampler(Sampler):
 
 	def __init__(self, game, 
@@ -202,8 +203,6 @@ class SinSampler(Sampler):
 		return p, '100+%isin((2pi/%i)t)+%ie'%(amplitude, period, noise)
 
 
-
-
 	def __sample_concat_sin(self):
 		prices = []
 		p = []
@@ -237,6 +236,97 @@ class SinSampler(Sampler):
 		funcs.append(func)
 		return np.array(prices).T, str(funcs)
 
+
+
+class BTCsampler(Sampler):
+
+	def __init__(self, load_db, fld=None, window_training_episode=168, window_testing_episode=48,
+				 downsample_factor=[10, 6], variables=None, wavelet_channels=4):
+		self.n_var 	=	1	# Price only
+
+		self.window_training_episode 	=	window_training_episode
+		self.window_testing_episode 	= 	window_testing_episode
+		self.wavelet_channels 			=	0
+		self.window_episode 			=	window_training_episode
+		self.variables 					=	variables
+		self.downsample_factor 			=	downsample_factor
+
+		suffix1 	=	'_training{}_testing{}'.format(window_training_episode, window_testing_episode)
+		suffix2 	=	'_wavCh{}'.format(wavelet_channels)
+		suffix3 	=	'_downsampled{}x'.format( np.prod(self.downsample_factor) )
+		self.title 	=	'BTC' + suffix1 + suffix2 + suffix3
+
+		# Load database
+		out 	=	fld.replace('.pickle', '') + suffix1 + suffix2 + suffix3 + '.pickle'
+		if not os.path.isfile(out):
+			self.build_db(fld, out)
+		self.load_db(out)
+		return
+
+	def build_db(self, raw_data, out_file, start_date='2015-01-01'):
+		# Process raw data
+		dtl		=	pd.read_csv( raw_data.replace('.pickle', '.csv') )
+		timeCol =	['DATETIME']
+		if not self.variables is None:
+			dtl	=	dtl[self.variables+timeCol]
+		# Keep data from starting date
+		if not start_date is None:
+			# Filter  by date
+			filter	=	pd.Series( [x[0].split(' ')[0] for x in dtl[timeCol].values] ) > start_date
+			dtl		=	dtl[filter]
+
+		# --- Downsample data
+		# Numerical variables
+		dtl_vars 	=	deepcopy( dtl[self.variables].values )
+		if np.prod(self.downsample_factor)!=1:
+			for idec in self.downsample_factor:
+				dtl_vars	=	decimate(dtl_vars, idec, axis=0)
+		# Non-numerical
+		dtl_strs 	= 	deepcopy(dtl[timeCol].values)
+		factor 		=	np.prod(self.downsample_factor)
+		dtl_strs 	=	dtl_strs[::factor]
+		# Recombine
+		dtl 		=	pd.DataFrame(data=np.concatenate((dtl_vars, dtl_strs), axis=1), columns=self.variables+timeCol)
+
+		# Chunk data
+		chunk 	=	self.window_training_episode + self.window_testing_episode
+		nchunks =	int( len(dtl) / chunk )
+		db_train=	[]
+		db_test = 	[]
+		for i_ch in range(nchunks):
+			db_train.append(dtl.loc[i_ch*chunk:i_ch*chunk+self.window_training_episode, self.variables])
+			db_test.append(dtl.loc[i_ch * chunk+self.window_training_episode-self.window_testing_episode:(i_ch + 1) * chunk, self.variables])
+		# Write to file
+		pickle.dump( (db_train, db_test), open(out_file, 'wb'))
+		return
+
+	def load_db(self, fld):
+		self.db		=	pickle.load( open(fld,'rb') )
+		self.n_db 	= len(self.db[0])
+		self.i_dbtrain	=	np.random.randint( self.n_db )	# 0
+		self.i_dbtest 	=	np.random.randint( self.n_db )	# 0
+		self.sample 	= 	self.__sample_db
+
+	def __sample_db(self, training=True):
+		if training:
+			prices 	=	self.db[0][self.i_dbtrain]
+			title 	=	'bitcoin_episode{}'.format(self.i_dbtrain)
+			self.i_dbtrain 	=	np.random.randint( self.n_db )
+			"""
+			self.i_dbtrain 	+=	1
+			if self.i_dbtrain	==	self.n_db:
+				self.i_dbtrain 	= 	0
+			"""
+		else: 	# Testing mode
+			prices 	= 	self.db[1][self.i_dbtest]
+			title 	= 	'bitcoin_episode{}'.format(self.i_dbtest)
+			self.i_dbtest 	=	np.random.randint( self.n_db )
+			"""
+			self.i_dbtest	+=	1
+			if self.i_dbtest	==	self.n_db:
+				self.i_dbtest 	= 	0
+			"""
+		return prices.values, title
 
 
 
