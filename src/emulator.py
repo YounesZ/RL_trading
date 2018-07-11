@@ -26,9 +26,8 @@ class Market:
 					which is self.state_shape
 
 	action 			three action
-					0:	empty, don't open/close. 
-					1:	open a position
-					2: 	keep a position
+					0:	go short (sell/wait)
+					1:	go long (buy/keep)
 	"""
 	
 	def reset(self, rand_price=True):
@@ -43,7 +42,7 @@ class Market:
 
 		self.max_profit = find_ideal(self.price[self.t0:], False)
 		self.t = self.t0
-		return self.get_state(), self.get_valid_actions()
+		return self.get_state(), [0, 1]	#self.get_valid_actions()
 
 
 	def get_state(self, t=None):
@@ -63,11 +62,14 @@ class Market:
 		return state
 
 
+	"""
 	def get_valid_actions(self):
 		if self.empty:
 			return [0, 1]	# wait, open
 		else:
 			return [0, 2]	# close, keep
+
+	"""
 
 
 	def get_noncash_reward(self, t=None, empty=None):
@@ -86,19 +88,15 @@ class Market:
 	def step(self, action):
 
 		done = False
-		if action == 0:		# wait/close
+		if action == 0:		# go short
 			reward = 0.
 			self.empty = True
-		elif action == 1:	# open
-			reward = self.get_noncash_reward()
+		elif action == 1:	# go long
+			reward	=	self.get_noncash_reward()
 			self.empty = False
-		elif action == 2:	# keep
-			reward = self.get_noncash_reward()
-		else:
-			raise ValueError('no such action: '+str(action))
 
 		self.t += 1
-		return self.get_state(), reward, self.t == self.t_max, self.get_valid_actions()
+		return self.get_state(), reward, self.t == self.t_max, [0,1]	#self.get_valid_actions()
 
 
 	def __init__(self, 
@@ -112,9 +110,9 @@ class Market:
 		self.risk_averse 	= 	risk_averse
 		self.time_difference=	True
 		self.wavelet_channels=	wavelet_channels
-		self.n_action 		= 	3
+		self.n_action 		= 	2
 		self.state_shape 	= 	(window_state, self.sampler.n_var)
-		self.action_labels 	= 	['empty','open','keep']
+		self.action_labels 	= 	['short', 'long']	#['empty','open','keep']
 		self.t0 			= 	window_state - 1 + self.time_difference
 
 

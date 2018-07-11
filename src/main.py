@@ -14,9 +14,9 @@ def get_model(model_type, env, learning_rate, fld_load):
 	exploration_init = 1.
 
 	if model_type == 'MLP':
-		m = 16
+		#m = 16
 		layers = 5
-		hidden_size = [m]*layers
+		hidden_size = [48, 24, 12, 6] 	#[m]*layers
 		model = QModelMLP(env.state_shape, env.n_action)
 		model.build_model(hidden_size, learning_rate=learning_rate, activation='tanh')
 	
@@ -73,7 +73,7 @@ def main():
 
 	# --- Agent's options
 	batch_size 		= 	8
-	learning_rate 	= 	1e-2
+	learning_rate 	= 	1e-3
 	discount_factor = 	0.8
 	exploration_decay= 	0.99
 	exploration_min = 	0.01
@@ -86,7 +86,7 @@ def main():
 	rootStore 		=	'/home/younesz/Documents/Databases/BTC'
 	window_state 	= 	32
 	time_difference = 	True
-	wavelet_channels=	4
+	wavelet_channels=	0
 	n_episode_training= 100
 	n_episode_testing = 50
 	open_cost 		= 	3  # Percentage on the buy order
