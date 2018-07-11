@@ -97,7 +97,7 @@ def main():
 
 	fld 	= 	os.path.join(rootStore,'data',db_type,db+'A')
 	#sampler = Sampler('load', fld=fld)
-	sampler = 	Sampler('single', 180, 1.5, (30,40), (49,50), fld=fld)
+	sampler = 	Sampler('single', 180, 1.5, (20,40), (49,50), fld=fld)
 	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
 	model, print_t = get_model(model_type, env, learning_rate, fld_load)
 	model.model.summary()

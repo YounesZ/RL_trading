@@ -54,7 +54,7 @@ class Simulator:
 		fld_save = os.path.join(self.fld_save,'training')
 
 		makedirs(fld_save)
-		MA_window = 100		# MA of performance
+		MA_window = 10		# MA of performance
 		safe_total_rewards = []
 		test_total_rewards 	=	[]
 		explored_total_rewards = []

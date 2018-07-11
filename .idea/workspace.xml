@@ -2,791 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="630ed60d-1b2e-42ed-b929-413c060c2c93" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/compute_bitcoin_wavelet_statistics.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/PairSamplerDB/randjump_100,1(10, 30)[]_A/db.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/PairSamplerDB/randjump_100,1(10, 30)[]_A/param.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/PairSamplerDB/randjump_100,1(10, 30)[]_B/db.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/PairSamplerDB/randjump_100,1(10, 30)[]_B/param.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/SinSamplerDB/concat_half_base_A/db.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/SinSamplerDB/concat_half_base_A/param.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/SinSamplerDB/concat_half_base_B/db.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/SinSamplerDB/concat_half_base_B/param.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/DB_randjump(5, (10, 30), 1, [])/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/DB_randjump(5, (10, 30), 1, [])/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/DB_randjump(5, (10, 30), 1, [])/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/DB_randjump(5, (10, 30), 1, [])/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/DB_randjump(5, (10, 30), 1, [])/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/DB_randjump(5, (10, 30), 1, [])/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_36.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_37.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_38.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_39.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_41.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_42.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_43.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_44.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_46.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_47.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_48.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_49.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_50.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_51.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_52.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_53.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_54.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_55.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_56.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_57.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_58.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_59.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_60.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_61.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_62.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_63.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_64.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_65.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_66.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_67.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_68.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_69.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_70.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_71.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_72.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_73.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_74.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_75.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_76.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_77.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_78.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_79.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_80.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_81.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_82.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_83.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_84.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_85.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_86.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_87.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_88.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_89.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_90.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_91.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_92.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_93.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_94.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_95.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_96.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_97.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_98.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_99.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (1, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/total_rewards.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_36.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_37.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_38.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_39.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_41.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_42.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_43.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_44.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_46.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_47.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_48.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_49.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_50.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_51.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_52.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_53.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_54.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_55.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_56.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_57.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_58.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_59.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_60.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_61.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_62.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_63.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_64.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_65.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_66.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_67.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_68.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_69.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_70.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_71.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_72.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_73.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_74.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_75.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_76.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_77.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_78.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_79.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_80.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_81.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_82.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_83.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_84.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_85.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_86.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_87.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_88.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_89.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_90.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_91.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_92.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_93.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_94.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_95.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_96.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_97.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_98.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_99.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/total_rewards.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_36.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_37.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_38.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_39.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_41.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_42.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_43.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_44.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_46.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_47.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_48.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_49.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/total_rewards.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_36.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_37.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_38.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_39.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_41.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_42.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_43.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_44.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_46.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_47.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_48.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_49.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_50.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_51.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_52.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_53.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_54.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_55.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_56.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_57.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_58.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_59.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_60.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_61.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_62.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_63.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_64.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_65.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_66.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_67.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_68.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_69.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_70.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_71.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_72.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_73.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_74.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_75.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_76.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_77.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_78.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_79.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_80.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_81.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_82.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_83.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_84.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_85.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_86.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_87.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_88.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_89.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_90.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_91.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_92.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_93.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_94.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_95.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_96.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_97.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_98.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_99.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/total_rewards.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_36.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_37.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_38.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_39.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_41.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_42.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_43.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_44.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_46.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_47.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_48.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_49.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/total_rewards.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_36.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_37.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_38.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_39.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_41.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_42.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_43.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_44.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_46.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_47.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_48.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_49.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_50.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_51.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_52.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_53.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_54.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_55.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_56.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_57.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_58.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_59.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_60.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_61.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_62.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_63.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_64.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_65.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_66.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_67.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_68.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_69.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_70.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_71.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_72.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_73.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_74.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_75.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_76.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_77.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_78.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_79.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_80.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_81.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_82.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_83.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_84.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_85.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_86.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_87.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_88.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_89.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_90.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_91.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_92.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_93.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_94.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_95.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_96.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_97.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_98.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_99.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/total_rewards.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_36.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_37.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_38.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_39.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_41.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_42.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_43.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_44.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_46.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_47.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_48.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_49.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/in-sample testing/total_rewards.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_36.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_37.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_38.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_39.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_41.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_42.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_43.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_44.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_45.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_46.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_47.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_48.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_49.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_50.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_51.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_52.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_53.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_54.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_55.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_56.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_57.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_58.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_59.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_60.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_61.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_62.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_63.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_64.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_65.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_66.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_67.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_68.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_69.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_70.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_71.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_72.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_73.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_74.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_75.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_76.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_77.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_78.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_79.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_80.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_81.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_82.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_83.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_84.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_85.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_86.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_87.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_88.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_89.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_90.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_91.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_92.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_93.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_94.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_95.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_96.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_97.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_98.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_99.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/total_rewards.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_16.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_17.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_18.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_19.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_20.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_21.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_22.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_23.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_24.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_25.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_26.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_27.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_28.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_30.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_31.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_33.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_34.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_35.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(32, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/episode_9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (30, 40), (49, 50))_buffer200_expoexpl_squashedstate_timediff_wavch4/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (35, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (35, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (35, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (35, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (35, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (35, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/Qmodel_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/agent_attr.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/model.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/weights.hdf5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (49, 50))/MLP[16, 16, 16, 16, 16]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (50, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (39, 40), (50, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (40, 40), (50, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/model/QModel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/results/SingleSin(0, (40, 40), (50, 50))/Conv[(16, 3, 1, True), (16, 3, 1, True)] + [48, 24]/(40, 180, 8, 0.0001, 0.8, 0.99, 3.3)/training/record.csv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/emulator.py" afterPath="$PROJECT_DIR$/src/emulator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sampler.py" afterPath="$PROJECT_DIR$/src/sampler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simulators.py" afterPath="$PROJECT_DIR$/src/simulators.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -800,11 +17,11 @@
       <file leaf-file-name="simulators.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/simulators.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2598">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="-150">
+              <caret line="56" column="21" lean-forward="false" selection-start-line="56" selection-start-column="21" selection-end-line="56" selection-end-column="21" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
-                <marker date="1531254821529" expanded="true" signature="3605:5098" ph="..." />
+                <marker date="1531333810395" expanded="true" signature="3604:5097" ph="..." />
               </folding>
             </state>
           </provider>
@@ -813,8 +30,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="84" column="31" lean-forward="true" selection-start-line="84" selection-start-column="31" selection-end-line="84" selection-end-column="31" />
+            <state relative-caret-position="429">
+              <caret line="88" column="24" lean-forward="false" selection-start-line="88" selection-start-column="24" selection-end-line="88" selection-end-column="24" />
               <folding>
                 <element signature="e#24#41#0" expanded="true" />
               </folding>
@@ -880,16 +97,16 @@
       <list>
         <option value="$PROJECT_DIR$/src/visualizer.py" />
         <option value="$PROJECT_DIR$/src/agents.py" />
-        <option value="$PROJECT_DIR$/src/simulators.py" />
         <option value="$PROJECT_DIR$/src/sampler.py" />
         <option value="$PROJECT_DIR$/scripts/compute_bitcoin_wavelet_statistics.py" />
         <option value="$PROJECT_DIR$/src/emulator.py" />
+        <option value="$PROJECT_DIR$/src/simulators.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1985" />
+    <option name="x" value="-1855" />
     <option name="y" value="-4" />
     <option name="width" value="1855" />
     <option name="height" value="1084" />
@@ -1046,7 +263,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1985" y="-4" width="1855" height="1084" extended-state="6" />
+    <frame x="-1855" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20176893" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1102,7 +319,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
-            <marker date="1531254821529" expanded="true" signature="3605:5098" ph="..." />
+            <marker date="1531333810395" expanded="true" signature="3604:5097" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1145,7 +362,7 @@
           <caret line="66" column="25" lean-forward="false" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
-            <marker date="1531254821529" expanded="true" signature="3605:5098" ph="..." />
+            <marker date="1531333810395" expanded="true" signature="3604:5097" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1178,7 +395,7 @@
           <caret line="66" column="25" lean-forward="false" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
-            <marker date="1531254821529" expanded="true" signature="3605:5098" ph="..." />
+            <marker date="1531333810395" expanded="true" signature="3604:5097" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1211,7 +428,7 @@
           <caret line="66" column="25" lean-forward="true" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
-            <marker date="1531254821529" expanded="true" signature="3605:5098" ph="..." />
+            <marker date="1531333810395" expanded="true" signature="3604:5097" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1244,7 +461,7 @@
           <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
-            <marker date="1531254821529" expanded="true" signature="3605:5098" ph="..." />
+            <marker date="1531333810395" expanded="true" signature="3604:5097" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1301,17 +518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/simulators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2598">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-            <marker date="1531254821529" expanded="true" signature="3605:5098" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sampler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -1352,10 +558,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/simulators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-150">
+          <caret line="56" column="21" lean-forward="false" selection-start-line="56" selection-start-column="21" selection-end-line="56" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+            <marker date="1531333810395" expanded="true" signature="3604:5097" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="84" column="31" lean-forward="true" selection-start-line="84" selection-start-column="31" selection-end-line="84" selection-end-column="31" />
+        <state relative-caret-position="429">
+          <caret line="88" column="24" lean-forward="false" selection-start-line="88" selection-start-column="24" selection-end-line="88" selection-end-column="24" />
           <folding>
             <element signature="e#24#41#0" expanded="true" />
           </folding>
