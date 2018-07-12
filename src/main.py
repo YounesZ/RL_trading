@@ -17,7 +17,7 @@ def get_model(model_type, env, learning_rate, fld_load):
 		#m = 16
 		layers = 5
 		hidden_size = [48, 24, 12, 6] 	#[m]*layers
-		model = QModelMLP(env.state_shape, env.n_action)
+		model = QModelMLP(env.state_shape, env.n_action, env.wavelet_channels)
 		model.build_model(hidden_size, learning_rate=learning_rate, activation='tanh')
 	
 	elif model_type == 'conv':
@@ -83,10 +83,10 @@ def main():
 	fld_load 		= 	None
 
 	# --- Environment's options
-	rootStore 		=	'/home/younesz/Documents/Databases/BTC'
+	rootStore 		=	open('../dbloc.txt', 'r').readline().rstrip('\n')
 	window_state 	= 	32
 	time_difference = 	True
-	wavelet_channels=	0
+	wavelet_channels=	4
 	n_episode_training= 100
 	n_episode_testing = 50
 	open_cost 		= 	3  # Percentage on the buy order

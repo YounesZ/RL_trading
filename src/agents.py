@@ -77,12 +77,12 @@ class QModelKeras:
 	def build_model(self):
 		pass
 
-	def __init__(self, state_shape, n_action):
-		self.state_shape = state_shape
-		self.n_action = n_action
-		self.attr2save = ['state_shape','n_action','model_name']
+	def __init__(self, state_shape, n_action, wavelet_channels=0):
+		self.state_shape	=	state_shape
+		self.n_action 		= 	n_action
+		self.attr2save 		= 	['state_shape','n_action','model_name']
+		self.wavelet_channels=	wavelet_channels
 		self.init()
-
 
 	def save(self, fld):
 		makedirs(fld)
@@ -136,20 +136,41 @@ class QModelMLP(QModelKeras):
 
 	def build_model(self, n_hidden, learning_rate, activation='relu'):
 
-		model = keras.models.Sequential()
-		model.add(keras.layers.Reshape(
-			(self.state_shape[0]*self.state_shape[1],), 
-			input_shape=self.state_shape))
+		if self.wavelet_channels==0:
+			# Purely dense MLP
+			model = keras.models.Sequential()
+			model.add(keras.layers.Reshape(
+				(self.state_shape[0]*self.state_shape[1],),
+				input_shape=self.state_shape))
 
-		for i in range(len(n_hidden)):
-			model.add(keras.layers.Dense(n_hidden[i], activation=activation))
-			#model.add(keras.layers.Dropout(drop_rate))
-		
-		model.add(keras.layers.Dense(self.n_action, activation='linear'))
+			for i in range(len(n_hidden)):
+				model.add(keras.layers.Dense(n_hidden[i], activation=activation))
+				#model.add(keras.layers.Dropout(drop_rate))
+
+			model.add(keras.layers.Dense(self.n_action, activation='linear'))
+		else:
+			# Composite architecture : 1MLP for each decomposition channel
+			max_scales 	=	int(np.log(self.state_shape[0])/np.log(2))
+			inputs 		=	np.power(2, range(1, self.wavelet_channels+1))[max_scales-self.wavelet_channels-1:][::-1]
+			inp_layers 	=	[]
+			inp_models 	=	[]
+			for ii in np.append(inputs, inputs[-1]):
+				# Make a model
+				input 	=	keras.layers.Input(shape=(16,))
+				hid1 	= 	keras.layers.Dense(int(1.5*ii), activation='relu')(input)
+				hid2 	=	keras.layers.Dense(int(1.5*ii), activation='relu')(hid1)
+				inp_layers 	+=	[input]
+				inp_models 	+=	[hid2]
+			# Make composite
+			composite 	= 	keras.layers.Concatenate(axis=-1)(inp_models)
+			compoD1 	= 	keras.layers.Dense(self.state_shape[0])(composite)
+			compoD2 	= 	keras.layers.Dense( int(self.state_shape[0]*.75) )(compoD1)
+			output 		=	keras.layers.Dense(self.n_action, activation='linear')(compoD2)
+			model 		=	keras.models.Model(inputs=inp_layers, outputs=output)
+
 		model.compile(loss='mse', optimizer=keras.optimizers.Adam(lr=learning_rate))
-		self.model = model
-		self.model_name = self.qmodel + str(n_hidden)
-		
+		self.model 		= 	model
+		self.model_name = 	self.qmodel + str(n_hidden)
 
 
 class QModelRNN(QModelKeras):
