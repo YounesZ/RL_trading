@@ -42,6 +42,7 @@ class Agent:
 		return random.sample(valid_actions, 1)[0]
 
 
+
 	def save(self, fld):
 		makedirs(fld)
 
@@ -106,9 +107,13 @@ class QModelKeras:
 			setattr(self, a, attr[a])
 
 	def predict(self, state):
-		q = self.model.predict(
-			add_dim(state, self.state_shape)
-			)[0]
+		# Reshape state-space if wavelet transformed
+		if self.wavelet_channels>0:
+			rshp_state 	= 	self.modular_state_space(state)
+		else:
+			rshp_state	=	add_dim(state, self.state_shape)
+
+		q = self.model.predict( rshp_state )[0]
 		
 		if np.isnan(max(q)):
 			print('state'+str(state))
@@ -121,11 +126,18 @@ class QModelKeras:
 		q = self.predict(state)
 		q[action] = q_action
 
-		self.model.fit(
-			add_dim(state, self.state_shape), 
-			add_dim(q, (self.n_action,)), 
-			epochs=1, verbose=0)
+		if self.wavelet_channels>0:
+			rshp_state	=	self.modular_state_space(state)
+		else:
+			rshp_state	=	add_dim(state, self.state_shape)
+		self.model.fit( rshp_state, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
 
+	def modular_state_space(self, state):
+		new_shape 	= 	(len(state) / np.power(2, list(range(1, self.wavelet_channels + 1)) + [self.wavelet_channels])).astype(int)
+		cum_shape 	= 	np.cumsum(new_shape).astype(int)
+		# rshp_state 		=	[add_dim(state[x:y], (z,1)) for x,y,z in zip( np.insert(cum_shape,0,0), cum_shape, new_shape )]
+		rshp_state 	= 	[state[x:y].T for x, y in zip(np.insert(cum_shape[:-1], 0, 0), cum_shape)]
+		return rshp_state
 
 
 class QModelMLP(QModelKeras):
@@ -156,7 +168,7 @@ class QModelMLP(QModelKeras):
 			inp_models 	=	[]
 			for ii in np.append(inputs, inputs[-1]):
 				# Make a model
-				input 	=	keras.layers.Input(shape=(16,))
+				input 	=	keras.layers.Input(shape=(ii,))
 				hid1 	= 	keras.layers.Dense(int(1.5*ii), activation='relu')(input)
 				hid2 	=	keras.layers.Dense(int(1.5*ii), activation='relu')(hid1)
 				inp_layers 	+=	[input]

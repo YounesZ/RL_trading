@@ -31,7 +31,7 @@ class Market:
 	"""
 	
 	def reset(self, rand_price=True):
-		self.empty = True
+		self.empty = 1.
 		if rand_price:
 			prices, self.title = self.sampler.sample()
 			price = np.reshape(prices[:,0], prices.shape[0])
@@ -42,7 +42,7 @@ class Market:
 
 		self.max_profit = find_ideal(self.price[self.t0:], False)
 		self.t = self.t0
-		return self.get_state(), [0, 1]	#self.get_valid_actions()
+		return self.get_state(), self.get_valid_actions()
 
 
 	def get_state(self, t=None):
@@ -62,14 +62,8 @@ class Market:
 		return state
 
 
-	"""
 	def get_valid_actions(self):
-		if self.empty:
-			return [0, 1]	# wait, open
-		else:
-			return [0, 2]	# close, keep
-
-	"""
+		return [self.empty-1, self.empty]	# negative: sell %age of BTC, positive: buy %age of BTC
 
 
 	def get_noncash_reward(self, t=None, empty=None):
