@@ -8,18 +8,27 @@ from simulators import *
 from visualizer import *
 
 
-def get_model(model_type, env, learning_rate, fld_load):
+def get_model(model_type, env, learning_rate, fld_load, input_size=32):
 
 	print_t = False
 	exploration_init = 1.
 
 	if model_type == 'MLP':
 		#m = 16
-		layers = 5
-		hidden_size = [48, 24, 12, 6] 	#[m]*layers
-		model = QModelMLP(env.state_shape, env.n_action, env.wavelet_channels)
+		layers 		= 	5
+		hidden_size = 	[48, 24, 12, 6] 	#[m]*layers
+		model 		= 	QModelMLP(env.state_shape, env.n_action, env.wavelet_channels)
 		model.build_model(hidden_size, learning_rate=learning_rate, activation='tanh')
-	
+
+
+	elif model_type == 'MLP_PG':
+		# Policy gradient approximation
+		layers 		=	5
+		hidden_size = 	[48, 24, 12, 6]
+		model 		=	PGModelMLP(env.state_shape, env.n_action, env.wavelet_channels)
+		model.build_model(hidden_size, learning_rate=learning_rate, activation='relu', input_size=input_size)
+
+
 	elif model_type == 'conv':
 
 		m = 16
@@ -36,6 +45,7 @@ def get_model(model_type, env, learning_rate, fld_load):
 		model.build_model(filter_num, filter_size, dense_units, learning_rate, 
 			dilation=dilation, use_pool=use_pool)
 
+
 	elif model_type == 'RNN':
 
 		m = 32
@@ -46,6 +56,7 @@ def get_model(model_type, env, learning_rate, fld_load):
 		model.build_model(hidden_size, dense_units, learning_rate=learning_rate)
 		print_t = True
 
+
 	elif model_type == 'ConvRNN':
 	
 		m = 8
@@ -55,6 +66,7 @@ def get_model(model_type, env, learning_rate, fld_load):
 		model = QModelConvGRU(env.state_shape, env.n_action)
 		model.build_model(conv_n_hidden, RNN_n_hidden, dense_units, learning_rate=learning_rate)
 		print_t = True
+
 
 	elif model_type == 'pretrained':
 		agent.model = load_model(fld_load, learning_rate)
@@ -73,12 +85,12 @@ def main():
 
 	# --- Agent's options
 	batch_size 		= 	8
-	learning_rate 	= 	1e-3
+	learning_rate 	= 	1e-4
 	discount_factor = 	0.8
 	exploration_decay= 	0.99
 	exploration_min = 	0.01
 	# DQN architecture
-	model_type		=	'MLP';
+	model_type		=	'MLP_PG';
 	exploration_init= 	1.;
 	fld_load 		= 	None
 
@@ -97,13 +109,14 @@ def main():
 
 	fld 	= 	os.path.join(rootStore,'data',db_type,db+'A')
 	#sampler = Sampler('load', fld=fld)
-	sampler = 	Sampler('single', 180, 1.5, (20,40), (49,50), fld=fld)
+	sampler = 	Sampler('single', 180, 0, (20,40), (49,50), fld=fld)
 	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
-	model, print_t = get_model(model_type, env, learning_rate, fld_load)
+	model, print_t 	= 	get_model(model_type, env, learning_rate, fld_load, input_size=window_state)
+	p_model, _ 		=	get_model(model_type, env, learning_rate, fld_load, input_size=window_state)
 	model.model.summary()
 	#return
 
-	agent 	=	Agent(model, discount_factor=discount_factor, batch_size=batch_size)
+	agent 	=	Agent(model, discount_factor=discount_factor, batch_size=batch_size, prediction_model=p_model)
 	visualizer	=	Visualizer(env.action_labels)
 
 	fld_save 	=	os.path.join(rootStore, 'results', sampler.title, model.model_name,

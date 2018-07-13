@@ -49,7 +49,7 @@ class Visualizer:
 		ax_action.set_yticks(range(self.n_action))
 		ax_action.legend(loc='best', frameon=False)
 		
-		style = ['k','r','b']
+		style = ['r','m', 'g','b','k']
 		qq = []
 		for t in range(env.t0):
 			qq.append([np.nan] * self.n_action)

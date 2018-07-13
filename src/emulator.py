@@ -31,7 +31,11 @@ class Market:
 	"""
 	
 	def reset(self, rand_price=True):
+<<<<<<< Updated upstream
 		self.empty = 1.
+=======
+		self.empty = 1
+>>>>>>> Stashed changes
 		if rand_price:
 			prices, self.title = self.sampler.sample()
 			price = np.reshape(prices[:,0], prices.shape[0])
@@ -63,7 +67,16 @@ class Market:
 
 
 	def get_valid_actions(self):
+<<<<<<< Updated upstream
 		return [self.empty-1, self.empty]	# negative: sell %age of BTC, positive: buy %age of BTC
+=======
+		if self.empty==0:		# Agent is full of btc
+			return [0, 1, 2]		# close 100%, close 50%, keep
+		elif self.empty==0.5:	# Agent is half full of btc
+			return [1, 2, 3]		# close 50%, keep, open 50%
+		elif self.empty==1:		# Agent is empty of btc
+			return [2, 3, 4]		# wait, open 50%, open 100%
+>>>>>>> Stashed changes
 
 
 	def get_noncash_reward(self, t=None, empty=None):
@@ -81,16 +94,18 @@ class Market:
 
 	def step(self, action):
 
-		done = False
-		if action == 0:		# go short
-			reward = 0.
-			self.empty = True
-		elif action == 1:	# go long
-			reward	=	self.get_noncash_reward()
-			self.empty = False
+		done	= 	False
+		move 	=	(action - 2)/2
+		if move	<	0:		# go short
+			reward	=	0.
+		elif move == 0:		# don't move btc/money
+			reward	=	self.get_noncash_reward(empty=False) * (1-self.empty)
+		else:				# Go long
+			reward 	= 	self.get_noncash_reward(empty=True) * self.empty
+		self.empty 	-= 	move  # update status
 
 		self.t += 1
-		return self.get_state(), reward, self.t == self.t_max, [0,1]	#self.get_valid_actions()
+		return self.get_state(), reward, self.t == self.t_max, self.get_valid_actions()
 
 
 	def __init__(self, 
@@ -104,9 +119,9 @@ class Market:
 		self.risk_averse 	= 	risk_averse
 		self.time_difference=	True
 		self.wavelet_channels=	wavelet_channels
-		self.n_action 		= 	2
+		self.n_action 		= 	5
 		self.state_shape 	= 	(window_state, self.sampler.n_var)
-		self.action_labels 	= 	['short', 'long']	#['empty','open','keep']
+		self.action_labels 	= 	['short all', 'short half', 'hold', 'long half', 'long all']	#['empty','open','keep']
 		self.t0 			= 	window_state - 1 + self.time_difference
 
 

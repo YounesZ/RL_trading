@@ -23,7 +23,6 @@ class Simulator:
 		while not done:
 			if print_t:
 				print(self.env.t)
-    
 
 			action = self.agent.act(state, exploration, valid_actions)
 			next_state, reward, done, valid_actions = self.env.step(action)

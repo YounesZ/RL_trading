@@ -3,9 +3,10 @@ from lib import *
 class Agent:
 
 	def __init__(self, model, 
-		batch_size=32, discount_factor=0.95, buffer_size=200):
+		batch_size=12, discount_factor=0.95, buffer_size=200, prediction_model=None):
 
 		self.model 		= 	model
+		self.p_model 	=	prediction_model
 		self.batch_size = 	batch_size
 		self.discount_factor = discount_factor
 		self.memory 	= 	[]
@@ -27,7 +28,12 @@ class Agent:
 
 
 	def get_q_valid(self, state, valid_actions):
-		q = self.model.predict(state)
+		if self.p_model is None:
+			q	=	self.model.predict([state])
+		else:
+			self.p_model.model.set_weights(self.model.model.get_weights())
+			q 	=	self.p_model.predict(state.T)
+
 		q_valid = [np.nan] * len(q)
 		for action in valid_actions:
 			q_valid[action] = q[action]
@@ -35,7 +41,7 @@ class Agent:
 
 
 	def act(self, state, exploration, valid_actions):
-		if np.random.random() > exploration:
+		if np.random.random() < exploration:
 			q_valid = self.get_q_valid(state, valid_actions)
 			if np.nanmin(q_valid) != np.nanmax(q_valid):
 				return np.nanargmax(q_valid)
@@ -107,6 +113,7 @@ class QModelKeras:
 			setattr(self, a, attr[a])
 
 	def predict(self, state):
+<<<<<<< Updated upstream
 		# Reshape state-space if wavelet transformed
 		if self.wavelet_channels>0:
 			rshp_state 	= 	self.modular_state_space(state)
@@ -114,6 +121,9 @@ class QModelKeras:
 			rshp_state	=	add_dim(state, self.state_shape)
 
 		q = self.model.predict( rshp_state )[0]
+=======
+		q = self.model.predict(state)[0]
+>>>>>>> Stashed changes
 		
 		if np.isnan(max(q)):
 			print('state'+str(state))
@@ -148,18 +158,20 @@ class QModelMLP(QModelKeras):
 
 	def build_model(self, n_hidden, learning_rate, activation='relu'):
 
-		if self.wavelet_channels==0:
-			# Purely dense MLP
-			model = keras.models.Sequential()
-			model.add(keras.layers.Reshape(
-				(self.state_shape[0]*self.state_shape[1],),
-				input_shape=self.state_shape))
+		#if self.wavelet_channels==0:
+		# Purely dense MLP
+		model = keras.models.Sequential()
+		model.add(keras.layers.Reshape(
+			(self.state_shape[0]*self.state_shape[1],),
+			input_shape=self.state_shape))
 
-			for i in range(len(n_hidden)):
-				model.add(keras.layers.Dense(n_hidden[i], activation=activation))
-				#model.add(keras.layers.Dropout(drop_rate))
+		for i in range(len(n_hidden)):
+			model.add(keras.layers.Dense(n_hidden[i], activation=activation))
+			#model.add(keras.layers.Dropout(drop_rate))
 
-			model.add(keras.layers.Dense(self.n_action, activation='linear'))
+		model.add(keras.layers.Dense(self.n_action, activation='linear'))
+
+		"""
 		else:
 			# Composite architecture : 1MLP for each decomposition channel
 			max_scales 	=	int(np.log(self.state_shape[0])/np.log(2))
@@ -179,10 +191,40 @@ class QModelMLP(QModelKeras):
 			compoD2 	= 	keras.layers.Dense( int(self.state_shape[0]*.75) )(compoD1)
 			output 		=	keras.layers.Dense(self.n_action, activation='linear')(compoD2)
 			model 		=	keras.models.Model(inputs=inp_layers, outputs=output)
+		"""
 
 		model.compile(loss='mse', optimizer=keras.optimizers.Adam(lr=learning_rate))
 		self.model 		= 	model
 		self.model_name = 	self.qmodel + str(n_hidden)
+
+
+class PGModelMLP(QModelKeras):
+	# multi-layer perception (MLP), i.e., dense only
+
+	def init(self):
+		self.qmodel = 'MLP_PG'
+
+	def build_model(self, n_hidden, learning_rate, activation='relu', input_size=32):
+
+		# --- Purely dense MLP
+		input 	=	keras.layers.Input((input_size,), name='main_input')
+		# Hidden
+		hidden 	=	[]
+		in_lay 	=	input
+		for ii in n_hidden:
+			hidden 	+=	[keras.layers.Dense(units=ii, activation=activation)(in_lay)]
+			in_lay 	=	hidden[-1]
+		# Output
+		output1 	=	keras.layers.Dense(units=self.n_action, activation='linear')(in_lay)
+		output2 	=	keras.layers.Dense(units=self.n_action, activation='softmax')(output1)
+		model 		= 	keras.models.Model(inputs=input, outputs=(output1, output2) )
+
+		model.compile(loss='binary_crossentropy', optimizer=keras.optimizers.Adam(lr=learning_rate))
+		self.model = model
+		self.model_name = self.qmodel + str(n_hidden)
+		self.learning_rate 	=	learning_rate
+
+
 
 
 class QModelRNN(QModelKeras):
