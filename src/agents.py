@@ -1,4 +1,6 @@
 from lib import *
+from copy import deepcopy
+
 
 class Agent:
 
@@ -10,11 +12,21 @@ class Agent:
 		self.batch_size = 	batch_size
 		self.discount_factor = discount_factor
 		self.memory 	= 	[]
+		self.memory_short=	[]
 		self.buffer_size=	buffer_size
 
 
 	def remember(self, state, action, reward, next_state, done, next_valid_actions):
-		self.memory.append((state, action, reward, next_state, done, next_valid_actions))
+		self.memory_short.append([state, action, reward, next_state, done, next_valid_actions])
+		if done:
+			# Subtract mean
+			rew_avg		=	np.mean( [x[2] for x in self.memory_short] )
+			rew_std 	=	np.std( [x[2] for x in self.memory_short] )
+			for ix in self.memory_short:
+				ix[2]	=	(ix[2] - rew_avg) #/ rew_std
+			# Transfer to long-term memory
+			self.memory +=	deepcopy(self.memory_short)
+			self.memory_short=	[]
 
 
 	def replay(self):
@@ -34,19 +46,21 @@ class Agent:
 			self.p_model.model.set_weights(self.model.model.get_weights())
 			q 	=	self.p_model.predict(state.T)
 
+		#assert np.max(q)<=1 and np.min(q)>=-1
+		"""
 		# Constrain value within range
 		q_valid = [np.nan] * len(q)
 		for action in valid_actions:
 			q_valid[action] = q[action]
-		return q_valid
+		"""
+		return q 		#q_valid
 
 
 	def act(self, state, exploration, valid_actions):
-		if np.random.random() < exploration:
+		if np.random.random() > exploration:
 			q_valid = self.get_q_valid(state, valid_actions)
-			if np.nanmin(q_valid) != np.nanmax(q_valid):
-				return np.nanargmax(q_valid)
-		return random.sample(valid_actions, 1)[0]
+			return np.maximum( np.minimum(q_valid, valid_actions[1]), valid_actions[0] )
+		return np.random.random(1) + valid_actions[0]
 
 
 
@@ -124,17 +138,21 @@ class QModelKeras:
 		"""
 		q = self.model.predict( state )[0]
 
+		"""
 		if np.isnan(np.max(q, axis=1)).any():
 			print('state'+str(state))
 			print('q'+str(q))
 			raise ValueError
+		"""
 
 		return q
 
 	def fit(self, state, action, q_action):
-		q = self.predict(state)
+		"""
+		q = self.predict(state.T)
 		q[action] = q_action
-
+		"""
+		q = q_action
 		# UNCOMMENT for modular wavelet channels
 		"""
 		if self.wavelet_channels>0:
@@ -143,7 +161,7 @@ class QModelKeras:
 			rshp_state	=	add_dim(state, self.state_shape)
 		self.model.fit( rshp_state, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
 		"""
-		self.model.fit(state, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
+		self.model.fit(state.T, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
 
 
 	def modular_state_space(self, state):
@@ -173,7 +191,7 @@ class QModelMLP(QModelKeras):
 			model.add(keras.layers.Dense(n_hidden[i], activation=activation))
 			#model.add(keras.layers.Dropout(drop_rate))
 
-		model.add(keras.layers.Dense(self.n_action, activation='tanh'))
+		model.add(keras.layers.Dense(self.n_action, activation='linear'))
 
 		"""
 		else:
@@ -219,13 +237,16 @@ class PGModelMLP(QModelKeras):
 			hidden 	+=	[keras.layers.Dense(units=ii, activation=activation)(in_lay)]
 			in_lay 	=	hidden[-1]
 		# Output
-		output1 	=	keras.layers.Dense(units=self.n_action, activation='linear')(in_lay)
-		output2 	=	keras.layers.Dense(units=self.n_action, activation='softmax')(output1)
-		model 		= 	keras.models.Model(inputs=input, outputs=(output1, output2) )
+		#output1	=	keras.layers.Dense(units=self.n_action, activation='linear')(in_lay)
+		#output2 =	keras.layers.Dense(units=self.n_action, activation='softmax')(output1)
+		output1 	= 	keras.layers.Dense(units=self.n_action, activation='tanh')(in_lay)
+		model 		= 	keras.models.Model(inputs=input, outputs=output1)
+		#model 	= 	keras.models.Model(inputs=input, outputs=(output1, output2) )
 
-		model.compile(loss='binary_crossentropy', optimizer=keras.optimizers.Adam(lr=learning_rate))
-		self.model = model
-		self.model_name = self.qmodel + str(n_hidden)
+		#model.compile(loss='binary_crossentropy', optimizer=keras.optimizers.Adam(lr=learning_rate))
+		model.compile(loss='mse', optimizer=keras.optimizers.Adam(lr=learning_rate))
+		self.model 			= 	model
+		self.model_name 	= 	self.qmodel + str(n_hidden)
 		self.learning_rate 	=	learning_rate
 
 

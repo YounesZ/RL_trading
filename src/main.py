@@ -85,10 +85,11 @@ def main():
 
 	# --- Agent's options
 	batch_size 		= 	8
-	learning_rate 	= 	1e-4
+	learning_rate 	= 	1e-3
 	discount_factor = 	0.8
 	exploration_decay= 	0.99
 	exploration_min = 	0.01
+	buffer_size 	=	147
 	# DQN architecture
 	model_type		=	'MLP_PG';
 	exploration_init= 	1.;
@@ -109,14 +110,14 @@ def main():
 
 	fld 	= 	os.path.join(rootStore,'data',db_type,db+'A')
 	#sampler = Sampler('load', fld=fld)
-	sampler = 	Sampler('single', 180, 0, (20,40), (49,50), fld=fld)
+	sampler = 	Sampler('single', 180, 1.5, (20,40), (49,50), fld=fld)
 	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
 	model, print_t 	= 	get_model(model_type, env, learning_rate, fld_load, input_size=window_state)
 	p_model, _ 		=	get_model(model_type, env, learning_rate, fld_load, input_size=window_state)
 	model.model.summary()
 	#return
 
-	agent 	=	Agent(model, discount_factor=discount_factor, batch_size=batch_size, prediction_model=p_model)
+	agent 	=	Agent(model, discount_factor=discount_factor, batch_size=batch_size, prediction_model=p_model, buffer_size=buffer_size)
 	visualizer	=	Visualizer(env.action_labels)
 
 	fld_save 	=	os.path.join(rootStore, 'results', sampler.title, model.model_name,

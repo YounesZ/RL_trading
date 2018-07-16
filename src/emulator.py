@@ -82,14 +82,15 @@ class Market:
 	def step(self, action):
 
 		done	= 	False
-		move 	=	(action - 2)/2
-		if move	<	0:		# go short
-			reward	=	0.
-		elif move == 0:		# don't move btc/money
-			reward	=	self.get_noncash_reward(empty=False) * (1-self.empty)
-		else:				# Go long
-			reward 	= 	self.get_noncash_reward(empty=True) * self.empty
-		self.empty 	-= 	move  # update status
+		# The reward now has two components: asset-moving, asset-keeping
+		reward 	=	0
+		# Moved asset
+		if action>0:
+			# Bought BTC
+			reward 	+=	self.get_noncash_reward(empty=True) * action
+		# Kept asset
+		reward 		+=	self.get_noncash_reward(empty=False) * (1 - self.empty + min(0,action))
+		self.empty 	-= 	action  # update status
 
 		self.t += 1
 		return self.get_state(), reward, self.t == self.t_max, self.get_valid_actions()
@@ -106,9 +107,9 @@ class Market:
 		self.risk_averse 	= 	risk_averse
 		self.time_difference=	True
 		self.wavelet_channels=	wavelet_channels
-		self.n_action 		= 	5
+		self.n_action 		= 	1
 		self.state_shape 	= 	(window_state, self.sampler.n_var)
-		self.action_labels 	= 	['short all', 'short half', 'hold', 'long half', 'long all']	#['empty','open','keep']
+		self.action_labels 	= 	['continuous']	#['short all', 'short half', 'hold', 'long half', 'long all']	#['empty','open','keep']
 		self.t0 			= 	window_state - 1 + self.time_difference
 
 
