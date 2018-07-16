@@ -34,6 +34,7 @@ class Agent:
 			self.p_model.model.set_weights(self.model.model.get_weights())
 			q 	=	self.p_model.predict(state.T)
 
+		# Constrain value within range
 		q_valid = [np.nan] * len(q)
 		for action in valid_actions:
 			q_valid[action] = q[action]
@@ -113,19 +114,17 @@ class QModelKeras:
 			setattr(self, a, attr[a])
 
 	def predict(self, state):
-<<<<<<< Updated upstream
+		# UNCOMMENT for modular wavelet channels
+		"""
 		# Reshape state-space if wavelet transformed
 		if self.wavelet_channels>0:
 			rshp_state 	= 	self.modular_state_space(state)
 		else:
 			rshp_state	=	add_dim(state, self.state_shape)
+		"""
+		q = self.model.predict( state )[0]
 
-		q = self.model.predict( rshp_state )[0]
-=======
-		q = self.model.predict(state)[0]
->>>>>>> Stashed changes
-		
-		if np.isnan(max(q)):
+		if np.isnan(np.max(q, axis=1)).any():
 			print('state'+str(state))
 			print('q'+str(q))
 			raise ValueError
@@ -136,11 +135,16 @@ class QModelKeras:
 		q = self.predict(state)
 		q[action] = q_action
 
+		# UNCOMMENT for modular wavelet channels
+		"""
 		if self.wavelet_channels>0:
 			rshp_state	=	self.modular_state_space(state)
 		else:
 			rshp_state	=	add_dim(state, self.state_shape)
 		self.model.fit( rshp_state, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
+		"""
+		self.model.fit(state, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
+
 
 	def modular_state_space(self, state):
 		new_shape 	= 	(len(state) / np.power(2, list(range(1, self.wavelet_channels + 1)) + [self.wavelet_channels])).astype(int)
@@ -169,7 +173,7 @@ class QModelMLP(QModelKeras):
 			model.add(keras.layers.Dense(n_hidden[i], activation=activation))
 			#model.add(keras.layers.Dropout(drop_rate))
 
-		model.add(keras.layers.Dense(self.n_action, activation='linear'))
+		model.add(keras.layers.Dense(self.n_action, activation='tanh'))
 
 		"""
 		else:

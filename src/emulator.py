@@ -31,11 +31,7 @@ class Market:
 	"""
 	
 	def reset(self, rand_price=True):
-<<<<<<< Updated upstream
 		self.empty = 1.
-=======
-		self.empty = 1
->>>>>>> Stashed changes
 		if rand_price:
 			prices, self.title = self.sampler.sample()
 			price = np.reshape(prices[:,0], prices.shape[0])
@@ -67,16 +63,7 @@ class Market:
 
 
 	def get_valid_actions(self):
-<<<<<<< Updated upstream
 		return [self.empty-1, self.empty]	# negative: sell %age of BTC, positive: buy %age of BTC
-=======
-		if self.empty==0:		# Agent is full of btc
-			return [0, 1, 2]		# close 100%, close 50%, keep
-		elif self.empty==0.5:	# Agent is half full of btc
-			return [1, 2, 3]		# close 50%, keep, open 50%
-		elif self.empty==1:		# Agent is empty of btc
-			return [2, 3, 4]		# wait, open 50%, open 100%
->>>>>>> Stashed changes
 
 
 	def get_noncash_reward(self, t=None, empty=None):
