@@ -8,7 +8,7 @@ from simulators import *
 from visualizer import *
 
 
-def get_model(model_type, env, learning_rate, fld_load, input_size=32):
+def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_size=8):
 
 	print_t = False
 	exploration_init = 1.
@@ -26,7 +26,7 @@ def get_model(model_type, env, learning_rate, fld_load, input_size=32):
 		layers 		=	5
 		hidden_size = 	[48, 24, 12, 6]
 		model 		=	PGModelMLP(env.state_shape, env.n_action, env.wavelet_channels)
-		model.build_model(hidden_size, learning_rate=learning_rate, activation='relu', input_size=input_size)
+		model.build_model(hidden_size, learning_rate=learning_rate, activation='relu', input_size=input_size, batch_size=batch_size)
 
 
 	elif model_type == 'conv':
@@ -80,16 +80,18 @@ def get_model(model_type, env, learning_rate, fld_load, input_size=32):
 def main():
 
 	"""
-	it is recommended to generate database usng sampler.py before run main
+	it is recommended to generate database using sampler.py before run main
 	"""
 
 	# --- Agent's options
 	batch_size 		= 	8
-	learning_rate 	= 	1e-3
+	learning_rate 	= 	1e-4
 	discount_factor = 	0.8
 	exploration_decay= 	0.99
 	exploration_min = 	0.01
-	buffer_size 	=	147
+	buffer_size 	=	200
+	planning_horizon=	10
+
 	# DQN architecture
 	model_type		=	'MLP_PG';
 	exploration_init= 	1.;
@@ -107,17 +109,17 @@ def main():
 	# db_type = 'PairSamplerDB'; db = 'randjump_100,1(10, 30)[]_'; Sampler = PairSampler
 
 
-
 	fld 	= 	os.path.join(rootStore,'data',db_type,db+'A')
 	#sampler = Sampler('load', fld=fld)
 	sampler = 	Sampler('single', 180, 1.5, (20,40), (49,50), fld=fld)
 	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
-	model, print_t 	= 	get_model(model_type, env, learning_rate, fld_load, input_size=window_state)
-	p_model, _ 		=	get_model(model_type, env, learning_rate, fld_load, input_size=window_state)
+	model, print_t 	= 	get_model(model_type, env, learning_rate, fld_load, input_size=window_state, batch_size=batch_size)
+	p_model, _ 		=	get_model(model_type, env, learning_rate, fld_load, input_size=window_state, batch_size=1)
 	model.model.summary()
 	#return
 
-	agent 	=	Agent(model, discount_factor=discount_factor, batch_size=batch_size, prediction_model=p_model, buffer_size=buffer_size)
+	agent 		=	Agent(	model, discount_factor=discount_factor, batch_size=batch_size,
+							prediction_model=p_model, buffer_size=buffer_size, planning_horizon=planning_horizon)
 	visualizer	=	Visualizer(env.action_labels)
 
 	fld_save 	=	os.path.join(rootStore, 'results', sampler.title, model.model_name,

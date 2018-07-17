@@ -108,10 +108,10 @@ class Market:
 		self.time_difference=	True
 		self.wavelet_channels=	wavelet_channels
 		self.n_action 		= 	1
-		self.state_shape 	= 	(window_state, self.sampler.n_var)
+		self.state_shape 	= 	(self.sampler.n_var, window_state)
 		self.action_labels 	= 	['continuous']	#['short all', 'short half', 'hold', 'long half', 'long all']	#['empty','open','keep']
 		self.t0 			= 	window_state - 1 + self.time_difference
-
+		self.train_window 	=	self.sampler.window_episode - self.window_state - self.time_difference
 
 if __name__ == '__main__':
 	test_env()

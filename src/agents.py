@@ -1,11 +1,12 @@
 from lib import *
 from copy import deepcopy
+import matplotlib.pyplot as plt
 
 
 class Agent:
 
-	def __init__(self, model, 
-		batch_size=12, discount_factor=0.95, buffer_size=200, prediction_model=None):
+	def __init__(self, model, batch_size=12, discount_factor=0.95,
+				 buffer_size=200, prediction_model=None, planning_horizon=10):
 
 		self.model 		= 	model
 		self.p_model 	=	prediction_model
@@ -14,37 +15,52 @@ class Agent:
 		self.memory 	= 	[]
 		self.memory_short=	[]
 		self.buffer_size=	buffer_size
+		self.planning_horizon 	=	planning_horizon
 
 
 	def remember(self, state, action, reward, next_state, done, next_valid_actions):
-		self.memory_short.append([state, action, reward, next_state, done, next_valid_actions])
+		self.memory_short.append( (state, action, reward, next_state, done, next_valid_actions) )
 		if done:
 			# Subtract mean
 			rew_avg		=	np.mean( [x[2] for x in self.memory_short] )
 			rew_std 	=	np.std( [x[2] for x in self.memory_short] )
-			for ix in self.memory_short:
-				ix[2]	=	(ix[2] - rew_avg) #/ rew_std
 			# Transfer to long-term memory
-			self.memory +=	deepcopy(self.memory_short)
+			for ix in self.memory_short:
+				temp 	= 	[]
+				temp 	=	deepcopy( (ix[0], ix[1], (ix[2]-rew_avg)/rew_std, ix[3], ix[4], ix[5]) )
+				self.memory.append( temp )
 			self.memory_short=	[]
 
 
-	def replay(self):
+	def replay(self, window_size=100):
 		if len(self.memory)>self.buffer_size:
-			batch = random.sample(self.memory, min(len(self.memory), self.batch_size))
+			sample_id 	=	[np.random.randint(len(self.memory)) for x in range(self.batch_size)]
+			rewards		=	[self.get_discounted_reward(x, window_size) for x in sample_id]
+			batch 		= 	np.concatenate([self.memory[0][0] for x in sample_id], axis=1)
+
+			self.model.fit(batch, [], rewards)
+
+			"""
 			for state, action, reward, next_state, done, next_valid_actions in batch:
-				q = reward
+				self.model.fit(np.concatenate([x[0] for x in batch], axis=1), [], [x[2] for x in batch])
+				q = deepcopy(reward)
 				if not done:
 					q += self.discount_factor * np.nanmax(self.get_q_valid(next_state, next_valid_actions))
 				self.model.fit(state, action, q)
+			"""
+
+
+	def get_discounted_reward(self, bin_id, window_size):
+		max_bin =	np.minimum( bin_id+self.batch_size, ( int( bin_id/window_size ) + 1 ) * window_size )
+		batch 	=	self.memory[bin_id:max_bin]
+		rews 	=	[x[2].astype(float) for x in batch]
+		disc 	=	np.power(self.discount_factor, range(len(batch)))
+		return np.sum( np.multiply(disc, rews) )
 
 
 	def get_q_valid(self, state, valid_actions):
-		if self.p_model is None:
-			q	=	self.model.predict([state])
-		else:
-			self.p_model.model.set_weights(self.model.model.get_weights())
-			q 	=	self.p_model.predict(state.T)
+		self.p_model.model.set_weights(self.model.model.get_weights())
+		q 	=	self.p_model.predict(state.T)
 
 		#assert np.max(q)<=1 and np.min(q)>=-1
 		"""
@@ -58,7 +74,7 @@ class Agent:
 
 	def act(self, state, exploration, valid_actions):
 		if np.random.random() > exploration:
-			q_valid = self.get_q_valid(state, valid_actions)
+			q_valid = self.get_q_valid(state, valid_actions)[0]
 			return np.maximum( np.minimum(q_valid, valid_actions[1]), valid_actions[0] )
 		return np.random.random(1) + valid_actions[0]
 
@@ -136,7 +152,8 @@ class QModelKeras:
 		else:
 			rshp_state	=	add_dim(state, self.state_shape)
 		"""
-		q = self.model.predict( state )[0]
+		rshp_state 	= 	add_dim(state, self.state_shape)
+		q 			= 	self.model.predict( rshp_state )[0]
 
 		"""
 		if np.isnan(np.max(q, axis=1)).any():
@@ -161,7 +178,9 @@ class QModelKeras:
 			rshp_state	=	add_dim(state, self.state_shape)
 		self.model.fit( rshp_state, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
 		"""
-		self.model.fit(state.T, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
+		rshp_state 	=	deepcopy(state).T
+		rshp_shape 	=	np.shape(rshp_state)
+		self.model.fit( add_dim(rshp_state, rshp_shape), add_dim(q, (len(q),1,)), epochs=1, verbose=0)
 
 
 	def modular_state_space(self, state):
@@ -226,10 +245,10 @@ class PGModelMLP(QModelKeras):
 	def init(self):
 		self.qmodel = 'MLP_PG'
 
-	def build_model(self, n_hidden, learning_rate, activation='relu', input_size=32):
+	def build_model(self, n_hidden, learning_rate, activation='relu', input_size=32, batch_size=8):
 
 		# --- Purely dense MLP
-		input 	=	keras.layers.Input((input_size,), name='main_input')
+		input 	=	keras.layers.Input((batch_size, input_size), name='main_input')
 		# Hidden
 		hidden 	=	[]
 		in_lay 	=	input

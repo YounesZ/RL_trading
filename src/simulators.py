@@ -15,9 +15,9 @@ class Simulator:
 		except AttributeError:
 			pass
 
-		cum_rewards = [np.nan] * env_t
-		actions = [np.nan] * env_t
-		states = [None] * env_t
+		cum_rewards	= 	[np.nan] * env_t
+		actions 	= 	[np.nan] * env_t
+		states 		= 	[None] * env_t
 		prev_cum_rewards = 0.
 
 		while not done:
@@ -34,7 +34,7 @@ class Simulator:
 
 			if training:
 				self.agent.remember(state, action, reward, next_state, done, valid_actions)
-				self.agent.replay()
+				self.agent.replay(self.env.train_window)
 
 			state = next_state
 
@@ -101,7 +101,7 @@ class Simulator:
 				self.agent.save(fld_model)
 
 				self.visualizer.plot_a_episode(
-					self.env, self.agent.model, 
+					self.env, self.agent.p_model,
 					explored_cum_rewards, explored_actions,
 					safe_cum_rewards, safe_actions,
 					os.path.join(fld_save, 'episode_%i.png'%(n)))
