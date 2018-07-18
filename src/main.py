@@ -90,7 +90,7 @@ def main():
 	exploration_decay= 	0.99
 	exploration_min = 	0.01
 	buffer_size 	=	200
-	planning_horizon=	10
+	planning_horizon=	1
 
 	# DQN architecture
 	model_type		=	'MLP_PG';

@@ -148,7 +148,7 @@ class Simulator:
 
 
 				self.visualizer.plot_a_episode(
-					self.env, self.agent.model, 
+					self.env, self.agent.p_model,
 					[np.nan]*len(safe_cum_rewards), [np.nan]*len(safe_actions),
 					safe_cum_rewards, safe_actions,
 					os.path.join(fld_save, 'episode_%i.png'%(n)))

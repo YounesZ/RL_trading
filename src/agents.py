@@ -291,7 +291,6 @@ class QModelRNN(QModelKeras):
 		model.compile(loss='mse', optimizer=keras.optimizers.Adam(lr=learning_rate))
 		self.model = model
 		self.model_name = self.qmodel + str(n_hidden) + str(dense_units)
-		
 
 
 class QModelLSTM(QModelRNN):
@@ -308,7 +307,6 @@ class QModelGRU(QModelRNN):
 	def build_model(self, n_hidden, dense_units, learning_rate, activation='relu'):
 		Layer = keras.layers.GRU
 		self._build_model(Layer, n_hidden, dense_units, learning_rate, activation)
-
 
 
 class QModelConv(QModelKeras):
@@ -347,7 +345,6 @@ class QModelConv(QModelKeras):
 		self.model_name = self.qmodel + str([a for a in
 			zip(filter_num, filter_size, dilation, use_pool)
 			])+' + '+str(dense_units)
-
 		
 
 class QModelConvRNN(QModelKeras):
