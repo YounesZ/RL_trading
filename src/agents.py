@@ -270,6 +270,33 @@ class PGModelMLP(QModelKeras):
 
 
 
+class DDPGModelMLP():
+	# Actor-critic method, both are implemented as MLPs
+
+	def init(self):
+		self.qmodel = 'MLP_DDPG'
+
+	def build_model(self, actor_hidden, critic_hidden, learning_rate, activation, input_size):
+		# ============
+		# PSEUDO-CODE:
+		# ============
+		# Build critic model network
+		#	2 dense hidden layers connected to input state
+		#	2 dense hidden layers connected to previous output + input action
+		# 	output is a single relu unit outputting V(s)
+		#	The loss function is the MSE between output and target r_t + gamma * V(s_t+1) - or TD(lambda) variant
+		# 	Store the gradients of the network parameters wrt the loss
+		# Build critic target network
+		# Build actor model network
+		#	4 dense hidden layers
+		#	output is a single linear unit outputting p(s) - deterministic continuous policy
+		# Build actor target network
+
+
+
+
+
+
 
 class QModelRNN(QModelKeras):
 	"""

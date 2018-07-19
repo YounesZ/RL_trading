@@ -29,6 +29,15 @@ def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_siz
 		model.build_model(hidden_size, learning_rate=learning_rate, activation='relu', input_size=input_size, batch_size=batch_size)
 
 
+	elif model_type == 'DDPG':
+		# Deep Deterministic Policy Gradient
+		# Lillicrap et al. 2016: Continuous control with deep reinforcement learning
+		actor_hidden 	=	[48, 24, 12, 6]
+		critic_hidden 	=	[[48, 24], [24, 12, 6]]
+		model 			=	DDPGModelMLP(env.state_shape, env.n_action, env.wavelet_channels)
+		model.build_model(actor_hidden, critic_hidden, learning_rate=learning_rate, activation='relu', input_size=input_size)
+
+
 	elif model_type == 'conv':
 
 		m = 16
