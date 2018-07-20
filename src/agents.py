@@ -4,8 +4,10 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import keras as K
 
+from os import path
 from src.lib import *
 from copy import deepcopy
+from datetime import datetime
 
 
 class Agent:
@@ -285,6 +287,7 @@ class DDPGModelMLP(QModelKeras):
 		self.batch_size 		=	batch_size
 		self.update_rate 		=	tau
 		self.memory 			=	[]
+		self.model_saver 		=	None
 
 	def build_graph(self, session, actor_hidden, critic_hidden, learning_rate, input_size, output_size):
 		# --- Setup actor
@@ -305,6 +308,7 @@ class DDPGModelMLP(QModelKeras):
 		self.critic_grad 	= 	tf.gradients(self.critic_model_network.output, self.critic_action_input)
 
 		# --- Initialize graph
+		self.model_saver	=	tf.train.Saver()
 		self.session.run(tf.initialize_all_variables())
 
 	def build_actor(self, input_size, actor_hidden, output_size, learning_rate):
@@ -401,6 +405,31 @@ class DDPGModelMLP(QModelKeras):
 			# Sample batch
 			for (state, action, reward, next_state, done) in [self.memory[np.random.randint(len(self.memory))]]:
 				self.fit(state, action, reward, next_state, done)
+
+	def save_model(self, root, sess, env_name, n_steps):
+		# Time stamp
+		now 	=	datetime.now()
+		stamp 	=	'{}{}{}_{}h{}'.format(now.day, now.month, now.year, now.hour, now.minute)
+		svname 	=	path.join(root, 'DDPG_trainedOn_{}_{}_{}steps'.format(env_name, stamp, n_steps))
+		self.model_saver.save( sess, svname )
+		return svname
+
+	def load_model(self, svname):
+		sess	=	tf.Session()
+		saver 	= 	tf.train.import_meta_graph( path.join(svname, path.basename(svname) + '.meta'))
+		saver.restore(sess, tf.train.latest_checkpoint(path.join(svname, './')) )
+		# Link TF variables to the classifier class
+		graph 	= 	sess.graph
+		annX 	= 	graph.get_tensor_by_name('Input_to_the_network-player_features:0')
+		"""self.annY_  =   graph.get_tensor_by_name('Ground_truth:0')
+        self.annW1  =   graph.get_tensor_by_name('weights_inp_hid:0')
+        self.annB1  =   graph.get_tensor_by_name('bias_inp_hid:0')
+        self.Y1     =   graph.get_operation_by_name('hid_output')
+        self.annW2  =   graph.get_tensor_by_name('weights_hid_out:0')
+        self.annB2  =   graph.get_tensor_by_name('bias_hid_out:0')"""
+		annY = graph.get_tensor_by_name('prediction:0')
+		return sess, annX, annY
+
 
 
 class QModelRNN(QModelKeras):
@@ -558,20 +587,55 @@ def test_ddpg():
 	trial_len  	=	500
 
 	cur_state	=	env.reset()
+	n_steps 	=	1
+	all_rew		=	[[], [], []]
+	FF 			= 	plt.figure()
+	AX 			= 	FF.add_subplot(111)
+	plt.ion()
+	plt.draw()
+
 	while True:
-		env.render()
+		print('Step {}'.format(n_steps))#env.render()
 		cur_state	=	cur_state.reshape((1, env.observation_space.shape[0]))
 		action		=	actor_critic.act(cur_state, env.action_space.sample())
-		action		=	action.reshape((1, env.action_space.shape[0]))
+		action		=	action.reshape( (1, env.action_space.shape[0]) )
 
-		new_state, reward, done, _ = env.step(action)
-		new_state 	= 	new_state.reshape((1, env.observation_space.shape[0]))
+		new_state, reward, done, _	=	env.step(action)
+		new_state 	= 	new_state.reshape( (1, env.observation_space.shape[0]) )
 
 		actor_critic.remember(cur_state, action, reward, new_state, done)
 		actor_critic.replay()
 
 		cur_state 	= 	new_state
 
+		# Plot rewards
+		all_rew 	=	process_rewards(all_rew, reward, 20, 0.5)
+		if n_steps%20==0:
+			viz_perf( n_steps, all_rew, AX)
+			plt.pause(0.05)
+			FF.canvas.draw()
+		n_steps += 1
+
+
+def process_rewards(rew, reward, win_size, gamma):
+	# Append to raw reward
+	rew[0] 	+=	[reward]
+	# Slice the data
+	inf_lim	=	np.minimum(len(rew[0]), win_size)
+	slice 	=	rew[0][-inf_lim:]
+	# Compute the moving average
+	rew[1]	+=	[np.mean(slice)]
+	# Compute the exponential average
+	e_avg 	=	[x*np.exp(-ix*gamma) for ix, x in enumerate(slice[::-1])] / np.sum([np.exp(-ix*gamma) for ix in range(len(slice))])
+	rew[2] 	+=	[e_avg[0][0]]
+	return rew
+
+def viz_perf(x, rewards, ax):
+	# Make a figure
+	colors 		=	['r', 'b', 'k']
+	labels 		= 	['raw', 'moving average', 'exp. average']
+	[ax.plot(range(x), ix, ic, label=il) for ix, ic, il in zip(rewards, colors, labels)]
+	return
 
 
 # ========
