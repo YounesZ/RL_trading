@@ -1,6 +1,11 @@
-from lib import *
-from copy import deepcopy
+import random
+
 import matplotlib.pyplot as plt
+import tensorflow as tf
+import keras as K
+
+from src.lib import *
+from copy import deepcopy
 
 
 class Agent:
@@ -79,7 +84,6 @@ class Agent:
 		return np.random.random(1) + valid_actions[0]
 
 
-
 	def save(self, fld):
 		makedirs(fld)
 
@@ -92,6 +96,7 @@ class Agent:
 		pickle.dump(attr, open(os.path.join(fld, 'agent_attr.pickle'),'wb'))
 		self.model.save(fld)
 
+
 	def load(self, fld):
 		path = os.path.join(fld, 'agent_attr.pickle')
 		print(path)
@@ -99,6 +104,7 @@ class Agent:
 		for k in attr:
 			setattr(self, k, attr[k])
 		self.model.load(fld)
+
 
 
 def add_dim(x, shape):
@@ -181,7 +187,6 @@ class QModelKeras:
 		rshp_state 	=	deepcopy(state).T
 		rshp_shape 	=	np.shape(rshp_state)
 		self.model.fit( add_dim(rshp_state, rshp_shape), add_dim(q, (len(q),1,)), epochs=1, verbose=0)
-
 
 	def modular_state_space(self, state):
 		new_shape 	= 	(len(state) / np.power(2, list(range(1, self.wavelet_channels + 1)) + [self.wavelet_channels])).astype(int)
@@ -269,33 +274,133 @@ class PGModelMLP(QModelKeras):
 		self.learning_rate 	=	learning_rate
 
 
-
-class DDPGModelMLP():
+class DDPGModelMLP(QModelKeras):
 	# Actor-critic method, both are implemented as MLPs
 
-	def init(self):
-		self.qmodel = 'MLP_DDPG'
+	def __init__(self, session, exploration_rate=0.1, buffer_size=200, batch_size=10, tau=0.8):
+		self.qmodel				=	'MLP_DDPG'
+		self.session 			=	session
+		self.exploration_rate 	=	exploration_rate
+		self.buffer_size 		=	buffer_size
+		self.batch_size 		=	batch_size
+		self.update_rate 		=	tau
+		self.memory 			=	[]
 
-	def build_model(self, actor_hidden, critic_hidden, learning_rate, activation, input_size):
-		# ============
-		# PSEUDO-CODE:
-		# ============
-		# Build critic model network
-		#	2 dense hidden layers connected to input state
-		#	2 dense hidden layers connected to previous output + input action
-		# 	output is a single relu unit outputting V(s)
-		#	The loss function is the MSE between output and target r_t + gamma * V(s_t+1) - or TD(lambda) variant
-		# 	Store the gradients of the network parameters wrt the loss
-		# Build critic target network
-		# Build actor model network
-		#	4 dense hidden layers
-		#	output is a single linear unit outputting p(s) - deterministic continuous policy
-		# Build actor target network
+	def build_graph(self, session, actor_hidden, critic_hidden, learning_rate, input_size, output_size):
+		# --- Setup actor
+		# Build networks
+		self.actor_input, self.actor_model_network 	=	self.build_actor(input_size, actor_hidden, output_size, learning_rate)
+		_, self.actor_model_target 					=	self.build_actor(input_size, actor_hidden, output_size, learning_rate)
+		# Build graphs ops - actor
+		self.actor_critic_grad 	=	tf.placeholder(tf.float32, [None, output_size[0]])
+		actor_model_weights 	=	self.actor_model_network.trainable_weights
+		self.actor_grad			=	tf.gradients(self.actor_model_network.output, actor_model_weights, -self.actor_critic_grad)
+		grads 					=	zip(self.actor_grad, actor_model_weights)
+		self.optimize 			=	tf.train.AdamOptimizer(learning_rate).apply_gradients(grads)
 
+		# --- Setup critic
+		self.critic_state_input, self.critic_action_input, self.critic_model_network = self.build_critic(input_size, critic_hidden, output_size, learning_rate)
+		_, _, self.critic_model_target 				= 	self.build_critic(input_size, critic_hidden, output_size, learning_rate)
+		# Build graphs ops - critic
+		self.critic_grad 	= 	tf.gradients(self.critic_model_network.output, self.critic_action_input)
 
+		# --- Initialize graph
+		self.session.run(tf.initialize_all_variables())
 
+	def build_actor(self, input_size, actor_hidden, output_size, learning_rate):
+		# Input layer
+		state_input	=	K.layers.Input(shape=input_size)
+		prev_lay 	=	state_input
+		# Hidden layers
+		for ih in actor_hidden:
+			h		=	K.layers.Dense(ih, activation='relu')(prev_lay)
+			prev_lay=	h
+		# Output layer
+		output0		= 	K.layers.Dense(output_size[0], activation='tanh')(prev_lay)
+		output 		=	K.layers.Lambda(lambda x: x * 2)(output0)
 
+		model 		= 	K.models.Model(input=state_input, output=output)
+		adam 		=	K.optimizers.Adam(lr=learning_rate)
+		model.compile(loss="mse", optimizer=adam)
+		return state_input, model
 
+	def build_critic(self, input_size, critic_hidden, output_size, learning_rate):
+		# Input layer 1: the state space
+		state_input = 	K.layers.Input(shape=input_size)
+		prev_lay 	= 	state_input
+		# Hidden layers
+		for ih in critic_hidden[0]:
+			h		=	K.layers.Dense(ih, activation='relu')(prev_lay)
+			prev_lay= 	h
+		# Input layer 2: the action space
+		action_input= 	K.layers.Input(shape=output_size)
+		# Hidden layers: Common
+		merged		= 	K.layers.concatenate([prev_lay, action_input])
+		prev_lay 	= 	merged
+		for ih in critic_hidden[1]:
+			h		=	K.layers.Dense(ih, activation='relu')(prev_lay)
+			prev_lay= 	h
+		output 		= 	K.layers.Dense(1, activation='relu')(prev_lay)
+		model 		= 	K.models.Model(input=[state_input, action_input], output=output)
+
+		adam 		= 	K.optimizers.Adam(lr=0.001)
+		model.compile(loss="mse", optimizer=adam)
+		return state_input, action_input, model
+
+	def fit(self, state, action, reward, next_state, done):
+		# Train the critic
+		self.train_critic(state, action, reward, next_state, done)
+		# Train the actor
+		if not done:
+			self.train_actor(state, next_state)
+		# Update the targets
+		self.update_target_networks()
+
+	def train_critic(self, state, action, reward, next_state, done):
+		if not done:
+			# Compute next action
+			next_action	=	self.actor_model_target.predict(next_state)
+			# Compute future reward *** CAN IMPLEMENT TD(lambda) HERE
+			reward 		+=	self.critic_model_network.predict([next_state, next_action])[0]
+		# Update the critic's model
+		self.critic_model_network.fit([state, action], reward, verbose=0)
+
+	def train_actor(self, state, next_state):
+		# Predict actor's next action
+		next_action =	self.actor_model_network.predict(next_state)
+		# Compute the critic's gradient wrt next action
+		gradients 	=	self.session.run( self.critic_grad, feed_dict={self.critic_state_input:next_state, self.critic_action_input:next_action})
+		# Optimize the actor's paramters
+		self.session.run(self.optimize, feed_dict={self.actor_input:state, self.actor_critic_grad:gradients[0]})
+
+	def update_target_networks(self):
+		# Get weights - critic
+		critic_model_weights 	=	self.critic_model_network.get_weights()
+		critic_target_weights 	=	self.critic_model_target.get_weights()
+		# Get weights - actor
+		actor_model_weights 	= 	self.actor_model_network.get_weights()
+		actor_target_weights 	= 	self.actor_model_target.get_weights()
+		for iw in range( len(critic_target_weights) ):
+			critic_target_weights[iw] 	=	self.update_rate * critic_target_weights[iw] + (1-self.update_rate) * critic_model_weights[iw]
+			actor_target_weights[iw] 	= 	self.update_rate * actor_target_weights[iw] + (1-self.update_rate) * actor_model_weights[iw]
+		# Update
+		self.critic_model_target.set_weights(critic_target_weights)
+		self.actor_model_target.set_weights(actor_target_weights)
+
+	def act(self, state, default):
+		if np.random.random()<self.exploration_rate:
+			return default
+		else:
+			return self.actor_model_target.predict(state)
+
+	def remember(self, state, action, reward, next_state, done):
+		self.memory.append( (state, action, reward, next_state, done) )
+
+	def replay(self):
+		if len(self.memory)>self.buffer_size:
+			# Sample batch
+			for (state, action, reward, next_state, done) in [self.memory[np.random.randint(len(self.memory))]]:
+				self.fit(state, action, reward, next_state, done)
 
 
 class QModelRNN(QModelKeras):
@@ -424,11 +529,6 @@ class QModelConvGRU(QModelConvRNN):
 		conv_kernel_size, use_pool, activation)
 
 
-
-
-
-
-
 def load_model(fld, learning_rate):
 	s = open(os.path.join(fld,'QModel.txt'),'r').read().strip()
 	qmodels = {
@@ -443,3 +543,39 @@ def load_model(fld, learning_rate):
 	return qmodel
 
 
+
+
+
+def test_ddpg():
+	import gym
+
+	sess	=	tf.Session()
+	K.backend.set_session(sess)
+	env 	= 	gym.make("Pendulum-v0")
+	actor_critic=	DDPGModelMLP(sess, exploration_rate=0.05, buffer_size=200, tau=0.8)
+	actor_critic.build_graph(sess, [16, 16, 12, 6], [[16, 16], [16, 10]], 1e-4, env.observation_space.shape, env.action_space.shape)
+	num_trials	=	10000
+	trial_len  	=	500
+
+	cur_state	=	env.reset()
+	while True:
+		env.render()
+		cur_state	=	cur_state.reshape((1, env.observation_space.shape[0]))
+		action		=	actor_critic.act(cur_state, env.action_space.sample())
+		action		=	action.reshape((1, env.action_space.shape[0]))
+
+		new_state, reward, done, _ = env.step(action)
+		new_state 	= 	new_state.reshape((1, env.observation_space.shape[0]))
+
+		actor_critic.remember(cur_state, action, reward, new_state, done)
+		actor_critic.replay()
+
+		cur_state 	= 	new_state
+
+
+
+# ========
+# LAUNCHER
+# ========
+if __name__ == '__main__':
+	test_ddpg()
