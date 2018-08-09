@@ -8,7 +8,7 @@ from simulators import *
 from visualizer import *
 
 
-def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_size=8):
+def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_size=8, outputdir=None):
 
 	print_t = False
 	exploration_init = 1.
@@ -34,7 +34,7 @@ def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_siz
 		# Lillicrap et al. 2016: Continuous control with deep reinforcement learning
 		actor_hidden 	=	[48, 24, 12, 6]
 		critic_hidden 	=	[[48, 24], [24, 12, 6]]
-		model 			=	DDPGModelMLP(env.state_shape, env.n_action, env.wavelet_channels)
+		model 			=	DDPGModelMLP(env.state_shape, env.n_action, env.wavelet_channels, outputdir)
 		model.build_model(actor_hidden, critic_hidden, learning_rate=learning_rate, activation='relu', input_size=input_size)
 
 
@@ -123,17 +123,21 @@ def main():
 	sampler = 	Sampler('single', 180, 1.5, (20,40), (49,50), fld=fld)
 	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
 	model, print_t 	= 	get_model(model_type, env, learning_rate, fld_load, input_size=window_state, batch_size=batch_size)
-	p_model, _ 		=	get_model(model_type, env, learning_rate, fld_load, input_size=window_state, batch_size=1)
+	p_model, _ 		= 	get_model(model_type, env, learning_rate, fld_load, input_size=window_state, batch_size=1, outputdir= '/home/younesz/Desktop/SUM')
+	agent	 = 	Agent(model, discount_factor=discount_factor, batch_size=batch_size,
+				  prediction_model=p_model, buffer_size=buffer_size, planning_horizon=planning_horizon)
+
+	# Set save name
+	fld_save = os.path.join(rootStore, 'results', sampler.title, model.model_name,
+							str((env.window_state, sampler.window_episode, agent.batch_size, learning_rate,
+								 agent.discount_factor, exploration_decay, env.open_cost)))
+
 	model.model.summary()
 	#return
 
-	agent 		=	Agent(	model, discount_factor=discount_factor, batch_size=batch_size,
-							prediction_model=p_model, buffer_size=buffer_size, planning_horizon=planning_horizon)
 	visualizer	=	Visualizer(env.action_labels)
 
-	fld_save 	=	os.path.join(rootStore, 'results', sampler.title, model.model_name,
-		str((env.window_state, sampler.window_episode, agent.batch_size, learning_rate,
-			agent.discount_factor, exploration_decay, env.open_cost)))
+
 	
 	print('='*20)
 	print(fld_save)

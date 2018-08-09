@@ -6,6 +6,7 @@ import keras as K
 
 from os import path
 from src.lib import *
+#from src.logging import *
 from copy import deepcopy
 from datetime import datetime
 
@@ -279,7 +280,7 @@ class PGModelMLP(QModelKeras):
 class DDPGModelMLP(QModelKeras):
 	# Actor-critic method, both are implemented as MLPs
 
-	def __init__(self, session, exploration_rate=0.1, buffer_size=200, batch_size=10, tau=0.8):
+	def __init__(self, session, exploration_rate=0.1, buffer_size=200, batch_size=10, tau=0.8, outputdir=None):
 		self.qmodel				=	'MLP_DDPG'
 		self.session 			=	session
 		self.exploration_rate 	=	exploration_rate
@@ -288,6 +289,8 @@ class DDPGModelMLP(QModelKeras):
 		self.update_rate 		=	tau
 		self.memory 			=	[]
 		self.model_saver 		=	None
+		self.outputdir 			=	outputdir
+
 
 	def build_graph(self, session, actor_hidden, critic_hidden, learning_rate, input_size, output_size):
 		# --- Setup actor
@@ -299,7 +302,11 @@ class DDPGModelMLP(QModelKeras):
 		actor_model_weights 	=	self.actor_model_network.trainable_weights
 		self.actor_grad			=	tf.gradients(self.actor_model_network.output, actor_model_weights, -self.actor_critic_grad)
 		grads 					=	zip(self.actor_grad, actor_model_weights)
-		self.optimize 			=	tf.train.AdamOptimizer(learning_rate).apply_gradients(grads)
+		# Set actor's learning rate
+		with tf.name_scope('actor_lr'):
+			lr_actor 			=	tf.placeholder(tf.float32)
+			tf.summary.scalar('actor_learning_rate', lr_actor)
+		self.optimize 			=	tf.train.AdamOptimizer(lr_actor).apply_gradients(grads)
 
 		# --- Setup critic
 		self.critic_state_input, self.critic_action_input, self.critic_model_network = self.build_critic(input_size, critic_hidden, output_size, learning_rate)
@@ -308,6 +315,9 @@ class DDPGModelMLP(QModelKeras):
 		self.critic_grad 	= 	tf.gradients(self.critic_model_network.output, self.critic_action_input)
 
 		# --- Initialize graph
+		self.merged_sum 	= 	tf.summary.merge_all()
+		if not self.outputdir is None:
+			self.sumWriter 	=	tf.summary.FileWriter(self.outputdir, session.graph)
 		self.model_saver	=	tf.train.Saver()
 		self.session.run(tf.initialize_all_variables())
 
@@ -375,7 +385,11 @@ class DDPGModelMLP(QModelKeras):
 		# Compute the critic's gradient wrt next action
 		gradients 	=	self.session.run( self.critic_grad, feed_dict={self.critic_state_input:next_state, self.critic_action_input:next_action})
 		# Optimize the actor's paramters
-		self.session.run(self.optimize, feed_dict={self.actor_input:state, self.actor_critic_grad:gradients[0]})
+		if not self.outputdir is None:
+			summary, _ 	=	self.session.run([self.merged_sum, self.optimize], feed_dict={self.actor_input:state, self.actor_critic_grad:gradients[0]})
+			self.sumWriter.add_summary(summary)
+		else:
+			self.session.run(self.optimize, feed_dict={self.actor_input: state, self.actor_critic_grad: gradients[0]})
 
 	def update_target_networks(self):
 		# Get weights - critic
