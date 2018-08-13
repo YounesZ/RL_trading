@@ -4,12 +4,21 @@ import matplotlib.pyplot as plt
 
 from os import path
 from datetime import datetime
+from itertools import compress
 
 
 class DDPGModelMLP():
 	# Actor-critic method, both are implemented as MLPs
 
-	def __init__(self, state_space, action_space, exploration_rate=0.1, buffer_size=200, batch_size=32, tau=0.8, outputdir=None, actor_hidden=[64, 64], critic_hidden=[64, 64]):
+	def __init__(self, state_space, action_space, \
+				 exploration_rate	=	0.1,\
+				 buffer_size		=	200,\
+				 batch_size			=	32,\
+				 cache_size 		=	1000,\
+				 tau				=	0.8,\
+				 outputdir			=	None,\
+				 actor_hidden		=	[64, 64],\
+				 critic_hidden		=	[64, 64]):
 		self.qmodel             =   'MLP_DDPG'
 		self.session            =   tf.Session()
 		self.state_space        =   state_space
@@ -17,6 +26,7 @@ class DDPGModelMLP():
 		self.exploration_rate 	=	exploration_rate
 		self.buffer_size 		=	buffer_size
 		self.batch_size 		=	batch_size
+		self.cache_size 		=	cache_size
 		self.update_rate 		=	tau
 		self.memory 			=	[]
 		self.model_saver 		=	None
@@ -31,8 +41,8 @@ class DDPGModelMLP():
 		# --- Setup actor
 		# Build networks
 		self.actor_weights_handles 			= 	['ac_w1', 'ac_b1', 'ac_w2', 'ac_b2', 'ac_w3', 'ac_b3']
-		self.actor_input, self.actor_output	=	self.build_actor(self.state_space, self.actor_hidden, self.action_space)
-		_, self.actor_target_output			=	self.build_actor(self.state_space, self.actor_hidden, self.action_space, 'target')
+		self.actor_input, self.actor_output, self.actor_training						=	self.build_actor(self.state_space, self.actor_hidden, self.action_space)
+		self.actor_target_input, self.actor_target_output, self.actor_target_training	=	self.build_actor(self.state_space, self.actor_hidden, self.action_space, 'target')
 		# Build graphs ops - actor
 		self.actor_critic_grad 	=	tf.placeholder(tf.float32, [None, self.action_space])
 		actor_model_weights 	=	self.get_weights('ac')
@@ -40,34 +50,43 @@ class DDPGModelMLP():
 		grads 					=	zip(self.actor_grad, actor_model_weights)
 		# Set actor's learning rate
 		with tf.name_scope('actor_lr'):
-			lr_actor 		=	tf.placeholder(tf.float32)
-			tf.summary.scalar('actor_learning_rate', lr_actor)
-		self.optimize_actor	=	tf.train.AdamOptimizer(lr_actor).apply_gradients(grads)
+			self.lr_actor 		=	tf.placeholder(tf.float32)
+			tf.summary.scalar('actor_learning_rate', self.lr_actor)
+		self.optimize_actor	=	tf.train.AdamOptimizer(self.lr_actor).apply_gradients(grads)
 
 		# --- Setup critic
 		self.critic_state_input, self.critic_action_input, self.critic_output	=	self.build_critic(self.state_space, self.critic_hidden, self.action_space)
 		_, _, self.target_critic_ouput	= 	self.build_critic(self.state_space, self.critic_hidden, self.action_space, 'target')
 		# Set critic's learning rate
 		with tf.name_scope('critic_lr'):
-			lr_critic		=	tf.placeholder(tf.float32)
-			tf.summary.scalar('critic_learning_rate', lr_critic)
+			self.lr_critic		=	tf.placeholder(tf.float32)
+			tf.summary.scalar('critic_learning_rate', self.lr_critic)
 		# Build graphs ops - critic
 		self.critic_grad 	= 	tf.gradients(self.critic_output, self.critic_action_input)
-		self.y_input 		=	tf.placeholder("float", shape=[self.action_space])
+		self.y_input 		=	tf.placeholder("float", shape=[None, self.action_space])
 		critic_loss 		=	tf.reduce_mean( tf.square(self.y_input - self.critic_output) )
-		self.optimize_critic=	tf.train.AdamOptimizer(lr_critic).minimize(critic_loss)
+		self.optimize_critic=	tf.train.AdamOptimizer(self.lr_critic).minimize(critic_loss)
+
+		# Add reward to graph summary
+		with tf.name_scope('episode_total_reward'):
+			self.episode_reward	=	tf.placeholder(tf.float32)
+			tf.summary.scalar('episode_reward', self.episode_reward)
+		self.merged_sum 	= 	tf.summary.merge_all()
 
 		# --- Initialize graph
-		self.merged_sum 	= 	tf.summary.merge_all()
 		if not self.outputdir is None:
 			self.sumWriter 	=	tf.summary.FileWriter(self.outputdir, self.session.graph)
 		self.model_saver	=	tf.train.Saver()
 		self.session.run(tf.initialize_all_variables())
 
+		# Prepare update operation
+		self.update_network_weights = self.update_target_networks()
+
 
 	def build_actor(self, input_size, actor_hidden, output_size, handle_suffix=''):
 		# Input layer
-		state_input	=	tf.placeholder("float", [None, input_size])
+		state_input	=	tf.placeholder("float", [None, input_size], name="actor_state_input")
+		is_training	=	tf.placeholder("bool", name="actor_training_flag")
 
 		# --- VARIABLES
 		# Hidden layer 1
@@ -81,20 +100,23 @@ class DDPGModelMLP():
 		b3 	= 	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3), name='ac_b3'+handle_suffix )
 
 		# --- GRAPH
-		output 	=	tf.add( tf.matmul(state_input, W1), b1 )
+		output 	=	self.batch_norm_layer(state_input, is_training, activation=tf.identity, scope_bn='batch_norm0'+handle_suffix)
+		output 	=	tf.add( tf.matmul(output, W1), b1 )
 		output 	=	tf.nn.relu( output )
+		output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm1'+handle_suffix)
 		output 	=	tf.add( tf.matmul(output, W2), b2 )
 		output 	=	tf.nn.relu(output)
+		output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm2'+handle_suffix)
 		output 	=	tf.add( tf.matmul(output, W3), b3 )
 		output 	=	tf.nn.tanh( output )
-		return state_input, output
+		return state_input, output, is_training
 
 
 	def build_critic(self, input_size, critic_hidden, output_size, handle_suffix=''):
 		# Input layer 1: the state space
-		state_input = 	tf.placeholder("float", shape=[None, input_size])
+		state_input = 	tf.placeholder("float", shape=[None, input_size], name="critic_state_input")
 		# Input layer 2: the action
-		action_input=	tf.placeholder("float", shape=[output_size])
+		action_input=	tf.placeholder("float", shape=[None, output_size], name="critic_action_input")
 
 		# --- VARIABLES
 		# Hidden layer 1
@@ -110,7 +132,7 @@ class DDPGModelMLP():
 		# --- GRAPH
 		output 	=	tf.add( tf.matmul(state_input, W1), b1 )
 		output 	=	tf.nn.relu( output )
-		output 	=	tf.concat( [output, action_input], 0 )
+		output 	=	tf.concat( [output, action_input], 1 )
 		output 	=	tf.add( tf.matmul(output, W2), b2 )
 		output 	=	tf.nn.relu( output )
 		output 	=	tf.add( tf.matmul(output, W3), b3 )
@@ -127,72 +149,97 @@ class DDPGModelMLP():
 		return [w1, b1, w2, b2, w3, b3]
 
 
-	def fit(self, state, action, reward, next_state, done):
+	def fit(self, state, action, reward, next_state, done, lr):
 		# Train the critic
-		self.train_critic(state, action, reward, next_state, done)
+		self.train_critic(state, action, reward, next_state, done, lr[1])
 		# Train the actor
 		if not done:
-			self.train_actor(state, next_state)
+			self.train_actor(state, next_state, lr[0])
 		# Update the targets
-		self.update_target_networks()
+		self.session.run(self.update_network_weights)
 
 
-	def train_critic(self, state, action, reward, next_state, done):
+	def train_critic(self, state, action, reward, next_state, done, lr):
 		if not done:
 			# Compute next action
-			next_action	=	self.session.run(self.actor_target_output, feed_dict={self.actor_input:next_state})
+			next_action	=	self.session.run(self.actor_target_output, feed_dict={self.actor_target_input:next_state, self.actor_target_learning:True})
 			# Compute future reward *** CAN IMPLEMENT TD(lambda) HERE
-			reward 		+=	self.session.run(self.critic_output, feed_dict={self.critic_state_input:next_state, self.critic_action_input:next_action})
+			reward 		+=	self.session.run(self.critic_output, feed_dict={self.critic_state_input:next_state, self.critic_action_input:next_action})[0]
 		# Update the critic's model
-		self.session.run( self.optimize_critic, feed_dict={self.y_input:reward, self.critic_state_input:state, self.critic_action_input:action} )
+		self.session.run( self.optimize_critic, feed_dict={self.y_input:reward, self.critic_state_input:state, self.critic_action_input:action, self.lr_critic:lr} )
 
 
-	def train_actor(self, state, next_state):
+	def train_actor(self, state, next_state, lr):
 		# Predict actor's next action
-		next_action =	self.session.run( self.actor_output, feed_dict={self.actor_input:next_state} )
+		next_action =	self.session.run( self.actor_output, feed_dict={self.actor_input:next_state, self.actor_training:True} )
 		# Compute the critic's gradient wrt next action
 		gradients 	=	self.session.run( self.critic_grad, feed_dict={self.critic_state_input:next_state, self.critic_action_input:next_action})
 		# Optimize the actor's paramters
 		if not self.outputdir is None:
-			summary, _ 	=	self.session.run([self.merged_sum, self.optimize_actor], feed_dict={self.actor_input:state, self.actor_critic_grad:gradients[0]})
-			self.sumWriter.add_summary(summary)
-		else:
-			self.session.run(self.optimize_actor, feed_dict={self.actor_input: state, self.actor_critic_grad: gradients[0]})
+			self.session.run(self.optimize_actor, feed_dict={self.actor_input:[state], self.actor_critic_grad:gradients[0], self.lr_actor:lr})
+
+
+	def update_summary(self, lr, rew, istep):
+		summary 	=	self.session.run(self.merged_sum, feed_dict={self.lr_actor:lr[0], self.lr_critic:lr[1], self.episode_reward:rew[0]})
+		self.sumWriter.add_summary(summary, istep)
 
 
 	def update_target_networks(self):
 		# Get weights - critic
-		critic_model_ref 	=	self.get_weights('ac')
-		critic_target_ref 	=	self.get_weights('ac', 'target')
+		critic_model_ref 	=	self.get_weights('cr')
+		critic_target_ref 	=	self.get_weights('cr', 'target')
 		critic_target_val 	= 	[]
 		# Get weights - actor
-		actor_model_ref 	= 	self.get_weights('cr')
-		actor_target_ref 	= 	self.get_weights('cr', 'target')
+		actor_model_ref 	= 	self.get_weights('ac')
+		actor_target_ref 	= 	self.get_weights('ac', 'target')
 		actor_target_val 	= 	[]
 		for iw in range( len(critic_target_ref) ):
 			critic_target_val	+=	[self.update_rate * self.session.run(critic_target_ref[iw]) + (1-self.update_rate) * self.session.run(critic_model_ref[iw])]
 			actor_target_val 	+= 	[self.update_rate * self.session.run(actor_target_ref[iw]) + (1-self.update_rate) * self.session.run(actor_model_ref[iw])]
 		# Update
-		[self.session.run( tf.assign(x, y) ) for x,y in zip(critic_target_ref, critic_target_val)]
-		[self.session.run( tf.assign(x, y) ) for x,y in zip(actor_target_ref, actor_target_val)]
+		upd_critic 	=	[tf.assign(x, y) for x,y in zip(critic_target_ref, critic_target_val)]
+		upd_actor 	=	[tf.assign(x, y) for x,y in zip(actor_target_ref, actor_target_val)]
+		return [upd_actor, upd_critic]
+
+
+	def batch_norm_layer(self, x, training_phase, activation=None, scope_bn=''):
+		return tf.cond(training_phase,
+					   lambda: tf.contrib.layers.batch_norm(x, activation_fn=activation, center=True, scale=True,
+															updates_collections=None, is_training=True, reuse=None,
+															scope=scope_bn, decay=0.9, epsilon=1e-5),
+					   lambda: tf.contrib.layers.batch_norm(x, activation_fn=activation, center=True, scale=True,
+															updates_collections=None, is_training=False, reuse=True,
+															scope=scope_bn, decay=0.9, epsilon=1e-5))
 
 
 	def act(self, state, default):
 		if np.random.random()<self.exploration_rate:
 			return default
 		else:
-			return self.session.run( self.actor_target_output, feed_dict={self.actor_input:state})
+			return self.session.run( self.actor_target_output, feed_dict={self.actor_target_input:[state], self.actor_target_training:True})
 
 
 	def remember(self, state, action, reward, next_state, done):
+		if  len(self.memory)==self.cache_size:
+			self.memory.pop(0)
 		self.memory.append( (state, action, reward, next_state, done) )
 
 
-	def replay(self):
+	def replay(self, lr):
 		if len(self.memory)>self.buffer_size:
 			# Sample batch
-			for (state, action, reward, next_state, done) in [self.memory[np.random.randint(len(self.memory))]]:
-				self.fit(state, action, reward, next_state, done)
+			state_btch 	=	[]
+			action_btch =	[]
+			reward_btch =	[]
+			nextSt_btch = 	[]
+			done_btch 	=	[]
+			for (state, action, reward, next_state, done) in compress(self.memory, np.random.randint(len(self.memory), size=self.batch_size)):
+				state_btch 	+=	[list(state)]
+				action_btch +=	[[action[0][0]]]
+				reward_btch +=	[[reward[0]]]
+				nextSt_btch += 	[list(next_state[0])]
+				done_btch	+=	[done]
+			self.fit(state_btch, action_btch, reward_btch, nextSt_btch, done_btch, lr)
 
 
 	def save_model(self, root, sess, env_name, n_steps):
@@ -228,37 +275,44 @@ class DDPGModelMLP():
 if __name__ == '__main__':
 	# Environment variables
 	outdir  =   '/home/younesz/Desktop/SUM'
+	lrAcCr 	=	np.array([1e-4, 1e-3])
 
 	# import gym environment
 	import gym
 	env     =   gym.make('Pendulum-v0')
-	agent   =   DDPGModelMLP( env.observation_space.shape[0], env.action_space.shape[0] )
+	agent   =   DDPGModelMLP( env.observation_space.shape[0], env.action_space.shape[0], outputdir=outdir )
 
 	# Simulation variables
 	n_episodes  =   1000
 	rewards     =   []
 	for episode in range(n_episodes):
+		print('episode {}, '.format(episode), end='')
 		state   =   env.reset()
+		lr_disc =	lrAcCr * n_episodes / (9 + episode + n_episodes)
 		epRew   =   0
 		# Train
 		for step in range(env.spec.timestep_limit):
-			env.render()
+			#env.render()
 			# Act
-			action  =   agent.act(state , np.random.random()*2-1)
+			action  =   agent.act(state , [[np.random.random()*2-1]])
 			next_state, reward, done, _ =   env.step(action)
 			# Store experience
-			agent.remember(state, action, reward, next_state, done)
-			agent.replay()
+			agent.remember(state, action, reward, next_state.T, done)
+			agent.replay(lr_disc)
 			# Prepare next iteration
-			state   =   next_state
+			state   =   next_state.flatten()
 			epRew   +=  reward
 			if done:
 				break
 		rewards     +=  [epRew]
+		print('total reward %.2f, done in %i steps'%(epRew, step))
+
+		# Update summary log
+		agent.update_summary(lr_disc, epRew, episode)
 
 	# Plot result
 	F   =   plt.figure()
 	Ax  =   F.add_subplot(111)
 	Ax.plot(rewards)
 	Ax.set_xlabel('Training episode')
-	Ax.set_ylabel('Cumulatede reward')
+	Ax.set_ylabel('Cumulated reward')
