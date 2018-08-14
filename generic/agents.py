@@ -15,10 +15,11 @@ class DDPGModelMLP():
 				 buffer_size		=	200,\
 				 batch_size			=	32,\
 				 cache_size 		=	1000,\
-				 tau				=	0.8,\
+				 tau				=	0.001,\
+				 discount 			=	0.8,\
 				 outputdir			=	None,\
-				 actor_hidden		=	[64, 64],\
-				 critic_hidden		=	[64, 64]):
+				 actor_hidden		=	[400, 300],\
+				 critic_hidden		=	[400, 300]):
 		self.qmodel             =   'MLP_DDPG'
 		self.session            =   tf.Session()
 		self.state_space        =   state_space
@@ -28,6 +29,8 @@ class DDPGModelMLP():
 		self.batch_size 		=	batch_size
 		self.cache_size 		=	cache_size
 		self.update_rate 		=	tau
+		self.discount_rate 		=	discount
+		self.random_seed 		=	np.random.randint(1e9, size=6)
 		self.memory 			=	[]
 		self.model_saver 		=	None
 		self.outputdir 			=	outputdir
@@ -44,9 +47,9 @@ class DDPGModelMLP():
 		self.actor_input, self.actor_output, self.actor_training						=	self.build_actor(self.state_space, self.actor_hidden, self.action_space)
 		self.actor_target_input, self.actor_target_output, self.actor_target_training	=	self.build_actor(self.state_space, self.actor_hidden, self.action_space, 'target')
 		# Build graphs ops - actor
-		self.actor_critic_grad 	=	tf.placeholder(tf.float32, [None, self.action_space])
-		actor_model_weights 	=	self.get_weights('ac')
-		self.actor_grad			=	tf.gradients(self.actor_output, actor_model_weights, -self.actor_critic_grad)
+		self.actor_critic_grad 	=	tf.placeholder(tf.float32, [None, self.action_space], name="dQ_dCritic")
+		actor_model_weights 	=	self.get_weights('ac', parent_scope='actor_')
+		self.actor_grad			=	tf.gradients(self.actor_output, actor_model_weights, -self.actor_critic_grad, name="dAction_dActorParams")
 		grads 					=	zip(self.actor_grad, actor_model_weights)
 		# Set actor's learning rate
 		with tf.name_scope('actor_lr'):
@@ -56,15 +59,15 @@ class DDPGModelMLP():
 
 		# --- Setup critic
 		self.critic_state_input, self.critic_action_input, self.critic_output	=	self.build_critic(self.state_space, self.critic_hidden, self.action_space)
-		_, _, self.target_critic_ouput	= 	self.build_critic(self.state_space, self.critic_hidden, self.action_space, 'target')
+		self.critic_target_state_input, self.critic_target_action_input, self.critic_target_output	= 	self.build_critic(self.state_space, self.critic_hidden, self.action_space, 'target')
 		# Set critic's learning rate
 		with tf.name_scope('critic_lr'):
 			self.lr_critic		=	tf.placeholder(tf.float32)
 			tf.summary.scalar('critic_learning_rate', self.lr_critic)
 		# Build graphs ops - critic
-		self.critic_grad 	= 	tf.gradients(self.critic_output, self.critic_action_input)
-		self.y_input 		=	tf.placeholder("float", shape=[None, self.action_space])
-		critic_loss 		=	tf.reduce_mean( tf.square(self.y_input - self.critic_output) )
+		self.critic_grad 	= 	tf.gradients(self.critic_output, self.critic_action_input, name="dQ_dAction")
+		self.y_input 		=	tf.placeholder("float", shape=[None, self.action_space], name="Qvalue_target")
+		critic_loss 		=	tf.reduce_mean( tf.square(self.y_input - self.critic_output), name="critic_loss" )
 		self.optimize_critic=	tf.train.AdamOptimizer(self.lr_critic).minimize(critic_loss)
 
 		# Add reward to graph summary
@@ -84,68 +87,70 @@ class DDPGModelMLP():
 
 
 	def build_actor(self, input_size, actor_hidden, output_size, handle_suffix=''):
-		# Input layer
-		state_input	=	tf.placeholder("float", [None, input_size], name="actor_state_input")
-		is_training	=	tf.placeholder("bool", name="actor_training_flag")
+		with tf.name_scope('actor_'+handle_suffix):
+			# Input layer
+			state_input	=	tf.placeholder("float", [None, input_size], name="actor_state_input")
+			is_training	=	tf.placeholder("bool", name="actor_training_flag")
 
-		# --- VARIABLES
-		# Hidden layer 1
-		W1 	=	tf.Variable( tf.random_uniform([input_size, actor_hidden[0]],-3e-3,3e-3), name= 'ac_w1'+handle_suffix )
-		b1 	=	tf.Variable( tf.random_uniform([actor_hidden[0]],-3e-3,3e-3), name='ac_b1'+handle_suffix )
-		# Hidden layer 2
-		W2 	= 	tf.Variable( tf.random_uniform([actor_hidden[0], actor_hidden[1]], -3e-3, 3e-3), name= 'ac_w2'+handle_suffix )
-		b2 	= 	tf.Variable( tf.random_uniform([actor_hidden[1]], -3e-3, 3e-3), name='ac_b2'+handle_suffix )
-		# Hidden layer 3
-		W3 	= 	tf.Variable( tf.random_uniform([actor_hidden[1], output_size]), name= 'ac_w3'+handle_suffix )
-		b3 	= 	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3), name='ac_b3'+handle_suffix )
+			# --- VARIABLES
+			# Hidden layer 1
+			W1 	=	tf.Variable( tf.random_uniform([input_size, actor_hidden[0]],-3e-3,3e-3, seed=self.random_seed[0]), name= 'ac_w1'+handle_suffix )
+			b1 	=	tf.Variable( tf.random_uniform([actor_hidden[0]],-3e-3,3e-3, seed=self.random_seed[1]), name='ac_b1'+handle_suffix )
+			# Hidden layer 2
+			W2 	= 	tf.Variable( tf.random_uniform([actor_hidden[0], actor_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[2]), name= 'ac_w2'+handle_suffix )
+			b2 	= 	tf.Variable( tf.random_uniform([actor_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[3]), name='ac_b2'+handle_suffix )
+			# Hidden layer 3
+			W3 	= 	tf.Variable( tf.random_uniform([actor_hidden[1], output_size], -3e-3,3e-3, seed=self.random_seed[4]), name= 'ac_w3'+handle_suffix )
+			b3 	= 	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3, seed=self.random_seed[5]), name='ac_b3'+handle_suffix )
 
-		# --- GRAPH
-		output 	=	self.batch_norm_layer(state_input, is_training, activation=tf.identity, scope_bn='batch_norm0'+handle_suffix)
-		output 	=	tf.add( tf.matmul(output, W1), b1 )
-		output 	=	tf.nn.relu( output )
-		output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm1'+handle_suffix)
-		output 	=	tf.add( tf.matmul(output, W2), b2 )
-		output 	=	tf.nn.relu(output)
-		output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm2'+handle_suffix)
-		output 	=	tf.add( tf.matmul(output, W3), b3 )
-		output 	=	tf.nn.tanh( output )
+			# --- GRAPH
+			output 	=	state_input #self.batch_norm_layer(state_input, is_training, activation=tf.identity, scope_bn='batch_norm0'+handle_suffix)
+			output 	=	tf.add( tf.matmul(output, W1), b1 )
+			output 	=	tf.nn.relu( output )
+			#output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm1'+handle_suffix)
+			output 	=	tf.add( tf.matmul(output, W2), b2 )
+			output 	=	tf.nn.relu(output)
+			#output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm2'+handle_suffix)
+			output 	=	tf.add( tf.matmul(output, W3), b3 )
+			output 	=	tf.nn.tanh( output )
 		return state_input, output, is_training
 
 
 	def build_critic(self, input_size, critic_hidden, output_size, handle_suffix=''):
-		# Input layer 1: the state space
-		state_input = 	tf.placeholder("float", shape=[None, input_size], name="critic_state_input")
-		# Input layer 2: the action
-		action_input=	tf.placeholder("float", shape=[None, output_size], name="critic_action_input")
+		with tf.name_scope('critic_' + handle_suffix):
+			# Input layer 1: the state space
+			state_input = 	tf.placeholder("float", shape=[None, input_size], name="critic_state_input")
+			# Input layer 2: the action
+			action_input=	tf.placeholder("float", shape=[None, output_size], name="critic_action_input")
 
-		# --- VARIABLES
-		# Hidden layer 1
-		W1 	=	tf.Variable( tf.random_uniform([input_size, critic_hidden[0]]), name= 'cr_w1'+handle_suffix )
-		b1 	=	tf.Variable( tf.random_uniform([critic_hidden[0]]), name= 'cr_b1'+handle_suffix )
-		# Hidden layer 2: take up concatenation on action_input
-		W2 	=	tf.Variable( tf.random_uniform([critic_hidden[0]+output_size, critic_hidden[1]]), name= 'cr_w2'+handle_suffix  )
-		b2 	=	tf.Variable( tf.random_uniform([critic_hidden[1]]), name= 'cr_b2'+handle_suffix )
-		# Output layer
-		W3 	=	tf.Variable( tf.random_uniform([critic_hidden[1], output_size]), name= 'cr_w3'+handle_suffix  )
-		b3 	=	tf.Variable( tf.random_uniform([output_size]), name= 'cr_b3'+handle_suffix )
+			# --- VARIABLES
+			# Hidden layer 1
+			W1 	=	tf.Variable( tf.random_uniform([input_size, critic_hidden[0]], -3e-3, 3e-3, seed=self.random_seed[0]), name= 'cr_w1'+handle_suffix )
+			b1 	=	tf.Variable( tf.random_uniform([critic_hidden[0]], -3e-3, 3e-3, seed=self.random_seed[1]), name= 'cr_b1'+handle_suffix )
+			# Hidden layer 2: take up concatenation on action_input
+			W2 	=	tf.Variable( tf.random_uniform([critic_hidden[0]+output_size, critic_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[2]), name= 'cr_w2'+handle_suffix  )
+			b2 	=	tf.Variable( tf.random_uniform([critic_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[3]), name= 'cr_b2'+handle_suffix )
+			# Output layer
+			W3 	=	tf.Variable( tf.random_uniform([critic_hidden[1], output_size], -3e-3, 3e-3, seed=self.random_seed[4]), name= 'cr_w3'+handle_suffix  )
+			b3 	=	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3, seed=self.random_seed[5]), name= 'cr_b3'+handle_suffix )
 
-		# --- GRAPH
-		output 	=	tf.add( tf.matmul(state_input, W1), b1 )
-		output 	=	tf.nn.relu( output )
-		output 	=	tf.concat( [output, action_input], 1 )
-		output 	=	tf.add( tf.matmul(output, W2), b2 )
-		output 	=	tf.nn.relu( output )
-		output 	=	tf.add( tf.matmul(output, W3), b3 )
+			# --- GRAPH
+			output 	=	tf.add( tf.matmul(state_input, W1), b1 )
+			output 	=	tf.nn.relu( output )
+			output 	=	tf.concat( [output, action_input], 1 )
+			output 	=	tf.add( tf.matmul(output, W2), b2 )
+			output 	=	tf.nn.relu( output )
+			output 	=	tf.add( tf.matmul(output, W3), b3 )
 		return state_input, action_input, output
 
 
-	def get_weights(self, component, suffix=''):
-		w1 	=	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=component + '_w1' + suffix + ':0')[0]
-		b1 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=component + '_b1' + suffix + ':0')[0]
-		w2 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=component + '_w2' + suffix + ':0')[0]
-		b2 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=component + '_b2' + suffix + ':0')[0]
-		w3 	=	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=component + '_w3' + suffix + ':0')[0]
-		b3 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=component + '_b3' + suffix + ':0')[0]
+	def get_weights(self, component, suffix='', parent_scope=''):
+		w1 	=	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w1' + suffix + ':0') )[0]
+		b1 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b1' + suffix + ':0') )[0]
+		w2 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w2' + suffix + ':0') )[0]
+		b2 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b2' + suffix + ':0') )[0]
+		w3 	=	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w3' + suffix + ':0') )[0]
+		b3 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b3' + suffix + ':0') )[0]
 		return [w1, b1, w2, b2, w3, b3]
 
 
@@ -154,7 +159,7 @@ class DDPGModelMLP():
 		self.train_critic(state, action, reward, next_state, done, lr[1])
 		# Train the actor
 		if not done:
-			self.train_actor(state, next_state, lr[0])
+			self.train_actor(state, lr[0])
 		# Update the targets
 		self.session.run(self.update_network_weights)
 
@@ -162,21 +167,20 @@ class DDPGModelMLP():
 	def train_critic(self, state, action, reward, next_state, done, lr):
 		if not done:
 			# Compute next action
-			next_action	=	self.session.run(self.actor_target_output, feed_dict={self.actor_target_input:next_state, self.actor_target_learning:True})
+			next_action	=	self.session.run(self.actor_target_output, feed_dict={self.actor_target_input:next_state, self.actor_target_training:True})
 			# Compute future reward *** CAN IMPLEMENT TD(lambda) HERE
-			reward 		+=	self.session.run(self.critic_output, feed_dict={self.critic_state_input:next_state, self.critic_action_input:next_action})[0]
+			reward 		+=	self.discount_rate * self.session.run(self.critic_target_output, feed_dict={self.critic_target_state_input:next_state, self.critic_target_action_input:next_action})[0]
 		# Update the critic's model
 		self.session.run( self.optimize_critic, feed_dict={self.y_input:reward, self.critic_state_input:state, self.critic_action_input:action, self.lr_critic:lr} )
 
 
-	def train_actor(self, state, next_state, lr):
+	def train_actor(self, state, lr):
 		# Predict actor's next action
-		next_action =	self.session.run( self.actor_output, feed_dict={self.actor_input:next_state, self.actor_training:True} )
+		actions_updated =	self.session.run( self.actor_output, feed_dict={self.actor_input:state, self.actor_training:True} )
 		# Compute the critic's gradient wrt next action
-		gradients 	=	self.session.run( self.critic_grad, feed_dict={self.critic_state_input:next_state, self.critic_action_input:next_action})
-		# Optimize the actor's paramters
-		if not self.outputdir is None:
-			self.session.run(self.optimize_actor, feed_dict={self.actor_input:[state], self.actor_critic_grad:gradients[0], self.lr_actor:lr})
+		gradients 		=	self.session.run( self.critic_grad, feed_dict={self.critic_state_input:state, self.critic_action_input:actions_updated} )
+		# Optimize the actor's parameters
+		self.session.run(self.optimize_actor, feed_dict={self.actor_input:state, self.actor_critic_grad:gradients[0], self.lr_actor:lr, self.actor_training:True})
 
 
 	def update_summary(self, lr, rew, istep):
@@ -186,16 +190,16 @@ class DDPGModelMLP():
 
 	def update_target_networks(self):
 		# Get weights - critic
-		critic_model_ref 	=	self.get_weights('cr')
-		critic_target_ref 	=	self.get_weights('cr', 'target')
+		critic_model_ref 	=	self.get_weights('cr', parent_scope='critic_')
+		critic_target_ref 	=	self.get_weights('cr', 'target', parent_scope='critic_target')
 		critic_target_val 	= 	[]
 		# Get weights - actor
-		actor_model_ref 	= 	self.get_weights('ac')
-		actor_target_ref 	= 	self.get_weights('ac', 'target')
+		actor_model_ref 	= 	self.get_weights('ac', parent_scope='actor_')
+		actor_target_ref 	= 	self.get_weights('ac', 'target', parent_scope='actor_target')
 		actor_target_val 	= 	[]
 		for iw in range( len(critic_target_ref) ):
-			critic_target_val	+=	[self.update_rate * self.session.run(critic_target_ref[iw]) + (1-self.update_rate) * self.session.run(critic_model_ref[iw])]
-			actor_target_val 	+= 	[self.update_rate * self.session.run(actor_target_ref[iw]) + (1-self.update_rate) * self.session.run(actor_model_ref[iw])]
+			critic_target_val	+=	[(1-self.update_rate) * critic_target_ref[iw] + self.update_rate * critic_model_ref[iw]]
+			actor_target_val 	+= 	[(1-self.update_rate) * actor_target_ref[iw] + (1-self.update_rate) * actor_model_ref[iw]]
 		# Update
 		upd_critic 	=	[tf.assign(x, y) for x,y in zip(critic_target_ref, critic_target_val)]
 		upd_actor 	=	[tf.assign(x, y) for x,y in zip(actor_target_ref, actor_target_val)]
@@ -216,7 +220,7 @@ class DDPGModelMLP():
 		if np.random.random()<self.exploration_rate:
 			return default
 		else:
-			return self.session.run( self.actor_target_output, feed_dict={self.actor_target_input:[state], self.actor_target_training:True})
+			return self.session.run( self.actor_output, feed_dict={self.actor_input:[state], self.actor_training:True})
 
 
 	def remember(self, state, action, reward, next_state, done):
@@ -272,7 +276,35 @@ class DDPGModelMLP():
 # ======
 # Tester
 # ======
-if __name__ == '__main__':
+def test_ddpg_gradients():
+	# Test whether the agent's action output moves towards the overall gradient
+
+	# Create a fake step
+	agent 	=	DDPGModelMLP(10,1)
+	s		=	list( range(10) )
+	s_ 		=	s[::-1]
+
+
+	# Test forward prop
+	ac_ref 	= 	agent.get_weights('ac', parent_scope='actor_')
+	ac_val 	=	[agent.session.run(x) for x in ac_ref]
+
+	a		=	agent.act(s, [0])
+	a_ 		=	agent.act(s_, [0])
+	done, lr=	False, [1e-2, 1e-3]
+
+	# Test backprop through the critic
+	q_sa 	= 	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s], agent.critic_action_input: a})
+	q_s_a_ 	= 	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s_], agent.critic_action_input: a_})
+	r		=	1 + q_sa - agent.discount_rate*q_s_a_
+	agent.session.run(agent.optimize_critic, feed_dict={agent.y_input: r, agent.critic_state_input: [s], agent.critic_action_input: a, agent.lr_critic: lr[1]})
+
+	# Learn from that step
+	agent.fit([s], a, r, [s_], done, lr)
+	print('Original action: %.5f, Incentivized action: %.5f'%(a, agent.act(s,0)))
+
+
+def test_gym_pendulum():
 	# Environment variables
 	outdir  =   '/home/younesz/Desktop/SUM'
 	lrAcCr 	=	np.array([1e-4, 1e-3])
@@ -308,7 +340,8 @@ if __name__ == '__main__':
 		print('total reward %.2f, done in %i steps'%(epRew, step))
 
 		# Update summary log
-		agent.update_summary(lr_disc, epRew, episode)
+		if not episode%20:
+			agent.update_summary(lr_disc, epRew, episode)
 
 	# Plot result
 	F   =   plt.figure()
@@ -316,3 +349,12 @@ if __name__ == '__main__':
 	Ax.plot(rewards)
 	Ax.set_xlabel('Training episode')
 	Ax.set_ylabel('Cumulated reward')
+
+
+
+if __name__ == '__main__':
+	# Launch gradients test
+	test_ddpg_gradients()
+
+	# Launch gym training
+	#test_gym_pendulum()
