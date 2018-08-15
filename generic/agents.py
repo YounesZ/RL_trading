@@ -3,6 +3,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 
 from os import path
+from copy import deepcopy
 from datetime import datetime
 from itertools import compress
 
@@ -30,7 +31,7 @@ class DDPGModelMLP():
 		self.cache_size 		=	cache_size
 		self.update_rate 		=	tau
 		self.discount_rate 		=	discount
-		self.random_seed 		=	np.random.randint(1e9, size=6)
+		self.random_seed 		=	[269115878, 513811440, 917426528,  39955810, 428253974, 937750847] #np.random.randint(1e9, size=6)
 		self.memory 			=	[]
 		self.model_saver 		=	None
 		self.outputdir 			=	outputdir
@@ -284,31 +285,58 @@ def test_ddpg_gradients():
 	s		=	list( range(10) )
 	s_ 		=	s[::-1]
 
-
 	# Test forward prop
-	ac_ref 	= 	agent.get_weights('ac', parent_scope='actor_')
-	ac_val 	=	[agent.session.run(x) for x in ac_ref]
-
 	a		=	agent.act(s, [0])
-	done, lr=	False, [1e-2, 1e-3]
+	done, lr=	False, [1e-2, 1e-1]
 
+	# ======
 	# Test backprop through the critic
+	# ======
+	# Get q-value
 	q_sa 	= 	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s], agent.critic_action_input: a})
-	r		=	2 + q_sa
-
-
-
+	# Drive reward up and recompute value
+	r		=	q_sa+2
 	agent.session.run(agent.optimize_critic, feed_dict={agent.y_input: r, agent.critic_state_input: [s], agent.critic_action_input: a, agent.lr_critic: lr[1]})
+	newq1 	=	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s], agent.critic_action_input: a}).flatten()
+	# Drive reward down and recompute value
+	r 		= 	newq1-2
+	agent.session.run(agent.optimize_critic,feed_dict={agent.y_input: [r], agent.critic_state_input: [s], agent.critic_action_input: a, agent.lr_critic: lr[1]})
+	newq2 	= 	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s], agent.critic_action_input: a}).flatten()
+	# Assess gradient direction
+	assert(newq1>q_sa and newq1>newq2), 'Critics gradients pointing the wrong direction'
 
-	# Learn from that step
-	agent.fit([s], a, r, [s_], done, lr)
-	print('Original action: %.5f, Incentivized action: %.5f'%(a, agent.act(s,0)))
+	# ======
+	# Test backprop through the whole model
+	# ======
+	# Get action and value
+	a 		=	agent.act(s, [0])
+	q_sa 	= 	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s], agent.critic_action_input: a})
+	# ---Drive reward up and recompute action
+	r 		= 	q_sa + 2
+	# Train critic
+	agent.session.run(agent.optimize_critic, feed_dict={agent.y_input: r, agent.critic_state_input: [s], agent.critic_action_input: a, agent.lr_critic: lr[1]})
+	# Train actor
+	agent.train_actor([s], lr[0])
+	a_new 	=	agent.act(s, [0])
+	# ---Drive reward up and recompute action
+	newq 	=	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s], agent.critic_action_input: a_new}).flatten()
+	r 		= 	newq - 2
+	# Train critic
+	agent.session.run(agent.optimize_critic, feed_dict={agent.y_input: [r], agent.critic_state_input: [s], agent.critic_action_input: a_new, agent.lr_critic: lr[1]})
+	# Train actor
+	gradients = agent.session.run(agent.critic_grad, feed_dict={agent.critic_state_input: [s], agent.critic_action_input:a_new})
+	# Optimize the actor's parameters
+	agent.session.run(agent.optimize_actor, feed_dict={agent.actor_input: [s], agent.actor_critic_grad: gradients[0], agent.lr_actor: lr[0], agent.actor_training: True})
+	a_new2 	= 	agent.act(s, [0])
+	assert (a_new > a and a_new > a_new2), 'Actor gradients pointing the wrong direction'
+
+	print('Gradient tests complete')
 
 
 def test_gym_pendulum():
 	# Environment variables
 	outdir  =   '/home/younesz/Desktop/SUM'
-	lrAcCr 	=	np.array([1e-4, 1e-3])
+	lrAcCr 	=	np.array([1e-2, 1e-1])
 
 	# import gym environment
 	import gym
@@ -334,7 +362,7 @@ def test_gym_pendulum():
 			agent.replay(lr_disc)
 			# Prepare next iteration
 			state   =   next_state.flatten()
-			epRew   +=  reward
+			epRew   +=  reward[0]
 			if done:
 				break
 		rewards     +=  [epRew]
@@ -352,10 +380,62 @@ def test_gym_pendulum():
 	Ax.set_ylabel('Cumulated reward')
 
 
+def test_sine():
+	# Environment variables
+	outdir = '/home/younesz/Desktop/SUM'
+	lrAcCr = np.array([1e-3, 1e-2])
+
+	# import gym environment
+	from generic.environments import Sine
+	env 	= 	Sine()
+	agent 	=	DDPGModelMLP(env.observation_space, env.action_space, outputdir=outdir,\
+							   actor_hidden=[20, 16], critic_hidden=[20,16])
+
+	# Simulation variables
+	n_episodes 	= 	1000
+	rewards 	= 	[]
+	for episode in range(n_episodes):
+		print('episode {}, '.format(episode), end='')
+		state 	= 	env.reset()
+		lr_disc = 	lrAcCr * n_episodes / (9 + episode + n_episodes)
+		epRew 	= 	0
+		# Train
+		for step in range(env.spec['timestep_limit']):
+			# Act
+			action 	= 	agent.act(state, [[np.random.random() * 2 - 1]])
+			next_state, reward, done	=	env.step(action[0][0])
+			env.render(state, reward)
+			# Store experience
+			agent.remember(state, action, reward, [next_state], done)
+			agent.replay(lr_disc)
+			# Prepare next iteration
+			state	= 	next_state
+			epRew 	+= 	reward.flatten()
+			if done:
+				break
+		rewards	+=	[epRew]
+		print('total reward %.2f, done in %i steps' % (epRew, step))
+
+		# Update summary log
+		if not episode % 20:
+			agent.update_summary(lr_disc, epRew, episode)
+
+	# Plot result
+	F	=	plt.figure()
+	Ax	=	F.add_subplot(111)
+	Ax.plot(rewards)
+	Ax.set_xlabel('Training episode')
+	Ax.set_ylabel('Cumulated reward')
+
+
+
 
 if __name__ == '__main__':
 	# Launch gradients test
-	test_ddpg_gradients()
+	#test_ddpg_gradients()
 
 	# Launch gym training
 	#test_gym_pendulum()
+
+	# Launch sine wave training
+	test_sine()

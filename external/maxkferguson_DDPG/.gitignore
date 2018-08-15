@@ -1,0 +1,8 @@
+#python
+*.pyc
+*.egg-info
+
+#folders
+experiments
+build
+dist
