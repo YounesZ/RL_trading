@@ -290,13 +290,14 @@ def test_ddpg_gradients():
 	ac_val 	=	[agent.session.run(x) for x in ac_ref]
 
 	a		=	agent.act(s, [0])
-	a_ 		=	agent.act(s_, [0])
 	done, lr=	False, [1e-2, 1e-3]
 
 	# Test backprop through the critic
 	q_sa 	= 	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s], agent.critic_action_input: a})
-	q_s_a_ 	= 	agent.session.run(agent.critic_output, feed_dict={agent.critic_state_input: [s_], agent.critic_action_input: a_})
-	r		=	1 + q_sa - agent.discount_rate*q_s_a_
+	r		=	2 + q_sa
+
+
+
 	agent.session.run(agent.optimize_critic, feed_dict={agent.y_input: r, agent.critic_state_input: [s], agent.critic_action_input: a, agent.lr_critic: lr[1]})
 
 	# Learn from that step
