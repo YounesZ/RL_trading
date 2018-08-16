@@ -54,10 +54,7 @@ class ActorNetwork(object):
 
         # Op for periodically updating target network with online network
         # weights
-        self.update_target_network_params = \
-            [self.target_network_params[i].assign(tf.multiply(self.network_params[i], self.tau) +
-                                                  tf.multiply(self.target_network_params[i], 1. - self.tau))
-                for i in range(len(self.target_network_params))]
+
 
         # This gradient will be provided by the critic network
         self.action_gradient = tf.placeholder(tf.float32, [None, self.a_dim])
@@ -76,10 +73,10 @@ class ActorNetwork(object):
 
     def create_actor_network(self):
         inputs = tflearn.input_data(shape=[None, self.s_dim])
-        net = tflearn.fully_connected(inputs, 400)
+        net = tflearn.fully_connected(inputs, 40)
         net = tflearn.layers.normalization.batch_normalization(net)
         net = tflearn.activations.relu(net)
-        net = tflearn.fully_connected(net, 300)
+        net = tflearn.fully_connected(net, 30)
         net = tflearn.layers.normalization.batch_normalization(net)
         net = tflearn.activations.relu(net)
         # Final layer weights are init to Uniform[-3e-3, 3e-3]
@@ -163,14 +160,14 @@ class CriticNetwork(object):
     def create_critic_network(self):
         inputs = tflearn.input_data(shape=[None, self.s_dim])
         action = tflearn.input_data(shape=[None, self.a_dim])
-        net = tflearn.fully_connected(inputs, 400)
+        net = tflearn.fully_connected(inputs, 40)
         net = tflearn.layers.normalization.batch_normalization(net)
         net = tflearn.activations.relu(net)
 
         # Add the action tensor in the 2nd hidden layer
         # Use two temp layers to get the corresponding weights and biases
-        t1 = tflearn.fully_connected(net, 300)
-        t2 = tflearn.fully_connected(action, 300)
+        t1 = tflearn.fully_connected(net, 30)
+        t2 = tflearn.fully_connected(action, 30)
 
         net = tflearn.activation(
             tf.matmul(net, t1.W) + tf.matmul(action, t2.W) + t2.b, activation='relu')
@@ -337,8 +334,8 @@ def train(sess, env, args, actor, critic, actor_noise):
                 writer.add_summary(summary_str, i)
                 writer.flush()
 
-                print('| Reward: {:d} | Episode: {:d} | Qmax: {:.4f}'.format(int(ep_reward), \
-                        i, (ep_ave_max_q / float(j))))
+                print('| Reward: {:d} | Episode: {:d} | N_steps: {:d} | Qmax: {:.4f}'.format(int(ep_reward), \
+                        i, j, (ep_ave_max_q / float(j))))
                 break
 
 def main(args):
@@ -386,6 +383,7 @@ def test_sine(args):
     with tf.Session() as sess:
 
         env = Sine()
+        args['max_episode_len']     =   env.spec['timestep_limit']
         np.random.seed(int(args['random_seed']))
         tf.set_random_seed(int(args['random_seed']))
         #env.seed(int(args['random_seed']))
