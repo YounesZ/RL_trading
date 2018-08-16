@@ -20,15 +20,15 @@ class Sine():
         self.x  +=  1
         self.y  +=  action
         reward  =   - np.sqrt( (self.y - np.sin(self.x*2*np.pi/self.spec['period'] - self.spec['phase']))**2 )
-        return [np.sin( (self.x-1)*2*np.pi/self.spec['period'] - self.spec['phase']), self.y], reward.flatten(), False
+        return [np.sin( (self.x-1)*2*np.pi/self.spec['period'] - self.spec['phase']), self.y], reward.flatten(), False, ''
 
     def run_demo(self):
         n_steps     =   0
         self.reset()
         while n_steps<self.spec['timestep_limit']:
             # Agent act
-            action      =   np.random.randn()
-            s_, r, done =   self.step(action)
+            action          =   np.random.randn()
+            s_, r, done, _  =   self.step(action)
             # Print
             self.render(s_, r)
             n_steps +=  1

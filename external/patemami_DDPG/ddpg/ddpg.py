@@ -379,6 +379,53 @@ def main(args):
         if args['use_gym_monitor']:
             env.monitor.close()
 
+
+def test_sine(args):
+    from  generic.environments import Sine
+
+    with tf.Session() as sess:
+
+        env = Sine()
+        np.random.seed(int(args['random_seed']))
+        tf.set_random_seed(int(args['random_seed']))
+        #env.seed(int(args['random_seed']))
+
+        state_dim   =   env.observation_space
+        action_dim  =   env.action_space
+
+        action_bound = 1
+        """
+        # Ensure action bound is symmetric
+        assert (env.action_space.high == -env.action_space.low)
+        """
+
+        actor = ActorNetwork(sess, state_dim, action_dim, action_bound,
+                             float(args['actor_lr']), float(args['tau']),
+                             int(args['minibatch_size']))
+
+        critic = CriticNetwork(sess, state_dim, action_dim,
+                               float(args['critic_lr']), float(args['tau']),
+                               float(args['gamma']),
+                               actor.get_num_trainable_vars())
+
+        actor_noise = OrnsteinUhlenbeckActionNoise(mu=np.zeros(action_dim))
+
+        """
+        if args['use_gym_monitor']:
+            if not args['render_env']:
+                env = wrappers.Monitor(
+                    env, args['monitor_dir'], video_callable=False, force=True)
+            else:
+                env = wrappers.Monitor(env, args['monitor_dir'], force=True)
+        """
+
+        train(sess, env, args, actor, critic, actor_noise)
+
+        """
+        if args['use_gym_monitor']:
+            env.monitor.close()
+        """
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='provide arguments for DDPG agent')
 
@@ -407,4 +454,5 @@ if __name__ == '__main__':
     
     pp.pprint(args)
 
-    main(args)
+    #main(args)
+    test_sine(args)
