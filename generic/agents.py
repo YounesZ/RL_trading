@@ -137,14 +137,14 @@ class DDPGModelMLP():
 
 			# --- VARIABLES
 			# Hidden layer 1
-			W1 	=	tf.Variable( tf.random_uniform([input_size, actor_hidden[0]],-3e-3,3e-3, seed=self.random_seed[0]), name= 'ac_w1'+handle_suffix )
-			b1 	=	tf.Variable( tf.random_uniform([actor_hidden[0]],-3e-3,3e-3, seed=self.random_seed[1]), name='ac_b1'+handle_suffix )
+			W1 	=	tf.Variable( tf.random_uniform([input_size, actor_hidden[0]],-3e-3,3e-3), name= 'ac_w1'+handle_suffix )
+			b1 	=	tf.Variable( tf.random_uniform([actor_hidden[0]],-3e-3,3e-3), name='ac_b1'+handle_suffix )
 			# Hidden layer 2
-			W2 	= 	tf.Variable( tf.random_uniform([actor_hidden[0], actor_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[2]), name= 'ac_w2'+handle_suffix )
-			b2 	= 	tf.Variable( tf.random_uniform([actor_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[3]), name='ac_b2'+handle_suffix )
+			W2 	= 	tf.Variable( tf.random_uniform([actor_hidden[0], actor_hidden[1]], -3e-3, 3e-3), name= 'ac_w2'+handle_suffix )
+			b2 	= 	tf.Variable( tf.random_uniform([actor_hidden[1]], -3e-3, 3e-3), name='ac_b2'+handle_suffix )
 			# Hidden layer 3
-			W3 	= 	tf.Variable( tf.random_uniform([actor_hidden[1], output_size], -3e-3,3e-3, seed=self.random_seed[4]), name= 'ac_w3'+handle_suffix )
-			b3 	= 	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3, seed=self.random_seed[5]), name='ac_b3'+handle_suffix )
+			W3 	= 	tf.Variable( tf.random_uniform([actor_hidden[1], output_size], -3e-3,3e-3), name= 'ac_w3'+handle_suffix )
+			b3 	= 	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3), name='ac_b3'+handle_suffix )
 
 			# --- GRAPH
 			output 	=	self.batch_norm_layer(state_input, is_training, activation=tf.identity, scope_bn='batch_norm0'+handle_suffix)
@@ -168,15 +168,15 @@ class DDPGModelMLP():
 
 			# --- VARIABLES
 			# Hidden layer 1
-			W1 	=	tf.Variable( tf.random_uniform([input_size, critic_hidden[0]], -3e-3, 3e-3, seed=self.random_seed[0]), name= 'cr_w1'+handle_suffix )
-			b1 	=	tf.Variable( tf.random_uniform([critic_hidden[0]], -3e-3, 3e-3, seed=self.random_seed[1]), name= 'cr_b1'+handle_suffix )
+			W1 	=	tf.Variable( tf.random_uniform([input_size, critic_hidden[0]], -3e-3, 3e-3), name= 'cr_w1'+handle_suffix )
+			b1 	=	tf.Variable( tf.random_uniform([critic_hidden[0]], -3e-3, 3e-3), name= 'cr_b1'+handle_suffix )
 			# Hidden layer 2: take up concatenation on action_input
-			W2s	=	tf.Variable( tf.random_uniform([critic_hidden[0], critic_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[2]), name= 'cr_w2s'+handle_suffix  )
-			W2a = 	tf.Variable( tf.random_uniform([output_size, critic_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[2]), name='cr_w2a' + handle_suffix)
-			b2 	= 	tf.Variable( tf.random_uniform([critic_hidden[1]], -3e-3, 3e-3, seed=self.random_seed[3]), name='cr_b2' + handle_suffix)
+			W2s	=	tf.Variable( tf.random_uniform([critic_hidden[0], critic_hidden[1]], -3e-3, 3e-3), name= 'cr_w2s'+handle_suffix  )
+			W2a = 	tf.Variable( tf.random_uniform([output_size, critic_hidden[1]], -3e-3, 3e-3), name='cr_w2a' + handle_suffix)
+			b2 	= 	tf.Variable( tf.random_uniform([critic_hidden[1]], -3e-3, 3e-3), name='cr_b2' + handle_suffix)
 			# Output layer
-			W3 	=	tf.Variable( tf.random_uniform([critic_hidden[1], output_size], -3e-3, 3e-3, seed=self.random_seed[4]), name= 'cr_w3'+handle_suffix  )
-			b3 	=	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3, seed=self.random_seed[5]), name= 'cr_b3'+handle_suffix )
+			W3 	=	tf.Variable( tf.random_uniform([critic_hidden[1], output_size], -3e-3, 3e-3), name= 'cr_w3'+handle_suffix  )
+			b3 	=	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3), name= 'cr_b3'+handle_suffix )
 
 			# --- GRAPH
 			output 	=	tf.add( tf.matmul(state_input, W1), b1 )
@@ -453,7 +453,7 @@ def test_gym_pendulum():
 
 def test_sine():
 	# Environment variables
-	outdir = '/home/younesz/Desktop/SUM'
+	outdir = '/Users/younes_zerouali/Desktop/SUM'
 	lrAcCr = np.array([1e-4, 1e-3])
 
 	# import gym environment
@@ -471,7 +471,7 @@ def test_sine():
 	for episode in range(n_episodes):
 		print('episode {}, '.format(episode), end='')
 		state 	= 	env.reset()
-		lr_disc = 	lrAcCr * n_episodes / (9 + episode + n_episodes)
+		lr_disc = 	lrAcCr #* n_episodes / (9 + episode + n_episodes)
 		epRew 	= 	0
 		epQlss 	=	0
 		# Train
@@ -506,6 +506,85 @@ def test_sine():
 	Ax.set_ylabel('Cumulated reward')
 
 
+def test_sine2():
+	# Environment variables
+	outdir = '/Users/younes_zerouali/Desktop/SUM'
+	lrAcCr = np.array([1e-4, 1e-3])
+
+	# import gym environment
+	from generic.environments import Sine
+	env 	= 	Sine()
+	noise 	=	OrnsteinUhlenbeckActionNoise(mu=np.zeros(env.action_space))
+	agent 	=	DDPGModelMLP(env.observation_space, env.action_space, outputdir=outdir,\
+							   actor_hidden=[40, 30], critic_hidden=[40,30], noise_process= noise)
+
+	# Simulation variables
+	n_episodes 	= 	1000
+	rewards 	= 	[]
+	epQsa 		=	0
+	epQlss 		=	0
+	for episode in range(n_episodes):
+		print('episode {}, '.format(episode), end='')
+		if episode==20:
+			print('')
+		state 	= 	env.reset()
+		lr_disc = 	lrAcCr #* n_episodes / (9 + episode + n_episodes)
+		epRew 	= 	0
+		epQlss 	=	0
+		# Train
+		for step in range(env.spec['timestep_limit']):
+			if step==35:
+				print('')
+			action	=	agent.session.run(agent.actor_output, feed_dict={agent.actor_input:[state], agent.actor_training:True})[0][0] + agent.noise_process()[0]
+			next_state, reward, done, _	= env.step(action)
+			epRew 	+=	reward
+			agent.remember(state, action, reward, next_state, done)
+
+			# Keep adding experience to the memory until
+			# there are at least minibatch size samples
+			if len(agent.memory) > agent.batch_size:
+				MEM	=	list(compress(agent.memory, np.random.randint(len(agent.memory), size=agent.batch_size)))
+				s_batch 	=	[x[0] for x in MEM]
+				a_batch 	=	[[x[1]] for x in MEM]
+				r_batch 	=	[x[2] for x in MEM]
+				s2_batch 	=	[x[3] for x in MEM]
+				t_batch 	=	[x[4] for x in MEM]
+
+				# Calculate targets
+				pred_a 		=	agent.session.run( agent.actor_target_output, feed_dict={agent.actor_target_input:s_batch, agent.actor_target_training:True})
+				target_q 	= 	agent.session.run( agent.critic_target_output, feed_dict={agent.critic_target_state_input:s2_batch, agent.critic_target_action_input:pred_a})
+
+				y_i = []
+				for k in range(len(MEM)):
+					if t_batch[k]:
+						y_i.append(np.array([r_batch[k]]))
+					else:
+						y_i.append(r_batch[k] + agent.discount_rate * target_q[k])
+
+				# Update the critic given the targets
+				agent.session.run(agent.optimize_critic, feed_dict={agent.y_input: y_i, agent.critic_state_input: s_batch, agent.critic_action_input: a_batch, agent.lr_critic: lrAcCr[1]})
+
+				# Update the actor policy using the sampled gradient
+				a_outs 	= 	agent.session.run(agent.actor_output, feed_dict={agent.actor_input:s_batch, agent.actor_training:True})
+				grads 	=	agent.session.run(agent.critic_grad, feed_dict={agent.critic_state_input:s_batch, agent.critic_action_input:a_batch})
+				agent.session.run(agent.optimize_actor, feed_dict={agent.actor_input: s_batch, agent.actor_critic_grad: grads[0], agent.actor_training:True, agent.lr_actor:lrAcCr[0]})
+
+				# Update target networks
+				agent.update_target_networks()
+
+			state	=	next_state
+		print('total reward %.2f, done in %i steps, max value: %.5f' % (epRew, step, epQsa))
+
+
+	# Plot result
+	F	=	plt.figure()
+	Ax	=	F.add_subplot(111)
+	Ax.plot(rewards)
+	Ax.set_xlabel('Training episode')
+	Ax.set_ylabel('Cumulated reward')
+
+
+
 
 
 if __name__ == '__main__':
@@ -516,4 +595,4 @@ if __name__ == '__main__':
 	#test_gym_pendulum()
 
 	# Launch sine wave training
-	test_sine()
+	test_sine2()
