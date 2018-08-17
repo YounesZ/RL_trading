@@ -124,7 +124,7 @@ def main():
 	rootStore 		=	open('../dbloc.txt', 'r').readline().rstrip('\n')
 	window_state 	= 	32
 	time_difference = 	True
-	wavelet_channels=	4
+	wavelet_channels=	0
 	n_episode_training= 100
 	n_episode_testing = 50
 	open_cost 		= 	3  # Percentage on the buy order
