@@ -1,4 +1,4 @@
-from lib import *
+from src.lib import *
 import matplotlib.pyplot as plt
 
 
@@ -75,7 +75,7 @@ class Simulator:
 			exploration = max(exploration_min, exploration * exploration_decay)
 			exploration = 0.7 * np.exp(-0.1*n) + 0.1
 			explorations.append(exploration)
-			explored_cum_rewards, explored_actions, _ = self.play_one_episode(exploration, print_t=print_t)
+			explored_cum_rewards, explored_actions, _	=	self.play_one_episode(exploration, print_t=print_t)
 			explored_total_rewards.append(100.*explored_cum_rewards[-1]/self.env.max_profit)
 			test_cum_rewards, test_actions, _ = self.play_one_episode(0, training=False, rand_price=True, print_t=False)
 			test_total_rewards.append(test_cum_rewards[-1])
@@ -100,19 +100,20 @@ class Simulator:
 				print('saving results...')
 				self.agent.save(fld_model)
 
+				"""
 				self.visualizer.plot_a_episode(
 					self.env, self.agent.p_model,
 					explored_cum_rewards, explored_actions,
 					safe_cum_rewards, safe_actions,
 					os.path.join(fld_save, 'episode_%i.png'%(n)))
-
+				"""
 
 				self.visualizer.plot_episodes(
-					explored_total_rewards, safe_total_rewards, explorations, 
+					np.reshape(explored_total_rewards,-1), np.reshape(safe_total_rewards,-1), explorations,
 					os.path.join(fld_save, 'total_rewards.png'),
 					MA_window)
 
-			AX.plot(list(range(n + 1)), test_total_rewards)
+			AX.plot(list(range(n + 1)), np.reshape(test_total_rewards,-1))
 			FF.canvas.draw()
 
 
@@ -146,12 +147,13 @@ class Simulator:
 			if n%save_per_episode == 0:
 				print('saving results...')
 
-
+				"""
 				self.visualizer.plot_a_episode(
 					self.env, self.agent.p_model,
 					[np.nan]*len(safe_cum_rewards), [np.nan]*len(safe_actions),
 					safe_cum_rewards, safe_actions,
 					os.path.join(fld_save, 'episode_%i.png'%(n)))
+				"""
 
 				self.visualizer.plot_episodes(
 					None, safe_total_rewards, None, 

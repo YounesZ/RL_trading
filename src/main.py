@@ -1,11 +1,22 @@
 #!/usr/bin/env python2
 
-from lib import *
-from sampler import *
-from agents import *
-from emulator import *
-from simulators import *
-from visualizer import *
+from src.lib import *
+from src.sampler import *
+from src.agents import *
+from src.emulator import *
+from src.simulators import *
+from src.visualizer import *
+
+
+def get_agent(model_type, env, learning_rate=0.01, fld_load=True, input_size=32, batch_size=8, discount_factor=0.99, buffer_size=2000, planning_horizon=10, outputdir='/home/younesz/Desktop/SUM'):
+	if model_type=='DDPG':
+		agent,print_t 	=	get_model(model_type, env, learning_rate, fld_load, input_size, batch_size)
+	else:
+		model, print_t 	= 	get_model(model_type, env, learning_rate, fld_load, input_size, batch_size)
+		p_model, _ 		=	get_model(model_type, env, learning_rate, fld_load, input_size, batch_size=1, outputdir=outputdir)
+		agent			=	Agent(model, discount_factor=discount_factor, batch_size=batch_size,
+				  			prediction_model=p_model, buffer_size=buffer_size, planning_horizon=planning_horizon)
+	return agent, print_t
 
 
 def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_size=8, outputdir=None):
@@ -32,10 +43,13 @@ def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_siz
 	elif model_type == 'DDPG':
 		# Deep Deterministic Policy Gradient
 		# Lillicrap et al. 2016: Continuous control with deep reinforcement learning
+		from external.patemami_DDPG.ddpg.ddpg import DDPG
+		from generic.dummy import Model
 		actor_hidden 	=	[48, 24, 12, 6]
 		critic_hidden 	=	[[48, 24], [24, 12, 6]]
-		model 			=	DDPGModelMLP(env.state_shape, env.n_action, env.wavelet_channels, outputdir)
-		model.build_model(actor_hidden, critic_hidden, learning_rate=learning_rate, activation='relu', input_size=input_size)
+		model 			=	DDPG(env.state_shape[1], env.n_action)
+		model.model 	=	Model('DDPG')
+		#model.build_model(actor_hidden, critic_hidden, learning_rate=learning_rate, activation='relu', input_size=input_size)
 
 
 	elif model_type == 'conv':
@@ -120,19 +134,16 @@ def main():
 
 	fld 	= 	os.path.join(rootStore,'data',db_type,db+'A')
 	#sampler = Sampler('load', fld=fld)
-	sampler = 	Sampler('single', 180, 1.5, (20,40), (49,50), fld=fld)
+	sampler = 	Sampler('single', 180, .5, (30,35), (49,50), fld=fld)
 	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
-	model, print_t 	= 	get_model(model_type, env, learning_rate, fld_load, input_size=window_state, batch_size=batch_size)
-	p_model, _ 		= 	get_model(model_type, env, learning_rate, fld_load, input_size=window_state, batch_size=1, outputdir= '/home/younesz/Desktop/SUM')
-	agent	 = 	Agent(model, discount_factor=discount_factor, batch_size=batch_size,
-				  prediction_model=p_model, buffer_size=buffer_size, planning_horizon=planning_horizon)
+	agent, print_t	= 	get_agent(model_type, env, outputdir='/home/younesz/Desktop/SUM')
 
 	# Set save name
-	fld_save = os.path.join(rootStore, 'results', sampler.title, model.model_name,
-							str((env.window_state, sampler.window_episode, agent.batch_size, learning_rate,
-								 agent.discount_factor, exploration_decay, env.open_cost)))
+	fld_save = os.path.join(rootStore, 'results', sampler.title, model_type,
+							str((env.window_state, sampler.window_episode, batch_size, learning_rate,
+								 discount_factor, exploration_decay, env.open_cost)))
 
-	model.model.summary()
+	#model.model.summary()
 	#return
 
 	visualizer	=	Visualizer(env.action_labels)

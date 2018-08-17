@@ -1,4 +1,4 @@
-from lib import *
+from src.lib import *
 import matplotlib.pyplot as plt
 
 
@@ -83,13 +83,13 @@ class Visualizer:
 		tt = range(len(safe_total_rewards))
 
 		if explored_total_rewards is not None:
-			ma = pd.rolling_median(np.array(explored_total_rewards), window=MA_window, min_periods=1)
+			ma = pd.rolling_mean(np.array(explored_total_rewards), window=MA_window, min_periods=1)
 			std = pd.rolling_std(np.array(explored_total_rewards), window=MA_window, min_periods=3)
 			ax_reward.plot(tt, explored_total_rewards,'bv', fillstyle='none')
 			ax_reward.plot(tt, ma, 'b', label='explored ma', linewidth=2)
 			ax_reward.plot(tt, std, 'b--', label='explored std', linewidth=2)
 
-		ma = pd.rolling_median(np.array(safe_total_rewards), window=MA_window, min_periods=1)
+		ma = pd.rolling_mean(np.array(safe_total_rewards), window=MA_window, min_periods=1)
 		std = pd.rolling_std(np.array(safe_total_rewards), window=MA_window, min_periods=3)
 		ax_reward.plot(tt, safe_total_rewards,'ro', fillstyle='none')
 		ax_reward.plot(tt, ma,'r', label='safe ma', linewidth=2)
