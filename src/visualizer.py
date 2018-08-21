@@ -89,8 +89,9 @@ class Visualizer:
 			ax_reward.plot(tt, ma, 'b', label='explored ma', linewidth=2)
 			ax_reward.plot(tt, std, 'b--', label='explored std', linewidth=2)
 
-		ma = pd.rolling_mean(np.array(safe_total_rewards), window=MA_window, min_periods=1)
-		std = pd.rolling_std(np.array(safe_total_rewards), window=MA_window, min_periods=3)
+		safe_total_rewards 	=	np.array(safe_total_rewards).flatten()
+		ma 	= pd.rolling_mean(safe_total_rewards, window=MA_window, min_periods=1)
+		std = pd.rolling_std(safe_total_rewards, window=MA_window, min_periods=3)
 		ax_reward.plot(tt, safe_total_rewards,'ro', fillstyle='none')
 		ax_reward.plot(tt, ma,'r', label='safe ma', linewidth=2)
 		ax_reward.plot(tt, std,'r--', label='safe std', linewidth=2)

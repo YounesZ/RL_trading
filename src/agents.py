@@ -44,7 +44,7 @@ class Agent:
 		if len(self.memory)>self.buffer_size:
 			sample_id 	=	[np.random.randint(len(self.memory)) for x in range(self.batch_size)]
 			rewards		=	[self.get_discounted_reward(x, window_size) for x in sample_id]
-			batch 		= 	np.concatenate([self.memory[0][0] for x in sample_id], axis=1)
+			batch 		= 	[self.memory[x][0].flatten() for x in sample_id]
 
 			self.model.fit(batch, [], rewards)
 
@@ -161,8 +161,8 @@ class QModelKeras:
 		else:
 			rshp_state	=	add_dim(state, self.state_shape)
 		"""
-		rshp_state 	= 	add_dim(state, self.state_shape)
-		q 			= 	self.model.predict( rshp_state )[0]
+		#rshp_state 	= 	add_dim(state, self.state_shape)
+		q 			= 	self.model.predict( state )[0]
 
 		"""
 		if np.isnan(np.max(q, axis=1)).any():
@@ -187,9 +187,7 @@ class QModelKeras:
 			rshp_state	=	add_dim(state, self.state_shape)
 		self.model.fit( rshp_state, add_dim(q, (self.n_action,)), epochs=1, verbose=0)
 		"""
-		rshp_state 	=	deepcopy(state).T
-		rshp_shape 	=	np.shape(rshp_state)
-		self.model.fit( add_dim(rshp_state, rshp_shape), add_dim(q, (len(q),1,)), epochs=1, verbose=0)
+		self.model.fit( np.array(state), q, epochs=1, verbose=0)
 
 	def modular_state_space(self, state):
 		new_shape 	= 	(len(state) / np.power(2, list(range(1, self.wavelet_channels + 1)) + [self.wavelet_channels])).astype(int)
@@ -205,17 +203,15 @@ class QModelMLP(QModelKeras):
 	def init(self):
 		self.qmodel = 'MLP'	
 
-	def build_model(self, n_hidden, learning_rate, activation='relu'):
+	def build_model(self, n_units, learning_rate, activation='relu'):
 
 		#if self.wavelet_channels==0:
 		# Purely dense MLP
-		model = keras.models.Sequential()
-		model.add(keras.layers.Reshape(
-			(self.state_shape[0]*self.state_shape[1],),
-			input_shape=self.state_shape))
+		model = K.models.Sequential()
+		model.add( K.layers.Dense( n_units[0], input_shape=(np.prod(self.state_shape),)) )
 
-		for i in range(len(n_hidden)):
-			model.add(keras.layers.Dense(n_hidden[i], activation=activation))
+		for i in range(1, len(n_units)):
+			model.add(keras.layers.Dense(n_units[i], activation=activation))
 			#model.add(keras.layers.Dropout(drop_rate))
 
 		model.add(keras.layers.Dense(self.n_action, activation='linear'))
@@ -244,7 +240,7 @@ class QModelMLP(QModelKeras):
 
 		model.compile(loss='mse', optimizer=keras.optimizers.Adam(lr=learning_rate))
 		self.model 		= 	model
-		self.model_name = 	self.qmodel + str(n_hidden)
+		self.model_name = 	self.qmodel + str(n_units)
 
 
 class PGModelMLP(QModelKeras):

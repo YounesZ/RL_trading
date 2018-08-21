@@ -8,9 +8,9 @@ from src.simulators import *
 from src.visualizer import *
 
 
-def get_agent(model_type, env, learning_rate=0.01, fld_load=True, input_size=32, batch_size=8, discount_factor=0.99, buffer_size=2000, planning_horizon=10, outputdir='/home/younesz/Desktop/SUM'):
+def get_agent(model_type, env, learning_rate=0.01, fld_load=True, input_size=32, batch_size=8, discount_factor=0.99, buffer_size=2000, buffer_min_size=100, planning_horizon=10, outputdir='/home/younesz/Desktop/SUM'):
 	if model_type=='DDPG':
-		agent,print_t 	=	get_model(model_type, env, learning_rate, fld_load, input_size, batch_size)
+		agent,print_t 	=	get_model(model_type, env, learning_rate=learning_rate, fld_load=fld_load, batch_size=batch_size, buffer_min_size=buffer_min_size, gamma=discount_factor, buffer_size=buffer_size, use_noise=False, outputdir=outputdir)
 	else:
 		model, print_t 	= 	get_model(model_type, env, learning_rate, fld_load, input_size, batch_size)
 		p_model, _ 		=	get_model(model_type, env, learning_rate, fld_load, input_size, batch_size=1, outputdir=outputdir)
@@ -19,7 +19,7 @@ def get_agent(model_type, env, learning_rate=0.01, fld_load=True, input_size=32,
 	return agent, print_t
 
 
-def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_size=8, outputdir=None):
+def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_size=8, buffer_size=2000, buffer_min_size=100, gamma=0.99, use_noise=True, outputdir=None):
 
 	print_t = False
 	exploration_init = 1.
@@ -27,9 +27,9 @@ def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_siz
 	if model_type == 'MLP':
 		#m = 16
 		layers 		= 	5
-		hidden_size = 	[48, 24, 12, 6] 	#[m]*layers
+		layer_units = 	[48, 24, 12, 6] 	#[m]*layers
 		model 		= 	QModelMLP(env.state_shape, env.n_action, env.wavelet_channels)
-		model.build_model(hidden_size, learning_rate=learning_rate, activation='tanh')
+		model.build_model(layer_units, learning_rate=learning_rate, activation='tanh')
 
 
 	elif model_type == 'MLP_PG':
@@ -43,11 +43,11 @@ def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_siz
 	elif model_type == 'DDPG':
 		# Deep Deterministic Policy Gradient
 		# Lillicrap et al. 2016: Continuous control with deep reinforcement learning
-		from external.patemami_DDPG.ddpg.ddpg import DDPG
+		from external_modules.patemami_DDPG.ddpg.ddpg import DDPG
 		from generic.dummy import Model
 		actor_hidden 	=	[48, 24, 12, 6]
 		critic_hidden 	=	[[48, 24], [24, 12, 6]]
-		model 			=	DDPG(env.state_shape[1], env.n_action)
+		model 			=	DDPG(env.state_shape[1], env.n_action, use_noise=use_noise, outputdir=outputdir, batch_size=batch_size, buffer_size=buffer_size, buffer_min_size=buffer_min_size, gamma=gamma)
 		model.model 	=	Model('DDPG')
 		#model.build_model(actor_hidden, critic_hidden, learning_rate=learning_rate, activation='relu', input_size=input_size)
 
@@ -112,11 +112,12 @@ def main():
 	discount_factor = 	0.8
 	exploration_decay= 	0.99
 	exploration_min = 	0.01
-	buffer_size 	=	200
+	buffer_min_size =	100
+	buffer_size		=	2000
 	planning_horizon=	1
 
 	# DQN architecture
-	model_type		=	'MLP_PG';
+	model_type		=	'DDPG';
 	exploration_init= 	1.;
 	fld_load 		= 	None
 
@@ -136,7 +137,9 @@ def main():
 	#sampler = Sampler('load', fld=fld)
 	sampler = 	Sampler('single', 180, .5, (30,35), (49,50), fld=fld)
 	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
-	agent, print_t	= 	get_agent(model_type, env, outputdir='/home/younesz/Desktop/SUM')
+	agent, print_t	= 	get_agent(model_type, env, batch_size=batch_size,\
+									 buffer_min_size=buffer_min_size, buffer_size=buffer_size,\
+									outputdir='/Users/younes_zerouali/Desktop/SUM')
 
 	# Set save name
 	fld_save = os.path.join(rootStore, 'results', sampler.title, model_type,

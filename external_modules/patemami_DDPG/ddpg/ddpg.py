@@ -17,26 +17,29 @@ import tflearn
 import argparse
 import pprint as pp
 
-from external.patemami_DDPG.ddpg.replay_buffer import ReplayBuffer
+from external_modules.patemami_DDPG.ddpg.replay_buffer import ReplayBuffer
+from generic.dummy import Noise as dmz
 
 # ===========================
 #   Actor and Critic DNNs
 # ===========================
 class DDPG():
 
-    def __init__(self, state_dim, action_dim, action_bound=1, lr=[1e-4, 1e-3], tau=0.001, batch_size=64, gamma=0.99, seed=np.random.randint(1e9), buffer_size=2000, outputdir='/home/younesz/Desktop/SUM'):
+    def __init__(self, state_dim, action_dim, action_bound=1, lr=[1e-4, 1e-3], tau=0.001, batch_size=64, buffer_min_size=100, gamma=0.99, seed=np.random.randint(1e9), buffer_size=2000, use_noise=True, outputdir='/home/younesz/Desktop/SUM'):
         # Initialize TF session
         self.sess   =   tf.Session()
         np.random.seed(seed)
         tf.set_random_seed(seed)
         # Create actor
-        self.Actor  =   ActorNetwork(self.sess, state_dim, action_dim, action_bound, lr[0], tau, batch_size)
+        self.Actor  =   ActorNetwork(self.sess, state_dim, action_dim, action_bound, lr[0], tau, batch_size, buffer_min_size)
         # Create critic
         self.Critic =   CriticNetwork(self.sess, state_dim, action_dim, lr[1], tau, gamma, self.Actor.get_num_trainable_vars())
-        # Critic noise process
-        self.Noise  =   OrnsteinUhlenbeckActionNoise(mu=np.zeros(action_dim))
         # Initialize replay memory
         self.Buffer =   ReplayBuffer(buffer_size, seed)
+        # Critic noise process
+        self.Noise  =   dmz()
+        if use_noise:
+            self.Noise = OrnsteinUhlenbeckActionNoise(mu=np.zeros(action_dim))
 
         # Initialize summary operations
         self.summary_ops, self.summary_vars = build_summaries()
@@ -52,7 +55,7 @@ class DDPG():
 
     def replay(self, trace=1):
         predicted_q_value   =   0
-        if self.Buffer.size() > self.Actor.batch_size:
+        if self.Buffer.size() > self.Actor.buffer_min_size:
             s_batch, a_batch, r_batch, s2_batch, t_batch    =   self.Buffer.sample_batch(self.Actor.batch_size)
 
             # Calculate targets
@@ -96,7 +99,7 @@ class ActorNetwork(object):
     between -action_bound and action_bound
     """
 
-    def __init__(self, sess, state_dim, action_dim, action_bound, learning_rate, tau, batch_size):
+    def __init__(self, sess, state_dim, action_dim, action_bound, learning_rate, tau, batch_size, buffer_min_size):
         self.sess = sess
         self.s_dim = state_dim
         self.a_dim = action_dim
@@ -104,6 +107,7 @@ class ActorNetwork(object):
         self.learning_rate = learning_rate
         self.tau = tau
         self.batch_size = batch_size
+        self.buffer_min_size = buffer_min_size
 
         # Actor Network
         self.inputs, self.out, self.scaled_out = self.create_actor_network()
@@ -140,10 +144,10 @@ class ActorNetwork(object):
 
     def create_actor_network(self):
         inputs = tflearn.input_data(shape=[None, self.s_dim])
-        net = tflearn.fully_connected(inputs, 400)
+        net = tflearn.fully_connected(inputs, 40)
         net = tflearn.layers.normalization.batch_normalization(net)
         net = tflearn.activations.relu(net)
-        net = tflearn.fully_connected(net, 300)
+        net = tflearn.fully_connected(net, 30)
         net = tflearn.layers.normalization.batch_normalization(net)
         net = tflearn.activations.relu(net)
         # Final layer weights are init to Uniform[-3e-3, 3e-3]
@@ -227,14 +231,14 @@ class CriticNetwork(object):
     def create_critic_network(self):
         inputs = tflearn.input_data(shape=[None, self.s_dim])
         action = tflearn.input_data(shape=[None, self.a_dim])
-        net = tflearn.fully_connected(inputs, 400)
+        net = tflearn.fully_connected(inputs, 40)
         net = tflearn.layers.normalization.batch_normalization(net)
         net = tflearn.activations.relu(net)
 
         # Add the action tensor in the 2nd hidden layer
         # Use two temp layers to get the corresponding weights and biases
-        t1 = tflearn.fully_connected(net, 300)
-        t2 = tflearn.fully_connected(action, 300)
+        t1 = tflearn.fully_connected(net, 30)
+        t2 = tflearn.fully_connected(action, 30)
 
         net = tflearn.activation(
             tf.matmul(net, t1.W) + tf.matmul(action, t2.W) + t2.b, activation='relu')
