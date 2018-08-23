@@ -1,3 +1,5 @@
+import random
+import keras as K
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -6,10 +8,80 @@ from os import path
 from copy import deepcopy
 from datetime import datetime
 from itertools import compress
+from keras.engine.input_layer import Input
+from keras.backend import variable as Kvar
+from keras.backend import set_value as Kset
 from generic.noise import OrnsteinUhlenbeckActionNoise
 
 
-class DDPGModelMLP():
+class Agent:
+
+	def __init__(self, agent_type, state_size, action_range, action_size=2, valid_actions=None,
+				 layer_units=[48, 32, 16, 8], batch_size=12, discount_factor=0.95, buffer_min_size=200,
+				 buffer_max_size=2000, learning_rate=0.001, noise_process=None, outputdir=None):
+
+		# Set action space
+		self.valid_actions	=	list( range(action_size) )
+		self.batch_size     =   batch_size
+		self.discount_factor=   discount_factor
+		self.memory         =   []
+		self.buffer_min_size=   buffer_min_size
+		self.buffer_max_size=   buffer_max_size
+		self.attr2save      =   ['state_size', 'action_size', 'model_name']
+		self.outputdir 		=	outputdir
+		self.model          =   self.get_agent(agent_type, state_size, action_size, layer_units, learning_rate, noise_process)
+
+
+	def get_agent(self, agent_type, state_size, action_size, layer_units, learning_rate, noise_process):
+		if agent_type	==	'DQN':
+			return	DQN_agent(state_size, action_size, layer_units, learning_rate, self.outputdir)
+		elif agent_type	==	'DDPG':
+			return DDPG_agent(state_size, action_size, layer_units, noise_process)
+		else:
+			print('Unrecognized agent type')
+			return
+
+
+	def remember(self, state, action, reward, next_state, done, next_valid_actions):
+		self.memory.append((state, action, reward, next_state, done, next_valid_actions))
+
+
+	def replay(self, trace_length=1):
+		Q_s_a 	=	[]
+		Qloss 	=	[]
+		if len(self.memory) > self.buffer_min_size:
+			batch   =   random.sample(self.memory, min(len(self.memory), self.batch_size))
+			for state, action, reward, next_state, done, next_valid_actions in batch:
+				q   =   reward
+				if not done:
+					q   +=  self.discount_factor * np.nanmax(self.get_q_valid(next_state, next_valid_actions))
+				Q_s_a 	+=	[q]
+				qls, ldc=	self.model.fit(state, action, q)
+				Qloss 	+=	[qls]
+		return Q_s_a, Qloss, ldc
+
+
+	def get_q_valid(self, state, valid_actions):
+		#self.model.model.set_weights(self.model.model.get_weights())
+		q       =   self.model.predict(state)
+		q_valid =   [np.nan] * len(q)
+		for action in valid_actions:
+			q_valid[action] =   q[action]
+		return q_valid
+
+
+	def act(self, state, exploration=0.05, valid_actions=None):
+		# NEED TO PLUG NOISE PROCESS HERE
+		if valid_actions is None:
+			valid_actions	=	self.valid_actions
+		if np.random.random() > exploration:
+			q_valid = self.get_q_valid(state, valid_actions)
+			return np.argmax(q_valid)
+		return np.random.choice( valid_actions )
+
+
+
+class DDPG_agent():
 	# Actor-critic method, both are implemented as MLPs
 
 	def __init__(self, state_space, action_space, \
@@ -23,7 +95,7 @@ class DDPGModelMLP():
 				 outputdir			=	None,\
 				 actor_hidden		=	[400, 300],\
 				 critic_hidden		=	[400, 300]):
-		self.qmodel             =   'MLP_DDPG'
+		self.qmodel             =   'DDPG'
 		self.session            =   tf.Session()
 		self.state_space        =   state_space
 		self.action_space       =   action_space
@@ -38,6 +110,9 @@ class DDPGModelMLP():
 		self.memory 			=	[]
 		self.model_saver 		=	None
 		self.outputdir 			=	outputdir
+		# Set noise process
+		if noise_process=='OrnsteinUhlenbeck':
+			self.noise_process 	=	OrnsteinUhlenbeckActionNoise( mu=np.zeros(action_space) )
 		# Make the graph
 		self.actor_hidden       =   actor_hidden
 		self.critic_hidden      =   critic_hidden
@@ -188,27 +263,6 @@ class DDPGModelMLP():
 			output 	=	tf.add( tf.matmul(output, W3), b3 )
 		return state_input, action_input, output
 
-	"""
-	def get_weights(self, component, suffix='', parent_scope=''):
-		if component=='ac':
-			w1 	=	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w1' + suffix + ':0') )[0]
-			b1 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b1' + suffix + ':0') )[0]
-			w2 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w2' + suffix + ':0') )[0]
-			b2 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b2' + suffix + ':0') )[0]
-			w3 	=	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w3' + suffix + ':0') )[0]
-			b3 	= 	tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b3' + suffix + ':0') )[0]
-			collection 	= 	[w1, b1, w2, b2, w3, b3]
-		elif component=='cr':
-			w1 = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w1' + suffix + ':0'))[0]
-			b1 = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b1' + suffix + ':0'))[0]
-			w2s= tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w2s' + suffix + ':0'))[0]
-			w2a= tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w2a' + suffix + ':0'))[0]
-			b2 = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b2' + suffix + ':0'))[0]
-			w3 = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_w3' + suffix + ':0'))[0]
-			b3 = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=path.join(parent_scope, component + '_b3' + suffix + ':0'))[0]
-			collection = [w1, b1, w2s, w2a, b2, w3, b3]
-		return collection
-	"""
 
 	def fit(self, state, action, reward, next_state, done, lr):
 		# Train the critic
@@ -250,24 +304,6 @@ class DDPGModelMLP():
 		self.sumWriter.add_summary(summary, istep)
 
 	def update_target_networks(self):
-		"""
-		# Get weights - critic
-		critic_model_ref 	=	self.get_weights('cr', parent_scope='critic_')
-		critic_target_ref 	=	self.get_weights('cr', 'target', parent_scope='critic_target')
-		critic_target_val 	= 	[]
-		# Get weights - actor
-		actor_model_ref 	= 	self.get_weights('ac', parent_scope='actor_')
-		actor_target_ref 	= 	self.get_weights('ac', 'target', parent_scope='actor_target')
-		actor_target_val 	= 	[]
-		for iw in range( len(critic_target_ref) ):
-			critic_target_val	+=	[(1-self.update_rate) * critic_target_ref[iw] + self.update_rate * critic_model_ref[iw]]
-		for iw in range(len(actor_target_ref)):
-				actor_target_val 	+= 	[(1-self.update_rate) * actor_target_ref[iw] + (1-self.update_rate) * actor_model_ref[iw]]
-		# Update
-		upd_critic 	=	[tf.assign(x, y) for x,y in zip(critic_target_ref, critic_target_val)]
-		upd_actor 	=	[tf.assign(x, y) for x,y in zip(actor_target_ref, actor_target_val)]
-		return [upd_actor, upd_critic]
-		"""
 		self.session.run(self.update_actor_target_params)
 		self.session.run(self.update_critic_target_params)
 
@@ -344,10 +380,92 @@ class DDPGModelMLP():
 		return sess, annX, annY
 
 
+class DQN_agent():
+
+	def __init__(self, state_size, action_size, layer_units, learning_rate, outputdir):
+		self.state_size 	= 	state_size
+		self.action_size 	= 	action_size
+		self.layer_units 	= 	layer_units
+		self.learning_rate 	= 	learning_rate
+		self.qmodel 		= 	'DQN'
+		self.model, self.model_name = self.build_model(state_size, action_size, layer_units, learning_rate, outputdir)
+
+
+	def build_model(self, state_size, action_size, layer_units, learning_rate, outputdir, activation='relu'):
+
+		def summary(y_true, y_pred):
+			return tf.summary.merge_all()
+
+		# if self.wavelet_channels==0:
+		# Purely dense MLP
+		model = K.models.Sequential()
+		model.add(K.layers.Dense(layer_units[0], input_shape=(np.prod(state_size),)))
+
+		for i in range(1, len(layer_units)):
+			model.add(K.layers.Dense(layer_units[i], activation=activation))
+		# model.add(keras.layers.Dropout(drop_rate))
+		model.add(K.layers.Dense(action_size, activation='linear'))
+		# --- Prepare summaries
+		self.sum_lr 	= Kvar(0.0);	tf.summary.scalar('learning_rate', 0.0)	#Input(tensor=self.sum_lr)
+		self.sum_epRew 	= Kvar(0.0);	tf.summary.scalar('episode_reward',0.0 )	#Input(tensor=self.sum_epRew)
+		self.sum_maxQ	= Kvar(0.0);	tf.summary.scalar('episode_max_value', 0.0)#Input(tensor=self.sum_maxQ)
+		self.sum_totL 	= Kvar(0.0);	tf.summary.scalar('episode_total_loss', 0.0)#Input(tensor=self.sum_totL)
+		if not outputdir is None:
+			self.sumWriter 	= 	tf.summary.FileWriter(outputdir)
+		model.compile(loss='mse', optimizer=K.optimizers.Adam(lr=learning_rate), metrics=[summary])
+		return model, 'DQN' + str(layer_units)
+
+
+	def predict(self, state):
+		if np.shape(state)[1] != self.state_size:
+			state = np.reshape(state, [1,-1])
+		q = self.model.predict(state)
+		if np.isnan(np.max(q, axis=1)).any():
+			print('state' + str(state))
+			print('q' + str(q))
+			raise ValueError
+		return q.flatten()
+
+
+	def fit(self, state, action, q_action):
+		q 	= 	self.predict(state)
+		q_	=	deepcopy(q)
+		q[action] = q_action
+		if np.shape(state)[1] != self.state_size:
+			state = state.T
+		l 		=	self.model.fit(state, add_dim(q, (self.action_size,)), epochs=1, verbose=0)
+		l_dict 	= 	dict(zip(self.model.metrics_names, l))
+		return np.sqrt( np.sum( (q-q_) ** 2 ) ), l_dict
+
+
+	def update_summary(self, ldc, lr, rew, qsa, qlss, istep):
+		Kset(self.sum_lr, lr)
+		Kset(self.sum_epRew, rew)
+		Kset(self.sum_maxQ, qsa)
+		Kset(self.sum_totL, qlss)
+		if hasattr(self, 'sumWriter'):
+			self.sumWriter.add_summary(ldc['value_summary'], global_step=istep)
+			self.sumWriter.flush()
+
+
+def add_dim(x, shape):
+	return np.reshape(x, (1,) + shape)
 
 # ======
 # Tester
 # ======
+def play_episode(env, agent, display=True):
+	s 	=	env.reset()
+	done=	False
+	env.render(s, 0, 0)
+	while not done:
+		a 	=	agent.act(s)
+		s_, r, done, _	=	env.step(a)
+		env.render(s, a, r)
+		s 	=	s_
+	env.kill()
+
+
 def test_ddpg_gradients():
 	# Test whether the agent's action output moves towards the overall gradient
 
@@ -453,15 +571,15 @@ def test_gym_pendulum():
 
 def test_sine():
 	# Environment variables
-	outdir = '/Users/younes_zerouali/Desktop/SUM'
-	lrAcCr = np.array([1e-4, 1e-3])
+	outdir = 	'/home/younesz/Desktop/SUM'
+	lrAcCr = 	1e-3	#np.array([1e-4, 1e-3])
+	exploR =	0.05
+	acSpace=	2
 
 	# import gym environment
 	from generic.environments import Sine
-	env 	= 	Sine()
-	noise 	=	OrnsteinUhlenbeckActionNoise(mu=np.zeros(env.action_space))
-	agent 	=	DDPGModelMLP(env.observation_space, env.action_space, outputdir=outdir,\
-							   actor_hidden=[40, 30], critic_hidden=[40,30], noise_process= noise)
+	env 	= 	Sine(action_size=acSpace)
+	agent 	=	Agent('DQN', env.observation_space, env.action_space, layer_units=[40,30], noise_process= None, outputdir=outdir)
 
 	# Simulation variables
 	n_episodes 	= 	1000
@@ -477,18 +595,18 @@ def test_sine():
 		# Train
 		for step in range(env.spec['timestep_limit']):
 			# Act
-			action 	= 	agent.act(state, [[np.random.random() * 2 - 1]])
-			next_state, reward, done, _	=	env.step(action[0][0])
+			action 	= 	agent.act(state, exploR)
+			next_state, reward, done, _	=	env.step(action)
 			#env.render(state, reward)
 			# Store experience
-			agent.remember(state, action, reward, [next_state], done)
-			Q_s_a_, Qloss 	=	agent.replay(lr_disc)
+			agent.remember(state, action, reward, [next_state], done, list(range(acSpace)))
+			Q_s_a_, Qloss, ldc 	=	agent.replay(lr_disc)
 			# Prepare next iteration
 			state	= 	next_state
-			epRew 	+= 	reward.flatten()
-			if not Q_s_a_ is None:
+			epRew 	+= 	reward.flatten()[0]
+			if len(Q_s_a_)>0:
 				epQsa 	=	np.maximum(np.max(Q_s_a_), epQsa) if step>0 else np.max(Q_s_a_)
-				epQlss 	+=	Qloss
+				epQlss 	+=	np.mean(Qloss)
 			if done:
 				break
 		rewards	+=	[epRew]
@@ -496,7 +614,10 @@ def test_sine():
 
 		# Update summary log
 		if not episode % 1:
-			agent.update_summary(lr_disc, epRew, epQsa, epQlss, episode)
+			agent.model.update_summary(ldc, lr_disc, epRew, epQsa, epQlss, episode)
+
+		if not episode % 20:
+			play_episode(env, agent, True)
 
 	# Plot result
 	F	=	plt.figure()
@@ -595,4 +716,4 @@ if __name__ == '__main__':
 	#test_gym_pendulum()
 
 	# Launch sine wave training
-	test_sine2()
+	test_sine()

@@ -113,5 +113,6 @@ class Market:
 		self.t0 			= 	window_state - 1 + self.time_difference
 		self.train_window 	=	self.sampler.window_episode - self.window_state - self.time_difference
 
+
 if __name__ == '__main__':
 	test_env()

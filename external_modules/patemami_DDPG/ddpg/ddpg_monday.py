@@ -18,32 +18,33 @@ import argparse
 import pprint as pp
 
 from external_modules.patemami_DDPG.ddpg.replay_buffer import ReplayBuffer
+from generic.dummy import Noise as dmz
 
 # ===========================
 #   Actor and Critic DNNs
 # ===========================
 class DDPG():
 
-    def __init__(self, state_dim, action_dim, action_bound=1, lr=[1e-4, 1e-3], tau=0.001, batch_size=64, gamma=0.99, seed=np.random.randint(1e9), buffer_size=2000, outputdir='/home/younesz/Desktop/SUM'):
+    def __init__(self, state_dim, action_dim, action_bound=1, lr=[1e-4, 1e-3], tau=0.001, batch_size=64, buffer_min_size=100, gamma=0.99, seed=np.random.randint(1e9), buffer_size=2000, use_noise=True, outputdir='/home/younesz/Desktop/SUM'):
         # Initialize TF session
-        self.saver  =   tf.train.Saver()
         self.sess   =   tf.Session()
         np.random.seed(seed)
         tf.set_random_seed(seed)
         # Create actor
-        self.Actor  =   ActorNetwork(self.sess, state_dim, action_dim, action_bound, lr[0], tau, batch_size)
+        self.Actor  =   ActorNetwork(self.sess, state_dim, action_dim, action_bound, lr[0], tau, batch_size, buffer_min_size)
         # Create critic
         self.Critic =   CriticNetwork(self.sess, state_dim, action_dim, lr[1], tau, gamma, self.Actor.get_num_trainable_vars())
-        # Critic noise process
-        self.Noise  =   OrnsteinUhlenbeckActionNoise(mu=np.zeros(action_dim))
         # Initialize replay memory
         self.Buffer =   ReplayBuffer(buffer_size, seed)
+        # Critic noise process
+        self.Noise  =   dmz()
+        if use_noise:
+            self.Noise = OrnsteinUhlenbeckActionNoise(mu=np.zeros(action_dim))
 
         # Initialize summary operations
         self.summary_ops, self.summary_vars = build_summaries()
         self.sess.run(tf.global_variables_initializer())
         self.writer =   tf.summary.FileWriter(outputdir, self.sess.graph)
-
 
     def act(self, s, exploration=0.1, valid_actions=[-1,1]):
         return self.Actor.predict(np.reshape(s, (1, self.Actor.s_dim))) + self.Noise()
@@ -53,7 +54,7 @@ class DDPG():
 
     def replay(self, trace=1):
         predicted_q_value   =   0
-        if self.Buffer.size() > self.Actor.batch_size:
+        if self.Buffer.size() > self.Actor.buffer_min_size:
             s_batch, a_batch, r_batch, s2_batch, t_batch    =   self.Buffer.sample_batch(self.Actor.batch_size)
 
             # Calculate targets
@@ -86,7 +87,8 @@ class DDPG():
         print('| Reward: {:d} | Episode: {:d} | N_steps: {:d} | Qmax: {:.4f}'.format(int(ep_reward), episode, n_steps, (ep_ave_max_q / n_steps)))
 
     def save(self, path):
-        return self.saver.save(self.sess, path)
+        pass
+
 
 class ActorNetwork(object):
     """
@@ -97,14 +99,15 @@ class ActorNetwork(object):
     between -action_bound and action_bound
     """
 
-    def __init__(self, sess, state_dim, action_dim, action_bound, learning_rate, tau, batch_size):
-        self.sess = sess
-        self.s_dim = state_dim
-        self.a_dim = action_dim
-        self.action_bound = action_bound
-        self.learning_rate = learning_rate
-        self.tau = tau
-        self.batch_size = batch_size
+    def __init__(self, sess, state_dim, action_dim, action_bound, learning_rate, tau, batch_size, buffer_min_size):
+        self.sess   =   sess
+        self.s_dim  =   state_dim
+        self.a_dim  =   action_dim
+        self.action_bound   =   action_bound
+        self.learning_rate  =   learning_rate
+        self.tau            =   tau
+        self.batch_size     =   batch_size
+        self.buffer_min_size=   buffer_min_size
 
         # Actor Network
         self.inputs, self.out, self.scaled_out = self.create_actor_network()
@@ -297,10 +300,11 @@ class OrnsteinUhlenbeckActionNoise:
     def __repr__(self):
         return 'OrnsteinUhlenbeckActionNoise(mu={}, sigma={})'.format(self.mu, self.sigma)
 
+
+
 # ===========================
 #   Tensorflow Summary Ops
 # ===========================
-
 def build_summaries():
     episode_reward = tf.Variable(0.)
     tf.summary.scalar("Reward", episode_reward)
@@ -312,10 +316,10 @@ def build_summaries():
 
     return summary_ops, summary_vars
 
+
 # ===========================
 #   Agent Training
 # ===========================
-
 def train(env, args, agent):
 
 
@@ -327,25 +331,25 @@ def train(env, args, agent):
     # Needed to enable BatchNorm.
     # This hurts the performance on Pendulum but could be useful
     # in other environments.
-    # tflearn.is_training(True)
+    tflearn.is_training(True, session=agent.sess)
 
     for i in range(int(args['max_episodes'])):
 
         s = env.reset()
 
-        ep_reward   =   0
-        ep_ave_max_q=   0
+        ep_reward = 0
+        ep_ave_max_q = 0
 
         for j in range(int(args['max_episode_len'])):
+
+            if args['render_env']:
+                env.render()
 
             # Added exploration noise
             #a = actor.predict(np.reshape(s, (1, 3))) + (1. / (1. + i))
             a = agent.act(s)
 
             s2, r, terminal, info = env.step(a[0])
-
-            if args['render_env']:
-                env.render(s, r)
 
             agent.remember(s, a, r, s2, terminal)
             """agent.Buffer.add(np.reshape(s, (agent.Actor.s_dim,)), np.reshape(a, (agent.Actor.a_dim,)), r,
@@ -393,6 +397,7 @@ def train(env, args, agent):
                 agent.update_summary(ep_reward, ep_ave_max_q, i, j)
                 break
 
+
 def main(args):
 
     with tf.Session() as sess:
@@ -408,7 +413,6 @@ def main(args):
         # Ensure action bound is symmetric
         assert (env.action_space.high == -env.action_space.low)
 
-        """
         actor = ActorNetwork(sess, state_dim, action_dim, action_bound,
                              float(args['actor_lr']), float(args['tau']),
                              int(args['minibatch_size']))
@@ -419,16 +423,6 @@ def main(args):
                                actor.get_num_trainable_vars())
         
         actor_noise = OrnsteinUhlenbeckActionNoise(mu=np.zeros(action_dim))
-        """
-
-        Agent = DDPG(state_dim, action_dim, action_bound=action_bound, \
-                     lr=[float(args['actor_lr']), float(args['critic_lr'])], \
-                     tau=float(args['tau']), \
-                     batch_size=int(args['minibatch_size']), \
-                     gamma=float(args['gamma']), \
-                     seed=int(args['random_seed']), \
-                     outputdir=str(args['summary_dir']))
-
 
         if args['use_gym_monitor']:
             if not args['render_env']:
@@ -437,7 +431,7 @@ def main(args):
             else:
                 env = wrappers.Monitor(env, args['monitor_dir'], force=True)
 
-        train(env, args, Agent)
+        train(sess, env, args, actor, critic, actor_noise)
 
         if args['use_gym_monitor']:
             env.monitor.close()
@@ -447,23 +441,20 @@ def test_sine(args):
     from  generic.environments import Sine
 
     env = Sine()
-    np.random.seed(int(args['random_seed']))
-    tf.set_random_seed(int(args['random_seed']))
-    env.seed(int(args['random_seed']))
     args['max_episode_len']     =   env.spec['timestep_limit']
     #env.seed(int(args['random_seed']))
 
     state_dim   =   env.observation_space
     action_dim  =   env.action_space
-    action_bound=   1
+    action_bound= 1
 
-    Agent   =   DDPG(state_dim, action_dim, action_bound=action_bound,\
-                     lr         =   [float(args['actor_lr']), float(args['critic_lr'])],\
+    Agent   =   DDPG(state_dim, action_dim, action_bound=action_bound, \
+                     lr         =   [float(args['actor_lr']),float(args['critic_lr'])],\
                      tau        =   float(args['tau']),\
                      batch_size =   int(args['minibatch_size']),\
-                     gamma      =   float(args['gamma']),\
+                     gamma      =   int(args['gamma']),\
                      seed       =   int(args['random_seed']),\
-                     outputdir  =   str(args['summary_dir']))
+                     outputdir  =   str(args['summary_dir']) )
 
     train(env, args, Agent)
 

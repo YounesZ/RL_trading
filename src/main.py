@@ -43,7 +43,7 @@ def get_model(model_type, env, learning_rate, fld_load, input_size=32, batch_siz
 	elif model_type == 'DDPG':
 		# Deep Deterministic Policy Gradient
 		# Lillicrap et al. 2016: Continuous control with deep reinforcement learning
-		from external_modules.patemami_DDPG.ddpg.ddpg import DDPG
+		from external_modules.patemami_DDPG.ddpg.ddpg_monday import DDPG
 		from generic.dummy import Model
 		actor_hidden 	=	[48, 24, 12, 6]
 		critic_hidden 	=	[[48, 24], [24, 12, 6]]
@@ -107,7 +107,7 @@ def main():
 	"""
 
 	# --- Agent's options
-	batch_size 		= 	8
+	batch_size 		= 	64
 	learning_rate 	= 	1e-4
 	discount_factor = 	0.8
 	exploration_decay= 	0.99
@@ -139,7 +139,7 @@ def main():
 	env 	= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels)
 	agent, print_t	= 	get_agent(model_type, env, batch_size=batch_size,\
 									 buffer_min_size=buffer_min_size, buffer_size=buffer_size,\
-									outputdir='/Users/younes_zerouali/Desktop/SUM')
+									outputdir='/home/younesz/Desktop/SUM')
 
 	# Set save name
 	fld_save = os.path.join(rootStore, 'results', sampler.title, model_type,
