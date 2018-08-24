@@ -56,9 +56,9 @@ class Agent:
 				if not done:
 					q   +=  self.discount_factor * np.nanmax(self.get_q_valid(next_state, next_valid_actions))
 				Q_s_a 	+=	[q]
-				qls, ldc=	self.model.fit(state, action, q)
+				qls		=	self.model.fit(state, action, q)
 				Qloss 	+=	[qls]
-		return Q_s_a, Qloss, ldc
+		return Q_s_a, Qloss
 
 
 	def get_q_valid(self, state, valid_actions):
@@ -386,15 +386,25 @@ class DQN_agent():
 		self.state_size 	= 	state_size
 		self.action_size 	= 	action_size
 		self.layer_units 	= 	layer_units
-		self.learning_rate 	= 	learning_rate
 		self.qmodel 		= 	'DQN'
+		# Summary variables
+		self.sum_epRew 		= 	0
+		self.sum_maxQ 		= 	0
+		self.sum_totL 		= 	0
+		self.learning_rate 	= 	learning_rate
 		self.model, self.model_name = self.build_model(state_size, action_size, layer_units, learning_rate, outputdir)
 
 
 	def build_model(self, state_size, action_size, layer_units, learning_rate, outputdir, activation='relu'):
 
-		def summary(y_true, y_pred):
-			return tf.summary.merge_all()
+		def summarize_lr(y_true, y_pred):
+			return tf.convert_to_tensor(self.learning_rate, np.float32)
+		def summarize_epRew(y_true, y_pred):
+			return tf.convert_to_tensor(self.sum_epRew, np.float32)
+		def summarize_maxQ(y_true, y_pred):
+			return tf.convert_to_tensor(self.sum_maxQ, np.float32)
+		def summarize_totL(y_true, y_pred):
+			return tf.convert_to_tensor(self.sum_totL, np.float32)
 
 		# if self.wavelet_channels==0:
 		# Purely dense MLP
@@ -406,13 +416,8 @@ class DQN_agent():
 		# model.add(keras.layers.Dropout(drop_rate))
 		model.add(K.layers.Dense(action_size, activation='linear'))
 		# --- Prepare summaries
-		self.sum_lr 	= Kvar(0.0);	tf.summary.scalar('learning_rate', 0.0)	#Input(tensor=self.sum_lr)
-		self.sum_epRew 	= Kvar(0.0);	tf.summary.scalar('episode_reward',0.0 )	#Input(tensor=self.sum_epRew)
-		self.sum_maxQ	= Kvar(0.0);	tf.summary.scalar('episode_max_value', 0.0)#Input(tensor=self.sum_maxQ)
-		self.sum_totL 	= Kvar(0.0);	tf.summary.scalar('episode_total_loss', 0.0)#Input(tensor=self.sum_totL)
-		if not outputdir is None:
-			self.sumWriter 	= 	tf.summary.FileWriter(outputdir)
-		model.compile(loss='mse', optimizer=K.optimizers.Adam(lr=learning_rate), metrics=[summary])
+		self.tbcbck 	=	K.callbacks.TensorBoard(log_dir='./keras_logs', histogram_freq=0, write_graph=True, write_images=True)
+		model.compile(loss='mse', optimizer=K.optimizers.Adam(lr=learning_rate), metrics=[summarize_lr, summarize_epRew, summarize_maxQ, summarize_totL])
 		return model, 'DQN' + str(layer_units)
 
 
@@ -433,19 +438,15 @@ class DQN_agent():
 		q[action] = q_action
 		if np.shape(state)[1] != self.state_size:
 			state = state.T
-		l 		=	self.model.fit(state, add_dim(q, (self.action_size,)), epochs=1, verbose=0)
-		l_dict 	= 	dict(zip(self.model.metrics_names, l))
-		return np.sqrt( np.sum( (q-q_) ** 2 ) ), l_dict
+		self.model.fit(state, add_dim(q, (self.action_size,)), epochs=1, verbose=0, callbacks=[self.tbcbck])
+		return np.sqrt( np.sum( (q-q_) ** 2 ) )
 
 
-	def update_summary(self, ldc, lr, rew, qsa, qlss, istep):
-		Kset(self.sum_lr, lr)
-		Kset(self.sum_epRew, rew)
-		Kset(self.sum_maxQ, qsa)
-		Kset(self.sum_totL, qlss)
-		if hasattr(self, 'sumWriter'):
-			self.sumWriter.add_summary(ldc['value_summary'], global_step=istep)
-			self.sumWriter.flush()
+	def update_summary(self, epRew, maxQ, totL):
+		self.sum_epRew 	=	epRew
+		self.sum_maxQ 	=	maxQ
+		self.sum_totL 	=	totL
+
 
 
 def add_dim(x, shape):
@@ -571,7 +572,7 @@ def test_gym_pendulum():
 
 def test_sine():
 	# Environment variables
-	outdir = 	'/home/younesz/Desktop/SUM'
+	outdir = 	'/Users/younes_zerouali/Desktop/SUM'
 	lrAcCr = 	1e-3	#np.array([1e-4, 1e-3])
 	exploR =	0.05
 	acSpace=	2
@@ -600,7 +601,7 @@ def test_sine():
 			#env.render(state, reward)
 			# Store experience
 			agent.remember(state, action, reward, [next_state], done, list(range(acSpace)))
-			Q_s_a_, Qloss, ldc 	=	agent.replay(lr_disc)
+			Q_s_a_, Qloss 	=	agent.replay(lr_disc)
 			# Prepare next iteration
 			state	= 	next_state
 			epRew 	+= 	reward.flatten()[0]
@@ -613,9 +614,6 @@ def test_sine():
 		print('total reward %.2f, done in %i steps, max value: %.5f' % (epRew, step, epQsa))
 
 		# Update summary log
-		if not episode % 1:
-			agent.model.update_summary(ldc, lr_disc, epRew, epQsa, epQlss, episode)
-
 		if not episode % 20:
 			play_episode(env, agent, True)
 
