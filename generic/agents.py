@@ -11,12 +11,13 @@ from itertools import compress
 from keras.engine.input_layer import Input
 from keras.backend import variable as Kvar
 from keras.backend import set_value as Kset
+from generic.dummy import Noise as dumnz
 from generic.noise import OrnsteinUhlenbeckActionNoise
 
 
 class Agent:
 
-	def __init__(self, agent_type, state_size, action_range, action_size=2, valid_actions=None,
+	def __init__(self, agent_type, state_size, action_size, valid_actions=None,
 				 layer_units=[48, 32, 16, 8], batch_size=12, discount_factor=0.95, buffer_min_size=200,
 				 buffer_max_size=2000, learning_rate=0.001, noise_process=None, outputdir=None):
 
@@ -29,45 +30,38 @@ class Agent:
 		self.buffer_max_size=   buffer_max_size
 		self.attr2save      =   ['state_size', 'action_size', 'model_name']
 		self.outputdir 		=	outputdir
-		self.model          =   self.get_agent(agent_type, state_size, action_size, layer_units, learning_rate, noise_process)
+		self.model          =   self.get_agent(agent_type, state_size, action_size, layer_units, learning_rate, discount_factor, noise_process)
 
 
-	def get_agent(self, agent_type, state_size, action_size, layer_units, learning_rate, noise_process):
+	def get_agent(self, agent_type, state_size, action_size, layer_units, learning_rate, discount_factor, noise_process):
 		if agent_type	==	'DQN':
-			return	DQN_agent(state_size, action_size, layer_units, learning_rate, self.outputdir)
+			return	DQN_agent(state_size, action_size, layer_units, learning_rate, discount_factor, self.outputdir)
 		elif agent_type	==	'DDPG':
-			return DDPG_agent(state_size, action_size, layer_units, noise_process)
+			return DDPG_agent(state_size, action_size, actor_hidden=layer_units, critic_hidden=layer_units, noise_process=noise_process, outputdir=self.outputdir, discount_factor=discount_factor)
 		else:
 			print('Unrecognized agent type')
 			return
 
 
-	def remember(self, state, action, reward, next_state, done, next_valid_actions):
+	def remember(self, state, action, reward, next_state, done, next_valid_actions=None):
+		if next_valid_actions is None:
+			next_valid_actions 	=	self.valid_actions
 		self.memory.append((state, action, reward, next_state, done, next_valid_actions))
 
 
-	def replay(self, trace_length=1):
+	def replay(self, log=False, learning_rate=1e-3):
 		Q_s_a 	=	[]
 		Qloss 	=	[]
 		if len(self.memory) > self.buffer_min_size:
-			batch   =   random.sample(self.memory, min(len(self.memory), self.batch_size))
-			for state, action, reward, next_state, done, next_valid_actions in batch:
-				q   =   reward
-				if not done:
-					q   +=  self.discount_factor * np.nanmax(self.get_q_valid(next_state, next_valid_actions))
-				Q_s_a 	+=	[q]
-				qls		=	self.model.fit(state, action, q)
-				Qloss 	+=	[qls]
+			batch   	=   random.sample(self.memory, min(len(self.memory), self.batch_size))
+			state 		=	np.concatenate([x[0] for x in batch])
+			action 		= 	np.reshape([x[1] for x in batch], [-1,1])
+			reward 		= 	np.reshape([x[2] for x in batch], [-1,1])
+			next_state	= 	np.concatenate([x[3] for x in batch])
+			done 		= 	np.reshape([x[4] for x in batch], [-1,1])
+			next_valid	=	np.concatenate([np.reshape(x[5], [1,-1]) for x in batch])
+			Qloss		=	self.model.fit(state, action, reward, next_state, done, next_valid=next_valid, lr=learning_rate, log=log)
 		return Q_s_a, Qloss
-
-
-	def get_q_valid(self, state, valid_actions):
-		#self.model.model.set_weights(self.model.model.get_weights())
-		q       =   self.model.predict(state)
-		q_valid =   [np.nan] * len(q)
-		for action in valid_actions:
-			q_valid[action] =   q[action]
-		return q_valid
 
 
 	def act(self, state, exploration=0.05, valid_actions=None):
@@ -75,9 +69,11 @@ class Agent:
 		if valid_actions is None:
 			valid_actions	=	self.valid_actions
 		if np.random.random() > exploration:
-			q_valid = self.get_q_valid(state, valid_actions)
-			return np.argmax(q_valid)
-		return np.random.choice( valid_actions )
+			return self.model.act(state, valid_actions=valid_actions) #+ self.model.noise_process()
+		elif len(valid_actions)>1:
+			return np.random.choice( valid_actions )
+		else:
+			return np.reshape(np.random.random()*2-1, [1,1])
 
 
 
@@ -86,11 +82,9 @@ class DDPG_agent():
 
 	def __init__(self, state_space, action_space, \
 				 exploration_rate	=	0.05,\
-				 buffer_size		=	200,\
 				 batch_size			=	64,\
-				 cache_size 		=	2000,\
 				 tau				=	0.001,\
-				 discount 			=	0.99,\
+				 discount_factor	=	0.99,\
 				 noise_process 		=	None,\
 				 outputdir			=	None,\
 				 actor_hidden		=	[400, 300],\
@@ -100,19 +94,18 @@ class DDPG_agent():
 		self.state_space        =   state_space
 		self.action_space       =   action_space
 		self.exploration_rate 	=	exploration_rate
-		self.buffer_size 		=	buffer_size
 		self.batch_size 		=	batch_size
-		self.cache_size 		=	cache_size
 		self.update_rate 		=	tau
-		self.discount_rate 		=	discount
-		self.noise_process 		=	noise_process
-		self.random_seed 		=	[269115878, 513811440, 917426528,  39955810, 428253974, 937750847] #np.random.randint(1e9, size=6)
+		self.discount_rate 		=	discount_factor
+		self.random_seed 		=	np.random.randint(1e9, size=6)
 		self.memory 			=	[]
 		self.model_saver 		=	None
 		self.outputdir 			=	outputdir
 		# Set noise process
 		if noise_process=='OrnsteinUhlenbeck':
 			self.noise_process 	=	OrnsteinUhlenbeckActionNoise( mu=np.zeros(action_space) )
+		elif noise_process=='dummy':
+			self.noise_process 	=	dumnz
 		# Make the graph
 		self.actor_hidden       =   actor_hidden
 		self.critic_hidden      =   critic_hidden
@@ -184,7 +177,7 @@ class DDPG_agent():
 		# Add reward to graph summary
 		with tf.name_scope('episode_total_reward'):
 			self.episode_reward	=	tf.placeholder(tf.float32)
-			tf.summary.scalar('episode_reward', self.episode_reward)
+			tf.summary.scalar("episode_reward", self.episode_reward)
 
 		# Add action value to graph summary
 		with tf.name_scope('episode_max_Qvalue'):
@@ -222,13 +215,14 @@ class DDPG_agent():
 			b3 	= 	tf.Variable( tf.random_uniform([output_size], -3e-3, 3e-3), name='ac_b3'+handle_suffix )
 
 			# --- GRAPH
-			output 	=	self.batch_norm_layer(state_input, is_training, activation=tf.identity, scope_bn='batch_norm0'+handle_suffix)
+			#output 	=	self.batch_norm_layer(state_input, is_training, activation=tf.identity, scope_bn='batch_norm0'+handle_suffix)
+			output 	=	state_input
 			output 	=	tf.add( tf.matmul(output, W1), b1 )
 			output 	=	tf.nn.relu( output )
-			output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm1'+handle_suffix)
+			#output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm1'+handle_suffix)
 			output 	=	tf.add( tf.matmul(output, W2), b2 )
 			output 	=	tf.nn.relu(output)
-			output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm2'+handle_suffix)
+			#output 	= 	self.batch_norm_layer(output, is_training, activation=tf.identity, scope_bn='batch_norm2'+handle_suffix)
 			output 	=	tf.add( tf.matmul(output, W3), b3 )
 			output 	=	tf.nn.tanh( output )
 		return state_input, output, is_training
@@ -264,12 +258,12 @@ class DDPG_agent():
 		return state_input, action_input, output
 
 
-	def fit(self, state, action, reward, next_state, done, lr):
+	def fit(self, state, action, reward, next_state, done, next_valid=[], lr=[], log=[]):
 		# Train the critic
 		target_value, Qloss 	=	self.train_critic(state, action, reward, next_state, done, lr[1])
 		# Train the actor
-		if not done:
-			self.train_actor(state, lr[0])
+		if done.any():
+			self.train_actor(state[~done.flatten(),:], lr[0])
 		# Update the targets
 		self.update_target_networks()
 		return target_value, Qloss
@@ -299,9 +293,11 @@ class DDPG_agent():
 		self.session.run(self.optimize_actor, feed_dict={self.actor_input:state, self.actor_critic_grad:gradients[0], self.lr_actor:lr, self.actor_training:True})
 
 
-	def update_summary(self, lr, rew, qsa, qlss, istep):
-		summary 	=	self.session.run(self.merged_sum, feed_dict={self.lr_actor:lr[0], self.lr_critic:lr[1], self.episode_reward:rew[0], self.episode_maxQ:qsa, self.episode_Qlss:qlss})
-		self.sumWriter.add_summary(summary, istep)
+	def update_summary(self, rew, qsa, qlss, lr, istep):
+		if not self.outputdir is None:
+			summary 	=	self.session.run(self.merged_sum, feed_dict={self.lr_actor:lr[0], self.lr_critic:lr[1], self.episode_reward:rew, self.episode_maxQ:qsa, self.episode_Qlss:qlss})
+			self.sumWriter.add_summary(summary, istep)
+
 
 	def update_target_networks(self):
 		self.session.run(self.update_actor_target_params)
@@ -318,40 +314,8 @@ class DDPG_agent():
 															scope=scope_bn, decay=0.9, epsilon=1e-5))
 
 
-	def act(self, state, default):
-		if np.random.random()<self.exploration_rate:
-			return default
-		else:
-			action 	=	self.session.run( self.actor_output, feed_dict={self.actor_input:[state], self.actor_training:True})
-			if self.noise_process is None:
-				return action
-			else:
-				return action + self.noise_process()
-
-
-	def remember(self, state, action, reward, next_state, done):
-		if  len(self.memory)==self.cache_size:
-			self.memory.pop(0)
-		self.memory.append( (state, action, reward, next_state, done) )
-
-
-	def replay(self, lr):
-		if len(self.memory)>self.buffer_size:
-			# Sample batch
-			state_btch 	=	[]
-			action_btch =	[]
-			reward_btch =	[]
-			nextSt_btch = 	[]
-			done_btch 	=	[]
-			for (state, action, reward, next_state, done) in compress(self.memory, np.random.randint(len(self.memory), size=self.batch_size)):
-				state_btch 	+=	[list(state)]
-				action_btch +=	[[action[0][0]]]
-				reward_btch +=	[[reward]]
-				nextSt_btch += 	[list(next_state[0])]
-				done_btch	+=	[done]
-			return self.fit(state_btch, action_btch, reward_btch, nextSt_btch, done_btch, lr)
-		else:
-			return None, None
+	def act(self, state, valid_actions=[]):
+		return self.session.run( self.actor_output, feed_dict={self.actor_input:state, self.actor_training:True})
 
 
 	def save_model(self, root, sess, env_name, n_steps):
@@ -382,10 +346,11 @@ class DDPG_agent():
 
 class DQN_agent():
 
-	def __init__(self, state_size, action_size, layer_units, learning_rate, outputdir):
+	def __init__(self, state_size, action_size, layer_units, learning_rate, discount_factor, outputdir):
 		self.state_size 	= 	state_size
 		self.action_size 	= 	action_size
 		self.layer_units 	= 	layer_units
+		self.discount_factor=	discount_factor
 		self.qmodel 		= 	'DQN'
 		# Summary variables
 		self.sum_epRew 		= 	0
@@ -416,15 +381,14 @@ class DQN_agent():
 		# model.add(keras.layers.Dropout(drop_rate))
 		model.add(K.layers.Dense(action_size, activation='linear'))
 		# --- Prepare summaries
-		self.tbcbck 	=	K.callbacks.TensorBoard(log_dir='./keras_logs', histogram_freq=0, write_graph=True, write_images=True)
+		self.tbcbck 	=	K.callbacks.TensorBoard(log_dir=outputdir, histogram_freq=0, write_graph=True, write_images=True)
 		model.compile(loss='mse', optimizer=K.optimizers.Adam(lr=learning_rate), metrics=[summarize_lr, summarize_epRew, summarize_maxQ, summarize_totL])
 		return model, 'DQN' + str(layer_units)
 
 
 	def predict(self, state):
-		if np.shape(state)[1] != self.state_size:
-			state = np.reshape(state, [1,-1])
-		q = self.model.predict(state)
+		state 	= 	np.reshape(state, [1,-1])
+		q 		= 	self.model.predict(state)
 		if np.isnan(np.max(q, axis=1)).any():
 			print('state' + str(state))
 			print('q' + str(q))
@@ -432,17 +396,51 @@ class DQN_agent():
 		return q.flatten()
 
 
-	def fit(self, state, action, q_action):
-		q 	= 	self.predict(state)
-		q_	=	deepcopy(q)
-		q[action] = q_action
-		if np.shape(state)[1] != self.state_size:
-			state = state.T
-		self.model.fit(state, add_dim(q, (self.action_size,)), epochs=1, verbose=0, callbacks=[self.tbcbck])
-		return np.sqrt( np.sum( (q-q_) ** 2 ) )
+	def get_q_valid(self, state, valid_actions):
+		#self.model.model.set_weights(self.model.model.get_weights())
+		q       =   self.predict(state)
+		q_valid =   [np.nan] * len(q)
+		for action in valid_actions:
+			q_valid[action] =   q[action]
+		return q_valid
 
 
-	def update_summary(self, epRew, maxQ, totL):
+	def get_targets(self, state, action, reward, next_state, done, next_valid):
+		# Compute targets from rewards
+		targets = []
+		for r, s_, d, n in zip(reward, next_state, done, next_valid):
+			q 	= 	r
+			if not d:
+				q 	+= 	self.discount_factor * np.nanmax(self.get_q_valid(s_, n))
+			targets += 	[q]
+
+		# Format targets
+		targetF 	=	[]
+		errors 		=	0
+		for s, a, t in zip(state, action, targets):
+			q 		=	self.predict(s)
+			q_ 		=	deepcopy(q)
+			q[a]	=	t
+			targetF	+=	[q]
+			errors 	+=	np.sqrt( np.sum( (q-q_) ** 2 ) )
+		return np.array(targetF), errors/len(state)
+
+
+	def fit(self, state, action, reward, next_state, done, next_valid, lr=[], log=False):
+		q, error 	= 	self.get_targets(state, action, reward, next_state, done, next_valid)
+		if log:
+			self.model.fit(state, q, epochs=1, verbose=0, callbacks=[self.tbcbck])
+		else:
+			self.model.fit(state, q, epochs=1, verbose=0)
+		return error
+
+
+	def act(self, state, valid_actions):
+		q_valid 	= 	self.get_q_valid(state, valid_actions)
+		return np.argmax(q_valid)
+
+
+	def update_summary(self, epRew, maxQ, totL, lr, ):
 		self.sum_epRew 	=	epRew
 		self.sum_maxQ 	=	maxQ
 		self.sum_totL 	=	totL
@@ -526,41 +524,46 @@ def test_ddpg_gradients():
 def test_gym_pendulum():
 	# Environment variables
 	outdir  =   '/home/younesz/Desktop/SUM'
-	lrAcCr 	=	np.array([1e-2, 1e-1])
 
 	# import gym environment
 	import gym
-	env     =   gym.make('Pendulum-v0')
-	agent   =   DDPGModelMLP( env.observation_space.shape[0], env.action_space.shape[0], outputdir=outdir )
+	env     	=   gym.make('Pendulum-v0')
+	agent_opt 	= 	{'type': 'DDPG', 'acSpace': 1, 'lr': [1e-4, 1e-3], 'nzproc':'OrnsteinUhlenbeck', 'batch_size':64, 'discount_factor':0.99}
+	agent 		= 	Agent(agent_opt['type'], env.observation_space.shape[0], agent_opt['acSpace'], layer_units=[400, 300], batch_size=agent_opt['batch_size'], noise_process=agent_opt['nzproc'], outputdir=outdir, learning_rate=agent_opt['lr'])
 
 	# Simulation variables
 	n_episodes  =   1000
 	rewards     =   []
 	for episode in range(n_episodes):
 		print('episode {}, '.format(episode), end='')
-		state   =   env.reset()
-		lr_disc =	lrAcCr * n_episodes / (9 + episode + n_episodes)
+		state   =   np.reshape(env.reset(), [1,-1])
+		lr_disc =	agent_opt['lr'] # * n_episodes / (9 + episode + n_episodes)
 		epRew   =   0
+		epQsa 	=	0
+		epQlss 	=	0
 		# Train
 		for step in range(env.spec.timestep_limit):
 			#env.render()
 			# Act
-			action  =   agent.act(state , [[np.random.random()*2-1]])
+			action  =   agent.act(state , 0.05)
 			next_state, reward, done, _ =   env.step(action)
 			# Store experience
 			agent.remember(state, action, reward, next_state.T, done)
-			agent.replay(lr_disc)
+			Q_s_a_, Qloss 	= 	agent.replay(learning_rate=lr_disc)
 			# Prepare next iteration
-			state   =   next_state.flatten()
+			state   =   next_state.T
 			epRew   +=  reward[0]
+			if len(Q_s_a_)>0:
+				epQsa 	=	np.maximum(np.max(Q_s_a_), epQsa) if step>0 else np.max(Q_s_a_)
+				epQlss 	+=	np.mean(Qloss)
 			if done:
 				break
 		rewards     +=  [epRew]
-		print('total reward %.2f, done in %i steps'%(epRew, step))
+		print('total reward %.2f, max Qvalue: %.2f, total loss: %.2f, actorLR: %.4f, criticLR: %.3f, done in %i steps'%(epRew, epQsa, epQlss, lr_disc[0], lr_disc[1], step))
 
 		# Update summary log
-		if not episode%20:
-			agent.update_summary(lr_disc, epRew, episode)
+		if not episode%1:
+			agent.model.update_summary(epRew, 0, 0, lr_disc, episode)
 
 	# Plot result
 	F   =   plt.figure()
@@ -570,29 +573,77 @@ def test_gym_pendulum():
 	Ax.set_ylabel('Cumulated reward')
 
 
+def test_gym_pendulum_PEMAMI():
+	import gym
+	env	=	gym.make('Pendulum-v0')
+	np.random.seed(np.random.randint(1e6))
+	env.seed(np.random.randint(1e6))
+
+	state_dim	= env.observation_space.shape[0]
+	action_dim 	= env.action_space.shape[0]
+	action_bound= env.action_space.high
+	# Ensure action bound is symmetric
+	assert (env.action_space.high == -env.action_space.low)
+
+	agent 	=	Agent('DDPG', state_dim, action_dim, layer_units=[400,300], batch_size=64, discount_factor=0.99, noise_process='OrnsteinUhlenbeck', outputdir='/home/younesz/Desktop/SUM')
+
+	agent.model.update_target_networks()
+
+
+	for i in range(1000):
+
+		s 		= 	np.reshape(env.reset(), [1,-1])
+		Qsa 	=	0
+		Qloss	=	0
+		epRew 	=	0
+		for j in range(100):
+
+			a 	= 	agent.act(s, 0.05)
+
+			s2, r, terminal, info = env.step(a)
+
+			agent.remember(s, a, r, s2.T, terminal)
+			qsa, qlss 	=	agent.replay(learning_rate=[1e-4, 1e-3])
+
+			# Update target networks
+			agent.model.update_target_networks()
+
+			s 		= 	s2.T
+			epRew 	+=	r
+			if len(qsa)>0:
+				Qsa		+=	qsa
+				Qloss 	+=	qlss
+			if terminal:
+				break
+
+		agent.model.update_summary(epRew[0], Qsa, Qloss, [1e-4, 1e-3], i)
+		print('total reward %.2f, max Qvalue: %.2f, total loss: %.2f, actorLR: %.4f, criticLR: %.3f, done in %i steps' % (epRew, Qsa, Qloss, 1e-4, 1e-3, i))
+
+
 def test_sine():
 	# Environment variables
-	outdir = 	'/Users/younes_zerouali/Desktop/SUM'
-	lrAcCr = 	1e-3	#np.array([1e-4, 1e-3])
+	outdir = 	'/home/younesz/Desktop/SUM'
 	exploR =	0.05
-	acSpace=	2
+
+	# Agent specific options
+	#agent_opt 	=	{'type': 'DQN', 'acSpace':5, 'lr':1e-3, 'nz':'dummy'}
+	agent_opt 	= 	{'type': 'DDPG', 'acSpace': 1, 'lr': [1e-4, 1e-3], 'nz':'dummy'}
 
 	# import gym environment
 	from generic.environments import Sine
-	env 	= 	Sine(action_size=acSpace)
-	agent 	=	Agent('DQN', env.observation_space, env.action_space, layer_units=[40,30], noise_process= None, outputdir=outdir)
+	env 	= 	Sine(action_size=agent_opt['acSpace'])
+	agent 	=	Agent( agent_opt['type'], env.observation_space, agent_opt['acSpace'], layer_units=[400,300], noise_process= agent_opt['nz'], outputdir=outdir, learning_rate=agent_opt['lr'])
 
 	# Simulation variables
 	n_episodes 	= 	1000
 	rewards 	= 	[]
-	epQsa 		=	0
-	epQlss 		=	0
 	for episode in range(n_episodes):
 		print('episode {}, '.format(episode), end='')
 		state 	= 	env.reset()
-		lr_disc = 	lrAcCr #* n_episodes / (9 + episode + n_episodes)
+		lr_disc = 	agent_opt['lr'] #* n_episodes / (9 + episode + n_episodes)
 		epRew 	= 	0
 		epQlss 	=	0
+		epQsa 	= 	0
 		# Train
 		for step in range(env.spec['timestep_limit']):
 			# Act
@@ -600,8 +651,8 @@ def test_sine():
 			next_state, reward, done, _	=	env.step(action)
 			#env.render(state, reward)
 			# Store experience
-			agent.remember(state, action, reward, [next_state], done, list(range(acSpace)))
-			Q_s_a_, Qloss 	=	agent.replay(lr_disc)
+			agent.remember(state, action, reward, next_state, done, list(range(agent_opt['acSpace'])))
+			Q_s_a_, Qloss 	=	agent.replay(log=step==0, learning_rate=lr_disc)
 			# Prepare next iteration
 			state	= 	next_state
 			epRew 	+= 	reward.flatten()[0]
@@ -614,8 +665,12 @@ def test_sine():
 		print('total reward %.2f, done in %i steps, max value: %.5f' % (epRew, step, epQsa))
 
 		# Update summary log
+		agent.model.update_summary(epRew, epQsa, epQlss, lr_disc, episode)
+
+		"""
 		if not episode % 20:
 			play_episode(env, agent, True)
+		"""
 
 	# Plot result
 	F	=	plt.figure()
@@ -712,6 +767,7 @@ if __name__ == '__main__':
 
 	# Launch gym training
 	#test_gym_pendulum()
+	#test_gym_pendulum_PEMAMI()
 
 	# Launch sine wave training
 	test_sine()

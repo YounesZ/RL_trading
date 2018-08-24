@@ -20,7 +20,10 @@ class Sine():
 
     def step(self, action):
         self.x  +=  1
-        self.y  +=  self.allowed_actions[action]
+        if self.action_space==1:
+            self.y  +=  action
+        else:
+            self.y  +=  self.allowed_actions[action]
         reward  =   - np.sqrt( (self.y - np.sin(self.x*2*np.pi/self.spec['period'] - self.spec['phase']))**2 )
         return np.reshape([np.sin( (self.x-1)*2*np.pi/self.spec['period'] - self.spec['phase']), self.y], [1,-1]), reward.flatten()[0], self.x==self.spec['timestep_limit'], ''
 
