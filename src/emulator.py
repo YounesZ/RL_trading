@@ -96,8 +96,7 @@ class Market:
 		return self.get_state(), reward, self.t == self.t_max, self.get_valid_actions()
 
 
-	def __init__(self, 
-		sampler, window_state, open_cost, wavelet_channels=0,
+	def __init__(self, sampler, window_state, open_cost, action_labels=['continuous'], wavelet_channels=0,
 		direction=1., risk_averse=0., time_difference=True):
 
 		self.sampler 		= 	sampler
@@ -107,9 +106,9 @@ class Market:
 		self.risk_averse 	= 	risk_averse
 		self.time_difference=	True
 		self.wavelet_channels=	wavelet_channels
-		self.n_action 		= 	1
 		self.state_shape 	= 	(self.sampler.n_var, window_state)
-		self.action_labels 	= 	['continuous']	#['short all', 'short half', 'hold', 'long half', 'long all']	#['empty','open','keep']
+		self.action_labels 	= 	action_labels	#['short all', 'short half', 'hold', 'long half', 'long all']	#['empty','open','keep']
+		self.n_action 		= 	len(self.action_labels)
 		self.t0 			= 	window_state - 1 + self.time_difference
 		self.train_window 	=	self.sampler.window_episode - self.window_state - self.time_difference
 

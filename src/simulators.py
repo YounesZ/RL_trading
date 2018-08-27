@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 class Simulator:
 
+	"""
 	def play_one_episode(self, exploration, training=True, rand_price=True, print_t=False):
 
 		state, valid_actions = self.env.reset(rand_price=rand_price)
@@ -38,6 +39,52 @@ class Simulator:
 
 			state = next_state
 
+		return cum_rewards, actions, states
+	"""
+
+	def play_one_episode(self, exploration, training=True, rand_price=True, print_t=False):
+		state, _	= 	self.env.reset()
+		lr_disc		= 	self.agent_opt['lr']  # * n_episodes / (9 + episode + n_episodes)
+		epRew 		= 	0
+		epQlss 		= 	0
+		epQsa 		= 	0
+		step 		= 	0
+		done 		= 	False
+		# Train
+		env_t 		= 	0
+		try:
+			env_t 	= 	self.env.t
+		except AttributeError:
+			pass
+		cum_rewards = 	[np.nan] * env_t
+		actions 	= 	[np.nan] * env_t
+		states 		= 	[None] * env_t
+		prev_cum_rewards = 0
+		while not done:
+			# Act
+			action, action_conv			= 	self.agent.act(state.T, exploration)
+			next_state, reward, done, _	=	self.env.step(action_conv)
+			# env.render(state, reward)
+			# Store experience
+			if training:
+				self.agent.remember(state.T, action, reward, next_state.T, done, list(range(self.agent_opt['acSpace'])))
+				Q_s_a_, Qloss = self.agent.replay(log=step == 0, learning_rate=lr_disc)
+				if len(Q_s_a_) > 0:
+					epQsa	= 	np.maximum(np.max(Q_s_a_), epQsa)
+					epQlss 	+=	np.mean(Qloss)
+				# Prepare next iteration
+			state 	= 	next_state
+			epRew 	+= 	reward.flatten()[0]
+			step 	+=	1
+
+			cum_rewards.append(prev_cum_rewards + reward)
+			prev_cum_rewards = cum_rewards[-1]
+			actions.append(action)
+			states.append(next_state)
+		#print('total reward %.2f, done in %i steps, max value: %.5f' % (epRew, step, epQsa))
+
+		# Update summary log
+		#self.agent.model.update_summary(epRew, epQsa, epQlss, lr_disc, episode)
 		return cum_rewards, actions, states
 
 
@@ -73,7 +120,7 @@ class Simulator:
 
 			print('\ntraining...')
 			exploration = max(exploration_min, exploration * exploration_decay)
-			exploration = 0.7 * np.exp(-0.1*n) + 0.1
+			#exploration = 0.7 * np.exp(-0.1*n) + 0.1
 			explorations.append(exploration)
 			explored_cum_rewards, explored_actions, _	=	self.play_one_episode(exploration, print_t=print_t)
 			explored_total_rewards.append(100.*explored_cum_rewards[-1]/self.env.max_profit)
@@ -100,13 +147,11 @@ class Simulator:
 				print('saving results...')
 				self.agent.save(fld_model)
 
-				"""
 				self.visualizer.plot_a_episode(
 					self.env, self.agent.p_model,
 					explored_cum_rewards, explored_actions,
 					safe_cum_rewards, safe_actions,
 					os.path.join(fld_save, 'episode_%i.png'%(n)))
-				"""
 
 				self.visualizer.plot_episodes(
 					np.reshape(explored_total_rewards,-1), np.reshape(safe_total_rewards,-1), explorations,
@@ -147,13 +192,11 @@ class Simulator:
 			if n%save_per_episode == 0:
 				print('saving results...')
 
-				"""
 				self.visualizer.plot_a_episode(
 					self.env, self.agent.p_model,
 					[np.nan]*len(safe_cum_rewards), [np.nan]*len(safe_actions),
 					safe_cum_rewards, safe_actions,
 					os.path.join(fld_save, 'episode_%i.png'%(n)))
-				"""
 
 				self.visualizer.plot_episodes(
 					None, safe_total_rewards, None, 

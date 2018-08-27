@@ -17,7 +17,7 @@ from generic.noise import OrnsteinUhlenbeckActionNoise
 
 class Agent:
 
-	def __init__(self, agent_type, state_size, action_size, valid_actions=None,
+	def __init__(self, agent_type, state_size, action_size, valid_actions=None, action_conversion=None,
 				 layer_units=[48, 32, 16, 8], batch_size=12, discount_factor=0.95, buffer_min_size=200,
 				 buffer_max_size=2000, learning_rate=0.001, noise_process=None, outputdir=None):
 
@@ -31,6 +31,7 @@ class Agent:
 		self.attr2save      =   ['state_size', 'action_size', 'model_name']
 		self.outputdir 		=	outputdir
 		self.model          =   self.get_agent(agent_type, state_size, action_size, layer_units, learning_rate, discount_factor, noise_process)
+		self.action_conversion 	=	action_conversion
 
 
 	def get_agent(self, agent_type, state_size, action_size, layer_units, learning_rate, discount_factor, noise_process):
@@ -69,12 +70,24 @@ class Agent:
 		if valid_actions is None:
 			valid_actions	=	self.valid_actions
 		if np.random.random() > exploration:
-			return self.model.act(state, valid_actions=valid_actions) #+ self.model.noise_process()
+			action 	=	self.model.act(state, valid_actions=valid_actions) #+ self.model.noise_process()
 		elif len(valid_actions)>1:
-			return np.random.choice( valid_actions )
+			action 	=	np.random.choice( valid_actions )
 		else:
-			return np.reshape(np.random.random()*2-1, [1,1])
+			action 	=	np.reshape(np.random.random()*2-1, [1,1])
+		# Action conversion
+		action_conv =	action
+		if not self.action_conversion is None and len(self.valid_actions)>1:
+			action_conv	=	self.action_conversion[action]
+		return action, action_conv
 
+
+	def predict(self, state):
+		return self.model.predict(state)
+
+
+	def save(self, folder):
+		pass	# for now. ..
 
 
 class DDPG_agent():
@@ -267,6 +280,11 @@ class DDPG_agent():
 		# Update the targets
 		self.update_target_networks()
 		return target_value, Qloss
+
+
+	def predict(self, state):
+		action 	=	self.act(state)
+		return self.session.run(self.critic_target_output, feed_dict={self.critic_target_state_input: state, self.critic_target_action_input: action})
 
 
 	def train_critic(self, state, action, reward, next_state, done, lr):
@@ -632,7 +650,7 @@ def test_sine():
 	# import gym environment
 	from generic.environments import Sine
 	env 	= 	Sine(action_size=agent_opt['acSpace'])
-	agent 	=	Agent( agent_opt['type'], env.observation_space, agent_opt['acSpace'], layer_units=[400,300], noise_process= agent_opt['nz'], outputdir=outdir, learning_rate=agent_opt['lr'])
+	agent 	=	Agent( agent_opt['type'], env.observation_space, agent_opt['acSpace'], layer_units=[80,60], noise_process= agent_opt['nz'], outputdir=outdir, learning_rate=agent_opt['lr'])
 
 	# Simulation variables
 	n_episodes 	= 	1000
@@ -667,10 +685,11 @@ def test_sine():
 		# Update summary log
 		agent.model.update_summary(epRew, epQsa, epQlss, lr_disc, episode)
 
-		"""
+
 		if not episode % 20:
-			play_episode(env, agent, True)
-		"""
+			print('pause here')
+			#play_episode(env, agent, True)
+
 
 	# Plot result
 	F	=	plt.figure()
@@ -758,6 +777,50 @@ def test_sine2():
 	Ax.set_ylabel('Cumulated reward')
 
 
+def test_market():
+
+	# Environment variables
+	outdir 			= 	'/home/younesz/Desktop/SUM'
+	window_state	=	32
+	open_cost 		=	3
+	time_difference =	True
+	wavelet_channels=	0
+	batch_size 		=	16
+	rootStore 		= 	open('../dbloc.txt', 'r').readline().rstrip('\n')
+
+	# Agent specific options
+	agent_opt 	=	{'type': 'DQN', 'acSpace':5, 'lr':1e-3, 'nz':'dummy', 'batch_size':batch_size, 'action_labels':['short100', 'short50', 'neutral', 'long50' ,'long100'], 'action_conversion':[-1, -0.5, 0, 0.5, 1]}
+	#agent_opt 	= 	{'type': 'DDPG', 'acSpace': 1, 'lr': [1e-4, 1e-3], 'nz': 'dummy', 'batch_size':batch_size, 'actions':['continuous'], 'action_conversion':None}
+
+	# import market environment
+	from src.emulator import Market
+	from src.sampler import SinSampler, BTCsampler
+	sampler 	= 	BTCsampler(True, 180, 1.5, (20, 40), (49, 50), fld=outdir)
+	env 		= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels, action_labels=agent_opt['action_labels'])
+
+	# Set agent
+	agent 		= 	Agent(agent_opt['type'], window_state, agent_opt['acSpace'], layer_units=[80, 60],
+				  			noise_process=agent_opt['nz'], outputdir=outdir, learning_rate=agent_opt['lr'],
+							batch_size=agent_opt['batch_size'], action_conversion=agent_opt['action_conversion'])
+	agent.p_model= 	agent.model
+	fld_save 	= 	path.join(rootStore, 'results', sampler.title, agent_opt['type'],
+							str((env.window_state, sampler.window_episode, batch_size, agent_opt['lr'],
+								 agent.discount_factor, 0, env.open_cost)))
+
+
+	# Set visualizer
+	from src.visualizer import Visualizer
+	visualizer 	= 	Visualizer(env.action_labels)
+
+	# Set simulator
+	from src.simulators import Simulator
+	simulator 	= 	Simulator(agent, env, visualizer=visualizer, fld_save=fld_save)
+	simulator.agent_opt 	=	agent_opt
+	# Train
+	simulator.train(100, save_per_episode=1, exploration_decay=0.9,
+					exploration_min=0.05, print_t=False, exploration_init=0.8)
+	# Test
+	simulator.test(50, save_per_episode=1, subfld='in-sample testing')
 
 
 
@@ -770,4 +833,7 @@ if __name__ == '__main__':
 	#test_gym_pendulum_PEMAMI()
 
 	# Launch sine wave training
-	test_sine()
+	#test_sine()
+
+	# Launch market testing
+	test_market()
