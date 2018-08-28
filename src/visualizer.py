@@ -54,7 +54,7 @@ class Visualizer:
 		for t in range(env.t0):
 			qq.append([np.nan] * self.n_action)
 		for t in range(env.t0, env.t_max):
-			qq.append(model.predict(env.get_state(t).T))
+			qq.append(model.predict(env.get_state(t)))
 		for i in range(self.n_action):
 			ax_Q.plot([float(qq[t][i]) for t in range(len(qq))],
 				style[i], label=self.action_labels[i])

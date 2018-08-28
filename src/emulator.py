@@ -1,6 +1,8 @@
-from src.lib import *
-from scripts.dwt_no_edge_effects import *
 import matplotlib.pyplot as plt
+
+from src.lib import *
+from itertools import compress
+from scripts.dwt_no_edge_effects import *
 
 # by Xiang Gao, 2018
 
@@ -59,11 +61,18 @@ class Market:
 			norm = np.mean(state[:,i])
 			stdv = np.std(state[:,i])
 			state[:,i] = (( state[:,i]-norm)/stdv )#*100
-		return state
+		return state.T
 
 
 	def get_valid_actions(self):
-		return [self.empty-1, self.empty]	# negative: sell %age of BTC, positive: buy %age of BTC
+		valid_actions	=	[self.empty-1, self.empty]	# negative: sell %age of BTC, positive: buy %age of BTC
+		if not self.action_conversion is None:
+			ls_actions 	=	list( range(self.n_action) )
+			filter1		=	self.action_conversion >= valid_actions[0]
+			filter2 	= 	self.action_conversion <= valid_actions[1]
+			mask 		=	[all(x) for x in zip(filter1, filter2)]
+			valid_actions 	=	list( compress(ls_actions, mask ) )
+		return valid_actions
 
 
 	def get_noncash_reward(self, t=None, empty=None):
@@ -81,23 +90,29 @@ class Market:
 
 	def step(self, action):
 
+		# Convert the action
+		if not self.action_conversion is None:
+			action	=	self.action_conversion[action]
+		elif self.n_action==1:
+			# Clip to valid range
+			action 	=	np.minimum( np.maximum(action, self.empty-1), self.empty )
 		done	= 	False
 		# The reward now has two components: asset-moving, asset-keeping
-		reward 	=	0
+		reward 	=	0.
 		# Moved asset
 		if action>0:
 			# Bought BTC
 			reward 	+=	self.get_noncash_reward(empty=True) * action
 		# Kept asset
-		reward 		+=	self.get_noncash_reward(empty=False) * (1 - self.empty + min(0,action))
+		#reward 		+=	self.get_noncash_reward(empty=False) * (1 - self.empty + min(0,action))
 		self.empty 	-= 	action  # update status
 
 		self.t += 1
 		return self.get_state(), reward, self.t == self.t_max, self.get_valid_actions()
 
 
-	def __init__(self, sampler, window_state, open_cost, action_labels=['continuous'], wavelet_channels=0,
-		direction=1., risk_averse=0., time_difference=True):
+	def __init__(self, sampler, window_state, open_cost, action_labels=['continuous'], action_range=None,
+				 wavelet_channels=0, direction=1., risk_averse=0., time_difference=True):
 
 		self.sampler 		= 	sampler
 		self.window_state 	= 	window_state
@@ -111,6 +126,11 @@ class Market:
 		self.n_action 		= 	len(self.action_labels)
 		self.t0 			= 	window_state - 1 + self.time_difference
 		self.train_window 	=	self.sampler.window_episode - self.window_state - self.time_difference
+
+		# Action conversion
+		self.action_conversion 		=	None
+		if not action_range is None and self.n_action>1:
+			self.action_conversion 	=	np.linspace(action_range[0], action_range[1], self.n_action)
 
 
 if __name__ == '__main__':

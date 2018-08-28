@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 class Simulator:
 
-	"""
-	def play_one_episode(self, exploration, training=True, rand_price=True, print_t=False):
+
+	def play_one_episode(self, exploration, training=True, rand_price=True, print_t=False, learning_rate=1e-3):
 
 		state, valid_actions = self.env.reset(rand_price=rand_price)
 		done = False
@@ -35,7 +35,7 @@ class Simulator:
 
 			if training:
 				self.agent.remember(state, action, reward, next_state, done, valid_actions)
-				self.agent.replay(self.env.train_window)
+				self.agent.replay(learning_rate=learning_rate)
 
 			state = next_state
 
@@ -62,8 +62,8 @@ class Simulator:
 		prev_cum_rewards = 0
 		while not done:
 			# Act
-			action, action_conv			= 	self.agent.act(state.T, exploration)
-			next_state, reward, done, _	=	self.env.step(action_conv)
+			action	= 	self.agent.act(state.T, exploration)
+			next_state, reward, done, _	=	self.env.step(action)
 			# env.render(state, reward)
 			# Store experience
 			if training:
@@ -86,9 +86,9 @@ class Simulator:
 		# Update summary log
 		#self.agent.model.update_summary(epRew, epQsa, epQlss, lr_disc, episode)
 		return cum_rewards, actions, states
+	"""
 
-
-	def train(self, n_episode, 
+	def train(self, n_episode, learning_rate=1e-3,
 		save_per_episode=10, exploration_decay=0.995, exploration_min=0.01, print_t=False, exploration_init=1.):
 
 		fld_model = os.path.join(self.fld_save,'model')
@@ -122,7 +122,7 @@ class Simulator:
 			exploration = max(exploration_min, exploration * exploration_decay)
 			#exploration = 0.7 * np.exp(-0.1*n) + 0.1
 			explorations.append(exploration)
-			explored_cum_rewards, explored_actions, _	=	self.play_one_episode(exploration, print_t=print_t)
+			explored_cum_rewards, explored_actions, _	=	self.play_one_episode(exploration, print_t=print_t, learning_rate=learning_rate)
 			explored_total_rewards.append(100.*explored_cum_rewards[-1]/self.env.max_profit)
 			test_cum_rewards, test_actions, _ = self.play_one_episode(0, training=False, rand_price=True, print_t=False)
 			test_total_rewards.append(test_cum_rewards[-1])

@@ -17,7 +17,7 @@ from generic.noise import OrnsteinUhlenbeckActionNoise
 
 class Agent:
 
-	def __init__(self, agent_type, state_size, action_size, valid_actions=None, action_conversion=None,
+	def __init__(self, agent_type, state_size, action_size, valid_actions=None,
 				 layer_units=[48, 32, 16, 8], batch_size=12, discount_factor=0.95, buffer_min_size=200,
 				 buffer_max_size=2000, learning_rate=0.001, noise_process=None, outputdir=None):
 
@@ -31,7 +31,6 @@ class Agent:
 		self.attr2save      =   ['state_size', 'action_size', 'model_name']
 		self.outputdir 		=	outputdir
 		self.model          =   self.get_agent(agent_type, state_size, action_size, layer_units, learning_rate, discount_factor, noise_process)
-		self.action_conversion 	=	action_conversion
 
 
 	def get_agent(self, agent_type, state_size, action_size, layer_units, learning_rate, discount_factor, noise_process):
@@ -71,15 +70,11 @@ class Agent:
 			valid_actions	=	self.valid_actions
 		if np.random.random() > exploration:
 			action 	=	self.model.act(state, valid_actions=valid_actions) #+ self.model.noise_process()
-		elif len(valid_actions)>1:
+		elif self.model.action_size>1:
 			action 	=	np.random.choice( valid_actions )
 		else:
 			action 	=	np.reshape(np.random.random()*2-1, [1,1])
-		# Action conversion
-		action_conv =	action
-		if not self.action_conversion is None and len(self.valid_actions)>1:
-			action_conv	=	self.action_conversion[action]
-		return action, action_conv
+		return action
 
 
 	def predict(self, state):
@@ -104,8 +99,8 @@ class DDPG_agent():
 				 critic_hidden		=	[400, 300]):
 		self.qmodel             =   'DDPG'
 		self.session            =   tf.Session()
-		self.state_space        =   state_space
-		self.action_space       =   action_space
+		self.state_size        	=   state_space
+		self.action_size      	=   action_space
 		self.exploration_rate 	=	exploration_rate
 		self.batch_size 		=	batch_size
 		self.update_rate 		=	tau
@@ -133,10 +128,10 @@ class DDPG_agent():
 		# ===============
 
 		# Build networks
-		self.actor_input, self.actor_output, self.actor_training	=	self.build_actor(self.state_space, self.actor_hidden, self.action_space)
+		self.actor_input, self.actor_output, self.actor_training	=	self.build_actor(self.state_size, self.actor_hidden, self.action_size)
 		self.actor_weights 			= 	tf.trainable_variables()
 		weight_count 				+=	len(self.actor_weights)
-		self.actor_target_input, self.actor_target_output, self.actor_target_training	=	self.build_actor(self.state_space, self.actor_hidden, self.action_space, 'target')
+		self.actor_target_input, self.actor_target_output, self.actor_target_training	=	self.build_actor(self.state_size, self.actor_hidden, self.action_size, 'target')
 		self.actor_target_weights 	= 	tf.trainable_variables()[weight_count:]
 		weight_count 				+= 	len(self.actor_target_weights)
 
@@ -149,7 +144,7 @@ class DDPG_agent():
 		self.update_actor_target_params	= 	[x.assign( tf.multiply(y, self.update_rate) + tf.multiply(x, 1-self.update_rate) ) for x,y in zip(self.actor_target_weights, self.actor_weights)]
 
 		# Set op: optimization
-		self.actor_critic_grad 		=	tf.placeholder(tf.float32, [None, self.action_space], name="dQ_dCritic")
+		self.actor_critic_grad 		=	tf.placeholder(tf.float32, [None, self.action_size], name="dQ_dCritic")
 		unnorm_actor_grad			=	tf.gradients(self.actor_output, self.actor_weights, -self.actor_critic_grad, name="dAction_dActorParams")
 		norm_actor_grad 			=	list(map(lambda x: tf.div(x, self.batch_size), unnorm_actor_grad))
 		grads 						=	zip(norm_actor_grad, self.actor_weights)
@@ -161,10 +156,10 @@ class DDPG_agent():
 		# ================
 
 		# Build networks
-		self.critic_state_input, self.critic_action_input, self.critic_output	=	self.build_critic(self.state_space, self.critic_hidden, self.action_space)
+		self.critic_state_input, self.critic_action_input, self.critic_output	=	self.build_critic(self.state_size, self.critic_hidden, self.action_size)
 		self.critic_weights 		=	tf.trainable_variables()[weight_count:]
 		weight_count 				+= 	len(self.critic_weights)
-		self.critic_target_state_input, self.critic_target_action_input, self.critic_target_output	= 	self.build_critic(self.state_space, self.critic_hidden, self.action_space, 'target')
+		self.critic_target_state_input, self.critic_target_action_input, self.critic_target_output	= 	self.build_critic(self.state_size, self.critic_hidden, self.action_size, 'target')
 		self.critic_target_weights 	= 	tf.trainable_variables()[weight_count:]
 		weight_count 				+= 	len(self.critic_target_weights)
 
@@ -178,7 +173,7 @@ class DDPG_agent():
 
 		# Set op: optimization
 		self.critic_grad 	= 	tf.gradients(self.critic_output, self.critic_action_input, name="dQ_dAction")
-		self.y_input 		=	tf.placeholder("float", shape=[None, self.action_space], name="Qvalue_target")
+		self.y_input 		=	tf.placeholder("float", shape=[None, self.action_size], name="Qvalue_target")
 		self.critic_loss	=	tf.reduce_mean( tf.square(self.y_input - self.critic_output), name="critic_loss" )
 		self.optimize_critic=	tf.train.AdamOptimizer(self.lr_critic).minimize(self.critic_loss)
 
@@ -429,7 +424,10 @@ class DQN_agent():
 		for r, s_, d, n in zip(reward, next_state, done, next_valid):
 			q 	= 	r
 			if not d:
-				q 	+= 	self.discount_factor * np.nanmax(self.get_q_valid(s_, n))
+				try:
+					q 	+= 	self.discount_factor * np.nanmax(self.get_q_valid(s_, n))
+				except:
+					print('pause here')
 			targets += 	[q]
 
 		# Format targets
@@ -455,7 +453,7 @@ class DQN_agent():
 
 	def act(self, state, valid_actions):
 		q_valid 	= 	self.get_q_valid(state, valid_actions)
-		return np.argmax(q_valid)
+		return np.nanargmax(q_valid)
 
 
 	def update_summary(self, epRew, maxQ, totL, lr, ):
@@ -789,19 +787,20 @@ def test_market():
 	rootStore 		= 	open('../dbloc.txt', 'r').readline().rstrip('\n')
 
 	# Agent specific options
-	agent_opt 	=	{'type': 'DQN', 'acSpace':5, 'lr':1e-3, 'nz':'dummy', 'batch_size':batch_size, 'action_labels':['short100', 'short50', 'neutral', 'long50' ,'long100'], 'action_conversion':[-1, -0.5, 0, 0.5, 1]}
-	#agent_opt 	= 	{'type': 'DDPG', 'acSpace': 1, 'lr': [1e-4, 1e-3], 'nz': 'dummy', 'batch_size':batch_size, 'actions':['continuous'], 'action_conversion':None}
+	#agent_opt 	=	{'type': 'DQN', 'acSpace':5, 'lr':1e-3, 'nz':'dummy', 'batch_size':batch_size, 'action_labels':['short100', 'short50', 'neutral', 'long50' ,'long100']}
+	agent_opt 	= 	{'type': 'DDPG', 'acSpace': 1, 'lr': [1e-4, 1e-3], 'nz': 'dummy', 'batch_size':batch_size, 'action_labels':['continuous'], 'action_conversion':None}
 
 	# import market environment
 	from src.emulator import Market
 	from src.sampler import SinSampler, BTCsampler
-	sampler 	= 	BTCsampler(True, 180, 1.5, (20, 40), (49, 50), fld=outdir)
-	env 		= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels, action_labels=agent_opt['action_labels'])
+	#sampler 	= 	SinSampler('single', 180, 1.5, (20, 40), (49, 50), fld=outdir)
+	sampler 	= 	BTCsampler(False, wavelet_channels=0, variables=['Close'], fld= path.join(rootStore, 'data', 'BTCsampler', 'db_bitcoin.csv'))
+	env 		= 	Market(sampler, window_state, open_cost, time_difference=time_difference, wavelet_channels=wavelet_channels, action_range=[-1,1], action_labels=agent_opt['action_labels'])
 
 	# Set agent
 	agent 		= 	Agent(agent_opt['type'], window_state, agent_opt['acSpace'], layer_units=[80, 60],
 				  			noise_process=agent_opt['nz'], outputdir=outdir, learning_rate=agent_opt['lr'],
-							batch_size=agent_opt['batch_size'], action_conversion=agent_opt['action_conversion'])
+							batch_size=agent_opt['batch_size'])
 	agent.p_model= 	agent.model
 	fld_save 	= 	path.join(rootStore, 'results', sampler.title, agent_opt['type'],
 							str((env.window_state, sampler.window_episode, batch_size, agent_opt['lr'],
@@ -817,7 +816,7 @@ def test_market():
 	simulator 	= 	Simulator(agent, env, visualizer=visualizer, fld_save=fld_save)
 	simulator.agent_opt 	=	agent_opt
 	# Train
-	simulator.train(100, save_per_episode=1, exploration_decay=0.9,
+	simulator.train(200, save_per_episode=1, exploration_decay=0.99, learning_rate=agent_opt['lr'],
 					exploration_min=0.05, print_t=False, exploration_init=0.8)
 	# Test
 	simulator.test(50, save_per_episode=1, subfld='in-sample testing')
